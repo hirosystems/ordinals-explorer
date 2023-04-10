@@ -1,0 +1,8 @@
+.search-bar-box {
+  box-shadow: 0px 6px 14px 0px #f2f0ed;
+}
+
+.search-bar-container.focused > .search-bar-box,
+.search-bar-container:hover > .search-bar-box {
+  box-shadow: 0px 6px 14px 0px #8c877d4d;
+}

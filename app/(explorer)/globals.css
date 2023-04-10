@@ -1,0 +1,138 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* todo: double-check if allowed use of font */
+/* todo: check if allowed to commit to github repo */
+/* NOTICE: Don't switch to next/font, since it's unclear if we're allowed to use the font that way. */
+@font-face {
+  font-family: "Aeonik Fono";
+  src: url("/AeonikFono-Regular.woff2") format("woff2"),
+    url("/AeonikFono-Regular.woff") format("woff");
+  font-weight: normal;
+  font-style: normal;
+  font-display: block; /* todo: swap better? */
+}
+
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+
+html,
+body {
+  max-width: 100vw;
+  font-family: "Aeonik Fono", sans-serif;
+}
+
+body * {
+  /* todo: test which is better with or without precision */
+  text-rendering: geometricPrecision;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+/* Custom */
+.blocks-pattern {
+  margin: 0 auto;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 17 17'%3E%3Crect x='0' y='0' width='16' height='16' rx='2' ry='2' fill='%2345403d'%3E%3C/rect%3E%3C/svg%3E");
+  background-repeat: repeat;
+  background-size: 17px;
+}
+
+.tools {
+  padding: 0.5rem 1rem;
+  width: 100%;
+  text-align: center;
+  position: sticky;
+  top: 0px;
+  z-index: 10;
+}
+
+.tools button {
+  padding: 0.5rem 1rem;
+  background: #444;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.3), 0 2px 4px rgba(0, 0, 0, 0.4);
+  border: 2px solid rgba(0, 0, 0, 0.5);
+  border-radius: 12px;
+  font-weight: bold;
+}
+
+.block,
+.sat {
+  cursor: pointer;
+}
+
+.selected {
+  fill: gold;
+  filter: drop-shadow(0px 0px 4px gold);
+  z-index: 100;
+}
+
+.tip {
+  content: attr(data-sat);
+
+  position: absolute;
+  cursor: pointer;
+  pointer-events: none;
+
+  font-family: Menlo, Monaco, monospace;
+  font-weight: bold;
+  text-align: center;
+
+  background: rgba(0, 0, 0, 0.7);
+  backdrop-filter: blur(16px);
+
+  border-radius: 7px;
+  color: #fff;
+  padding: 8px 12px 6px;
+
+  overflow: visible;
+
+  /* transition: left 0.05s ease-out, top 0.05s ease-out; */
+}
+
+div:hover .logo {
+  box-shadow: 0px 1px 7px rgba(255, 215, 0, 0.5);
+}
+
+.hiro {
+  background: url("/hiro-logo-dark.svg");
+  background-size: 100%;
+}
+
+.spinner {
+  animation-delay: 2s;
+}
+
+.search {
+  box-shadow: 0px 6px 14px #f2f0ed;
+}
+
+.selectitem[data-state="checked"]::before {
+  content: "[";
+}
+
+.selectitem[data-state="checked"]::after {
+  content: "]";
+}
+
+input::-webkit-calendar-picker-indicator {
+  display: none;
+}
+
+input[type="date"]::-webkit-input-placeholder {
+  visibility: hidden !important;
+}
+
+.big-button {
+  box-shadow: 0px 6px 24px rgba(13, 12, 12, 0.2);
+}
+
+.cta-link {
+  box-shadow: 0px 6px 24px rgba(13, 12, 12, 0.2);
+}
