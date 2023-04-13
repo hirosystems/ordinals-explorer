@@ -1,32 +1,15 @@
 "use client";
 
 import Link from "next/link";
-import useSWR from "swr";
 
 import CtaLink from "../../components/CtaLink";
 import Footer from "../../components/Footer";
 import GalleryPreview from "../../components/GalleryPreview";
 import Header from "../../components/Header";
 import Intro from "../../components/Intro";
-import Loading from "../../components/Loading";
 import SearchBar from "../../components/SearchBar";
-import { fetcher } from "../../lib/helpers";
-import { useHasMounted } from "../../lib/hooks";
-import { HomepageResponse } from "../../pages/api/homepage";
 
 export default function Home() {
-  const hasMounted = useHasMounted();
-
-  // todo: push down to components
-  const { data, error, isLoading } = useSWR<HomepageResponse>(
-    "/api/homepage",
-    fetcher
-  );
-
-  if (error) return "Something went wrong ʕ•̠͡•ʔ Please try reloading the page";
-  if (!hasMounted || isLoading || !data)
-    return <Loading className="min-h-screen" />;
-
   return (
     <>
       <Header />
@@ -51,7 +34,7 @@ export default function Home() {
           <p className="mt-20 text-sm text-center uppercase">
             Latest Inscriptions
           </p>
-          <div className="mx-auto mt-3 mb-4 h-12 w-0 border border-dashed border-l-black"></div>
+          <div className="mx-auto mt-3 mb-4 h-12 w-0 border border-dashed border-l-black" />
           <GalleryPreview />
 
           <div className="mt-16 flex justify-around">
