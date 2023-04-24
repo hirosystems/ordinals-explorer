@@ -1,9 +1,10 @@
 import { ImageResponse } from "@vercel/og";
 import { NextRequest } from "next/server";
+
 import Ellipsis from "../../../components/Ellipsis";
 import { ThumbnailIcon } from "../../../components/Thumbnail";
 import { API_URL } from "../../../lib/constants";
-import { InscriptionResponse } from "../ordinals/v1/inscriptions";
+import { InscriptionResponse } from "../../../lib/types";
 
 export const config = {
   runtime: "edge",

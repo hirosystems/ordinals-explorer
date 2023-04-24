@@ -1,20 +1,16 @@
 "use client";
 
 import useSWR from "swr";
-import { API_URL } from "../lib/constants";
 
+import { API_URL } from "../lib/constants";
 import { fetcher } from "../lib/helpers";
-import { InscriptionResponse } from "../pages/api/ordinals/v1/inscriptions/[iid]";
-import Ellipsis from "./Ellipsis";
+import { InscriptionResponse, ListResponse } from "../lib/types";
 import CtaLink from "./CtaLink";
 import InscriptionCard from "./InscriptionCard";
 import Loading from "./Loading";
 
 const BlockDetails = (params: { bid: string }) => {
-  const { data, error, isLoading } = useSWR<{
-    results: InscriptionResponse[];
-    total: number;
-  }>(
+  const { data, error, isLoading } = useSWR<ListResponse<InscriptionResponse>>(
     // todo: increase limit to 60
     `${API_URL}/inscriptions?limit=20&genesis_block=${params.bid}`,
     fetcher

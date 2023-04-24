@@ -2,7 +2,7 @@ import Footer from "../../../../components/Footer";
 import Header from "../../../../components/Header";
 import InscriptionDetails from "../../../../components/InscriptionDetails";
 import { API_URL } from "../../../../lib/constants";
-import { InscriptionResponse } from "../../../../pages/api/ordinals/v1/inscriptions";
+import { InscriptionResponse } from "../../../../lib/types";
 
 export async function generateMetadata({
   params,

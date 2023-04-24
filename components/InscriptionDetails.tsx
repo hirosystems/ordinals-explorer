@@ -2,17 +2,18 @@
 
 import Link from "next/link";
 import useSWR from "swr";
-import { API_URL } from "../lib/constants";
 
+import { API_URL } from "../lib/constants";
 import { fetcher } from "../lib/helpers";
-import { InscriptionResponse } from "../pages/api/ordinals/v1/inscriptions/[iid]";
 import Loading from "./Loading";
 import { ThumbnailIcon } from "./Thumbnail";
+import { InscriptionResponse } from "../lib/types";
 
 const InscriptionDetails = (params: { iid: string }) => {
   const { data, error, isLoading } = useSWR<
     | InscriptionResponse
     | {
+        // todo: add more generic api error response type
         error: string;
         message: string;
         statusCode: number;
