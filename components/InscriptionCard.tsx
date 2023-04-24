@@ -3,17 +3,16 @@ import { motion } from "framer-motion";
 
 import Iframe from "./Iframe";
 import { cn } from "../lib/helpers";
+import { InscriptionResponse } from "../lib/types";
 
 const InscriptionCard = ({
-  id,
-  number,
+  inscription,
   light = false,
 }: {
-  id: string;
-  number: number;
+  inscription?: InscriptionResponse;
   light?: boolean;
 }) => {
-  if (!id)
+  if (!inscription?.id)
     return (
       // make the grid take up the maximal space, even when a grid item is empty
       // todo: double-check skeleton styles are the same as the real ones
@@ -33,11 +32,11 @@ const InscriptionCard = ({
 
   return (
     <Link
-      href={`/inscription/${id}`}
+      href={`/inscription/${inscription.id}`}
       className="border sm:p-2 md:p-3 lg:p-5 rounded-md space-y-2 md:space-y-3 lg:space-y-5"
     >
       {/* todo: replace with root preview link */}
-      <Iframe src={`/preview/${id}`} />
+      <Iframe src={`/preview/${inscription.id}`} />
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
@@ -47,7 +46,7 @@ const InscriptionCard = ({
           light && "bg-white text-neutral-300 border"
         )}
       >
-        #{number}
+        #{inscription.number}
       </motion.div>
     </Link>
   );

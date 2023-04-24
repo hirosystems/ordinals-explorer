@@ -42,7 +42,7 @@ const AddressDetails = (params: { aid: string }) => {
       )}
       <div className="mt-4 grid grid-cols-3 md:grid-cols-4 gap-4">
         {data.results.map((i, index) => (
-          <InscriptionCard key={index} {...i} />
+          <InscriptionCard key={index} inscription={i} />
         ))}
       </div>
 
