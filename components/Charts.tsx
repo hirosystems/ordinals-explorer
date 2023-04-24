@@ -3,7 +3,7 @@
 import * as d3 from "d3";
 import { useEffect, useRef } from "react";
 
-import localFont from "@next/font/local";
+import localFont from "next/font/local";
 import { addLineChart } from "./LineChart";
 
 // todo: aeonik font?
