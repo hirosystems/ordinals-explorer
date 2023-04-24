@@ -28,7 +28,7 @@ const SatsListWrapper = ({ bid }: { bid: string }) => {
     <div className="py-4">
       <div className="pt-4 grid grid-cols-3 md:grid-cols-5 gap-4">
         {data.results.map((i, index) => (
-          <InscriptionCard key={index} {...i} />
+          <InscriptionCard key={index} inscription={i} />
         ))}
       </div>
       <div className="mt-16 mb-32 flex justify-around">

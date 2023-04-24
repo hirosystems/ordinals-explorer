@@ -3,8 +3,9 @@ import useSWR from "swr";
 import { API_URL } from "../lib/constants";
 
 import { fetcher } from "../lib/helpers";
-import { InscriptionListResponse } from "../pages/api/ordinals/v1/inscriptions";
+
 import InscriptionCard from "./InscriptionCard";
+import { InscriptionResponse, ListResponse } from "../lib/types";
 
 // const limit = 60; // LCM of 3, 4, 5, 6
 const limit = 20; // todo: increase limit on api end
@@ -104,7 +105,7 @@ const GalleryFull = ({
 
   // todo: use ref to track the latest number of results to avoid flickering when switching between a filter with no results and another filter with no results
 
-  const { data, error, isLoading } = useSWR<InscriptionListResponse>(
+  const { data, error, isLoading } = useSWR<ListResponse<InscriptionResponse>>(
     `${API_URL}/inscriptions?${params.toString()}`,
     fetcher
   );
@@ -127,7 +128,7 @@ const GalleryFull = ({
     <>
       <div className="grid grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-5 3xl:grid-cols-6 gap-4">
         {items.map((i, index) => (
-          <InscriptionCard key={i?.id ?? index} {...i} light />
+          <InscriptionCard key={i?.id ?? index} inscription={i} light />
         ))}
       </div>
       {children}
