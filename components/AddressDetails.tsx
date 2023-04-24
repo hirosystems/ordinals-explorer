@@ -1,20 +1,16 @@
 "use client";
 
 import useSWR from "swr";
-import { API_URL } from "../lib/constants";
 
+import { API_URL } from "../lib/constants";
 import { fetcher } from "../lib/helpers";
-import { InscriptionResponse } from "../pages/api/ordinals/v1/inscriptions/[iid]";
+import { InscriptionResponse, ListResponse } from "../lib/types";
 import Ellipsis from "./Ellipsis";
-import CtaLink from "./CtaLink";
 import InscriptionCard from "./InscriptionCard";
 import Loading from "./Loading";
 
 const AddressDetails = (params: { aid: string }) => {
-  const { data, error, isLoading } = useSWR<{
-    results: InscriptionResponse[];
-    total: number;
-  }>(
+  const { data, error, isLoading } = useSWR<ListResponse<InscriptionResponse>>(
     // todo: increase limit to 60
     `${API_URL}/inscriptions?limit=20&address=${params.aid}`,
     fetcher
