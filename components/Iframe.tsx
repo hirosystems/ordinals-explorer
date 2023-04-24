@@ -3,11 +3,11 @@ const Iframe = ({ src }: { src: string }) => {
   return (
     <iframe
       src={src}
-      className="w-full rounded-[4px] aspect-square pointer-events-none border-none"
+      className="w-full h-full pointer-events-none border-none"
       // loading="lazy"
       sandbox="allow-scripts"
       scrolling="no"
-    ></iframe>
+    />
   );
 };
 

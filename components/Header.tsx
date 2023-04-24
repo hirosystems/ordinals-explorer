@@ -15,7 +15,7 @@ const Header = ({ children }: { children?: React.ReactNode }) => {
       {/* todo: explore button, stats, hiro.so */}
       <div className="hidden sm:block">
         <HoverCard openDelay={0}>
-          <HoverCardTrigger className="px-3.5 py-2.5 rounded-md cursor-default hover:bg-neutral-0">
+          <HoverCardTrigger className="px-3.5 py-2.5 rounded-md cursor-default hover:bg-neutral-0 select-none">
             Explore
           </HoverCardTrigger>
           <HoverCardContent className="flex flex-col p-1">
