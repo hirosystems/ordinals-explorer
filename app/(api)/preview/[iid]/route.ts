@@ -1,5 +1,5 @@
 import { API_URL } from "../../../../lib/constants";
-import { InscriptionResponse } from "../../../../pages/api/ordinals/v1/inscriptions";
+import { InscriptionResponse } from "../../../../lib/types";
 
 export async function GET(
   request: Request,
