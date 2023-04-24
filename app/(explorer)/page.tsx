@@ -68,7 +68,7 @@ export default function Home() {
         <div className="grid md:grid-cols-2 w-full gap-5">
           <div className="p-8 border border-neutral-0 rounded-[6px]">
             <div className="rounded bg-neutral-0 w-16 h-16 pl-2 flex items-center text-xl overflow-hidden">
-              <span className="bg-clip-text text-transparent bg-gradient-to-r from-neutral-300 to-neutral-0">
+              <span className="bg-clip-text text-transparent bg-gradient-to-r from-neutral-300 to-neutral-0 pointer-events-none select-none">
                 #8030
               </span>
             </div>
@@ -93,7 +93,7 @@ export default function Home() {
             </p>
           </div>
           <div className="p-8 border border-neutral-0 rounded-[6px]">
-            <div className="rounded bg-neutral-0 w-16 h-16 flex justify-center items-center">
+            <div className="rounded bg-neutral-0 w-16 h-16 flex justify-center items-center pointer-events-none">
               <img src="/b-illustration.svg" alt="Bitcoin Icon" />
             </div>
             <h4 className="mt-7 text-2xl">What are Ordinals?</h4>
