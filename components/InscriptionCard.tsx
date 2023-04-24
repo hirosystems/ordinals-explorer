@@ -4,6 +4,7 @@ import { motion } from "framer-motion";
 import Iframe from "./Iframe";
 import { cn } from "../lib/helpers";
 import { InscriptionResponse } from "../lib/types";
+import InscriptionRender from "./InscriptionRender";
 
 const InscriptionCard = ({
   inscription,
@@ -17,7 +18,7 @@ const InscriptionCard = ({
       // make the grid take up the maximal space, even when a grid item is empty
       // todo: double-check skeleton styles are the same as the real ones
       <div className="border sm:p-2 md:p-3 lg:p-5 rounded-md space-y-2 md:space-y-3 lg:space-y-5">
-        <div className="rounded-[4px] aspect-square"></div>
+        <div className="rounded-[4px] aspect-square" />
         <div
           className={cn(
             "opacity-0 hidden sm:inline-block text-sm rounded-[4px] px-1 md:px-2 md:py-1",
@@ -35,8 +36,9 @@ const InscriptionCard = ({
       href={`/inscription/${inscription.id}`}
       className="border sm:p-2 md:p-3 lg:p-5 rounded-md space-y-2 md:space-y-3 lg:space-y-5"
     >
-      {/* todo: replace with root preview link */}
-      <Iframe src={`/preview/${inscription.id}`} />
+      <div className="w-full rounded-[4px] aspect-square overflow-hidden">
+        <InscriptionRender inscription={inscription} />
+      </div>
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
