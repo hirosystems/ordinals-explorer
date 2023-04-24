@@ -1,11 +1,10 @@
 "use client";
 
 import useSWR from "swr";
-import { API_URL } from "../lib/constants";
 
+import { API_URL } from "../lib/constants";
 import { fetcher } from "../lib/helpers";
 import { SatResponse } from "../lib/types";
-import { InscriptionResponse } from "../pages/api/ordinals/v1/inscriptions/[iid]";
 import InscriptionCard from "./InscriptionCard";
 import Loading from "./Loading";
 import WithInscription from "./WithInscription";

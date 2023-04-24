@@ -5,13 +5,14 @@ import useSWR from "swr";
 import { API_URL } from "../lib/constants";
 import { fetcher } from "../lib/helpers";
 import { lastInscriptionDataAtom } from "../lib/store";
-import { InscriptionListResponse } from "../pages/api/ordinals/v1/inscriptions";
+
+import { InscriptionResponse, ListResponse } from "../lib/types";
 import InscriptionCard from "./InscriptionCard";
 
 const GalleryPreview = () => {
   const setLastInscriptionData = useSetAtom(lastInscriptionDataAtom);
 
-  const { data, error, isLoading } = useSWR<InscriptionListResponse>(
+  const { data, error, isLoading } = useSWR<ListResponse<InscriptionResponse>>(
     `${API_URL}/inscriptions`,
     fetcher
   );
@@ -33,7 +34,7 @@ const GalleryPreview = () => {
     <>
       <div className="grid grid-cols-3 md:grid-cols-4 gap-4">
         {previews.slice(0, 12).map((i, index) => (
-          <InscriptionCard key={index} {...i} />
+          <InscriptionCard key={index} inscription={i} />
         ))}
       </div>
       {/* todo: re-add figma link to full feed */}
