@@ -7,7 +7,7 @@ export async function generateMetadata() {
     openGraph: {
       title: "Ordinals — Hiro", // todo: add inscription number
       description: "An Ordinals Explorer built using Hiro APIs and tools",
-      url: "https://nextjs.org",
+      url: "https://ordinals.hiro.so",
       siteName: "Ordinals — Hiro",
       images: [
         {
@@ -75,7 +75,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
             style={{ display: "none", visibility: "hidden" }}
             height="0"
             width="0"
-          ></iframe>
+          />
         </noscript>
       </body>
     </html>

@@ -12,12 +12,19 @@ export async function GET(
 
     return new Response(await page(data), {
       status: 200,
-      headers: { "Content-Type": "text/html; charset=utf-8" },
+
+      headers: {
+        "Content-Type": "text/html; charset=utf-8",
+        "Access-Control-Allow-Origin": "*",
+      },
     });
   } catch (e) {
     return new Response(await pageEmpty(), {
       status: 500,
-      headers: { "Content-Type": "text/html; charset=utf-8" },
+      headers: {
+        "Content-Type": "text/html; charset=utf-8",
+        "Access-Control-Allow-Origin": "*",
+      },
     });
   }
 }
@@ -97,7 +104,8 @@ function htmlWithFont(children: string) {
         <style>
           @font-face {
             font-family: "Aeonik Fono";
-            src: url("/AeonikFono-Regular.woff2") format("woff2"), url("/AeonikFono-Regular.woff") format("woff");
+            src: url("/AeonikFono-Regular.woff2") format("woff2"),
+              url("/AeonikFono-Regular.woff") format("woff");
             font-weight: normal;
             font-style: normal;
             font-display: block;
