@@ -44,7 +44,7 @@ const InscriptionDetails = (params: { iid: string }) => {
             sandbox="allow-scripts"
             loading="lazy"
             src={`/preview/${params.iid}`}
-          ></iframe>
+          />
         </div>
       </div>
 
