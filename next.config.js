@@ -12,6 +12,29 @@ const nextConfig = {
       },
     ],
   },
+
+  headers: async () => {
+    return [
+      {
+        source: "/AeonikFono-Regular.woff",
+        headers: [
+          {
+            key: "Cache-Control",
+            value: "public, max-age=31536000, immutable",
+          },
+        ],
+      },
+      {
+        source: "/AeonikFono-Regular.woff2",
+        headers: [
+          {
+            key: "Cache-Control",
+            value: "public, max-age=31536000, immutable",
+          },
+        ],
+      },
+    ];
+  },
 };
 
 module.exports = nextConfig;
