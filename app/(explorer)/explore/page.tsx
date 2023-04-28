@@ -255,10 +255,17 @@ const Page = () => {
                 {/* todo: use real links? */}
                 {/* todo: hide on load, or add skeleton */}
                 <div className="grid grid-cols-2 gap-3">
-                  {page > 0 && (
+                  {page > 0 ? (
                     <button
                       className="text-white bg-black px-3 py-1.5 rounded-[4px]"
                       onClick={() => updatePage(-1)}
+                    >
+                      &larr; Previous
+                    </button>
+                  ) : (
+                    <button
+                      className="text-neutral-200 bg-neutral px-3 py-1.5 rounded-[4px] transition-colors cursor-not-allowed"
+                      disabled={true}
                     >
                       &larr; Previous
                     </button>
