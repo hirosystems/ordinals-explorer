@@ -16,6 +16,10 @@ const nextConfig = {
   headers: async () => {
     return [
       {
+        source: "/:path*",
+        headers: [{ key: "Access-Control-Allow-Origin", value: "*" }],
+      },
+      {
         source: "/AeonikFono-Regular.woff",
         headers: [
           {
@@ -32,6 +36,16 @@ const nextConfig = {
             value: "public, max-age=31536000, immutable",
           },
         ],
+      },
+    ];
+  },
+
+  redirects: async () => {
+    return [
+      {
+        source: "/content/:iid",
+        destination: `${process.env.NEXT_PUBLIC_API_URL}/inscriptions/:iid/content`,
+        permanent: false,
       },
     ];
   },
