@@ -1,3 +1,4 @@
+import { API_URL } from "../../lib/constants";
 import "./globals.css";
 
 import Script from "next/script";
@@ -58,6 +59,14 @@ export default function RootLayout({
         <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#CFC9C2" />
         <meta name="msapplication-TileColor" content="#CFC9C2" />
         <meta name="theme-color" content="#ffffff" />
+        <meta
+          httpEquiv="Content-Security-Policy"
+          content={`frame-src ${
+            process.env.NODE_ENV === "production"
+              ? ""
+              : " http://localhost:3000"
+          } https://api.hiro.so https://ordinals.hiro.so;`}
+        />
 
         <Script id="google-analytics" strategy="afterInteractive">
           {`(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
