@@ -33,12 +33,20 @@ const Header = ({ children }: { children?: React.ReactNode }) => {
             </Link>
           </HoverCardContent>
         </HoverCard>
-        <Link
-          href="/stats"
-          className="px-3.5 py-2.5 rounded-md hover:bg-neutral-0"
-        >
-          Stats
-        </Link>
+        <HoverCard openDelay={0}>
+          <HoverCardTrigger className="opacity-50 cursor-not-allowed">
+            <span
+              // todo: change back to Link
+              // href="/stats"
+              className="px-3.5 py-2.5 rounded-md hover:bg-neutral-0"
+            >
+              Stats
+            </span>
+          </HoverCardTrigger>
+          <HoverCardContent className="px-2">
+            Under Construction 🚧
+          </HoverCardContent>
+        </HoverCard>
         <Link
           target="_blank"
           href="https://hiro.so"
