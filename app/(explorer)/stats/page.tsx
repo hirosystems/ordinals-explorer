@@ -27,21 +27,24 @@ export default function Home() {
     <>
       <Header />
       <main className="w-full flex flex-col justify-between items-center min-h-screen max-w-5xl p-6 mx-auto space-y-6">
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.3, delay: 0.1 }}
-          className="w-full max-w-3xl"
-        >
-          <h2 className="mt-20 text-2xl text-center ">
-            Number of Ordinal Inscriptions
-          </h2>
-          {/* todo: enable touch on charts (currently not possible to scroll or zoom while touching chart area) */}
-          <Charts data={data?.graph} dataCumulative={data?.graphCumulative} />
-        </motion.div>
-        <p className="text-sm text-neutral-500">
-          The numbers shown in these charts are not updated in real-time.
-        </p>
+        <div>This page is under construction 🚧</div>
+        <div className="opacity-50">
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.3, delay: 0.1 }}
+            className="w-full max-w-3xl"
+          >
+            <h2 className="mt-20 text-2xl text-center ">
+              Number of Ordinal Inscriptions
+            </h2>
+            {/* todo: enable touch on charts (currently not possible to scroll or zoom while touching chart area) */}
+            <Charts data={data?.graph} dataCumulative={data?.graphCumulative} />
+          </motion.div>
+          <p className="text-sm text-neutral-500 text-center">
+            The numbers shown in these charts are not up-to-date currently.
+          </p>
+        </div>
       </main>
       <Footer />
     </>
