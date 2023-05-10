@@ -1,0 +1,7 @@
+.gradient {
+  filter: saturate(10%) brightness(120%);
+}
+
+.gradient:hover {
+  filter: initial;
+}
