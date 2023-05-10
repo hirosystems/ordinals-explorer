@@ -18,6 +18,7 @@
     "@radix-ui/react-select": "^1.2.0",
     "@radix-ui/react-tooltip": "^1.0.4",
     "@scure/base": "^1.1.1",
+    "@stacks/stacking": "^6.5.2",
     "@vercel/og": "^0.4.0",
     "class-variance-authority": "^0.4.0",
     "clsx": "^1.2.1",
