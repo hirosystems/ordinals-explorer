@@ -38,11 +38,11 @@ const TransferHistory = (params: { iid: string }) => {
     );
 
   return (
-    <div className="p-2">
-      <h2 className="text-xl px-2 py-3">Transfer History</h2>
+    <div className="flex flex-col justify-center p-2">
+      <h2 className="text-center text-xl px-2 py-3">Transfer History</h2>
       <div className="border p-4 rounded-lg">
-        <div className="flex flex-row flex-wrap">
-          {data.results.map((transfer, i) => (
+        <div className="space-y-3">
+          {data.results.reverse().map((transfer, i) => (
             <TransferRowItem
               transfer={transfer}
               length={data.results.length}
@@ -73,44 +73,43 @@ function TransferRowItem(params: {
 
   const degree = Math.round(((bytes.at(-3) ?? 127) / 255) * 180);
 
+  const isGenesis = params.i === 0;
+
   return (
-    <div className="">
-      <div className="relative text-sm">
-        {params.i < params.length - 1 && (
-          // show line on all but last element
-          <div className="absolute inset-x-0 top-[50%] border-b border-b-neutral-200 border-dotted ml-2" />
-        )}
-        <span className="ml-2 relative bg-white">
-          #{params.transfer.block_height}
-        </span>
+    <div className="flex flex-row">
+      <div className="flex items-center text-sm w-16">
+        #{params.transfer.block_height}
       </div>
-      <div className=" mx-2 mb-2 bg-neutral-50 rounded-[6px]  w-24 h-24 overflow-hidden">
-        {params.i === 0 && (
-          // show genesis star on first element
-          <div className="flex justify-center items-center absolute inset w-4 h-4 bg-[rgba(242,240,237,.65)] rounded border border-white m-1 z-10">
-            <TooltipProvider delayDuration={0}>
-              <Tooltip>
-                <TooltipTrigger className="w-full">
-                  <div className="mt-[3px]">*</div>
-                </TooltipTrigger>
-                <TooltipContent>
-                  <p>Inscription genesis</p>
-                </TooltipContent>
-              </Tooltip>
-            </TooltipProvider>
-          </div>
-        )}
-        <div className="flex w-full h-full items-end relative">
+      <div className="">
+        <div className="relative group rounded-[6px] max-w-md overflow-hidden">
           <div
-            // todo: try group-hover
-            className={`${styles.gradient} w-full h-full absolute inset-0 transition-[filter] duration-350`}
+            className={`${styles.gradient} group-hover:filter-none absolute inset-0 w-full h-full transition-[filter] duration-350 z-0`}
             style={{
               background: `linear-gradient(${degree}deg, rgba(${startR}, ${startG}, ${startB}, ${startOpacity}), rgba(${endR}, ${endG}, ${endB}, ${endOpacity})), url('/noise.png')`,
               backgroundBlendMode: "multiply",
             }}
           />
-          <div className="overflow-hidden overflow-ellipsis m-0.5 pl-1 rounded-[4.5px] text-white bg-neutral-600 z-10">
-            {params.transfer.address}
+          <div className="relative flex flex-row px-1.5 py-0.5 z-10">
+            <span className="text-white overflow-hidden overflow-ellipsis">
+              {params.transfer.address}
+            </span>
+            {isGenesis && (
+              // show genesis star on first element
+              <div className="flex items-center">
+                <TooltipProvider delayDuration={0}>
+                  <Tooltip>
+                    <TooltipTrigger>
+                      <div className="relative w-4 h-4 bg-[rgba(242,240,237,.65)] rounded border border-white mr-[1px] z-20">
+                        <div className="absolute w-full h-full">*</div>
+                      </div>
+                    </TooltipTrigger>
+                    <TooltipContent>
+                      <p>Inscription genesis</p>
+                    </TooltipContent>
+                  </Tooltip>
+                </TooltipProvider>
+              </div>
+            )}
           </div>
         </div>
       </div>
