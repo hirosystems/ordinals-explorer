@@ -10,9 +10,10 @@ export const config = {
   runtime: "edge",
 };
 
-const font = fetch(
-  new URL("../../../public/AeonikFono-Regular.woff", import.meta.url)
-).then((res) => res.arrayBuffer());
+// todo: re-add aeonik font when rewriting in puppetteer
+const font = fetch(new URL("../../../assets/Inter.ttf", import.meta.url)).then(
+  (res) => res.arrayBuffer()
+);
 
 export default async function handler(req: NextRequest) {
   const { searchParams } = new URL(req.url);
@@ -37,7 +38,7 @@ export default async function handler(req: NextRequest) {
           display: "flex",
           flexDirection: "column",
           justifyContent: "space-around",
-          fontFamily: '"Aeonik-Fono"',
+          fontFamily: '"Inter"',
           fontSize: "32px",
           textRendering: "geometricPrecision",
           padding: "4px 32px",
@@ -169,7 +170,7 @@ export default async function handler(req: NextRequest) {
       height: 630,
       fonts: [
         {
-          name: "Aeonik-Fono",
+          name: "Inter",
           data: fontData,
           style: "normal",
         },

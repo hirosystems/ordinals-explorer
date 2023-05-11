@@ -104,8 +104,8 @@ function htmlWithFont(children: string) {
         <style>
           @font-face {
             font-family: "Aeonik Fono";
-            src: url("/AeonikFono-Regular.woff2") format("woff2"),
-              url("/AeonikFono-Regular.woff") format("woff");
+            src: url("https://alphaassets.hiro.so/AeonikFono-Regular.woff2") format("woff2"),
+              url("https://alphaassets.hiro.so/AeonikFono-Regular.woff") format("woff");
             font-weight: normal;
             font-style: normal;
             font-display: block;
