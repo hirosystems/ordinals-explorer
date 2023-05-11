@@ -1,7 +1,9 @@
 import { decodeBtcAddress } from "@stacks/stacking";
+import TimeAgo from "javascript-time-ago";
+import en from "javascript-time-ago/locale/en.json";
+import ReactTimeAgo from "react-time-ago";
 import useSWR from "swr";
 
-import styles from "./TransferHistory.module.css";
 import { API_URL } from "../lib/constants";
 import { fetcher } from "../lib/helpers";
 import { InscriptionTransferResponse, ListResponse } from "../lib/types";
@@ -12,6 +14,9 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "./Tooltip";
+import styles from "./TransferHistory.module.css";
+
+TimeAgo.addDefaultLocale(en);
 
 const TransferHistory = (params: { iid: string }) => {
   const { data, error, isLoading } = useSWR<
@@ -38,19 +43,17 @@ const TransferHistory = (params: { iid: string }) => {
     );
 
   return (
-    <div className="p-2">
-      <h2 className="text-xl px-2 py-3">Transfer History</h2>
-      <div className="border p-4 rounded-lg">
-        <div className="flex flex-row flex-wrap">
-          {data.results.map((transfer, i) => (
-            <TransferRowItem
-              transfer={transfer}
-              length={data.results.length}
-              i={i}
-              key={i}
-            />
-          ))}
-        </div>
+    <div className="text-center flex flex-col items-center p-2">
+      <h2 className="text-center text-xl my-4">Transfer History</h2>
+      <div className="flex flex-col items-center w-full max-w-2xl border rounded-lg p-8 space-y-4">
+        {data.results.map((transfer, i) => (
+          <TransferRowItem
+            key={transfer.tx_id}
+            transfer={transfer}
+            length={data.results.length}
+            i={i}
+          />
+        ))}
       </div>
     </div>
   );
@@ -73,44 +76,49 @@ function TransferRowItem(params: {
 
   const degree = Math.round(((bytes.at(-3) ?? 127) / 255) * 180);
 
+  const isGenesis = params.i === params.length - 1;
+
   return (
-    <div className="">
-      <div className="relative text-sm">
-        {params.i < params.length - 1 && (
-          // show line on all but last element
-          <div className="absolute inset-x-0 top-[50%] border-b border-b-neutral-200 border-dotted ml-2" />
-        )}
-        <span className="ml-2 relative bg-white">
-          #{params.transfer.block_height}
-        </span>
+    <div className="flex flex-col items-end">
+      <div className="text-sm">
+        <ReactTimeAgo date={params.transfer.timestamp} locale="en-US" />
       </div>
-      <div className=" mx-2 mb-2 bg-neutral-50 rounded-[6px]  w-24 h-24 overflow-hidden">
-        {params.i === 0 && (
-          // show genesis star on first element
-          <div className="flex justify-center items-center absolute inset w-4 h-4 bg-[rgba(242,240,237,.65)] rounded border border-white m-1 z-10">
-            <TooltipProvider delayDuration={0}>
-              <Tooltip>
-                <TooltipTrigger className="w-full">
-                  <div className="mt-[3px]">*</div>
-                </TooltipTrigger>
-                <TooltipContent>
-                  <p>Inscription genesis</p>
-                </TooltipContent>
-              </Tooltip>
-            </TooltipProvider>
-          </div>
-        )}
-        <div className="flex w-full h-full items-end relative">
+      <div className="flex">
+        <div className="flex items-center text-sm w-16">
+          #{params.transfer.block_height}
+        </div>
+        <div className="relative group rounded-[6px] overflow-hidden">
           <div
-            // todo: try group-hover
-            className={`${styles.gradient} w-full h-full absolute inset-0 transition-[filter] duration-350`}
+            className={`${styles.gradient} group-hover:filter-none absolute inset-0 w-full h-full transition-[filter] duration-350 z-0`}
             style={{
               background: `linear-gradient(${degree}deg, rgba(${startR}, ${startG}, ${startB}, ${startOpacity}), rgba(${endR}, ${endG}, ${endB}, ${endOpacity})), url('/noise.png')`,
               backgroundBlendMode: "multiply",
             }}
           />
-          <div className="overflow-hidden overflow-ellipsis m-0.5 pl-1 rounded-[4.5px] text-white bg-neutral-600 z-10">
-            {params.transfer.address}
+          <div className="relative min-w-0 flex flex-row px-1.5 max-w-sm py-0.5 z-10">
+            <span className="whitespace-nowrap text-white overflow-hidden overflow-ellipsis">
+              {params.transfer.address}
+            </span>
+            {isGenesis && (
+              // show genesis star on first element
+              // todo: if genesis is last element, we can use relative/absolute positioning to make this easier (non-js)
+              <div className="flex items-center">
+                <TooltipProvider delayDuration={0}>
+                  <Tooltip>
+                    <TooltipTrigger>
+                      <div className="relative w-4 h-4 bg-[rgba(242,240,237,.4)] rounded border border-white mr-[1px] z-20">
+                        <div className="absolute text-white w-full h-full mt-[-3px]">
+                          *
+                        </div>
+                      </div>
+                    </TooltipTrigger>
+                    <TooltipContent>
+                      <p>Inscription genesis</p>
+                    </TooltipContent>
+                  </Tooltip>
+                </TooltipProvider>
+              </div>
+            )}
           </div>
         </div>
       </div>
