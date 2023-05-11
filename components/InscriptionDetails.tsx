@@ -58,12 +58,7 @@ const InscriptionDetails = (params: { iid: string }) => {
                 Type
               </td>
               <td className="md:py-2 break-all flex items-center space-x-2">
-                <span>{data.content_type}</span>
-                <ThumbnailIcon
-                  inscription={data}
-                  className="inline w-5 h-5"
-                  showImage={false}
-                />
+                {data.content_type}
               </td>
             </tr>
             <tr className="flex flex-col md:table-row py-3 space-y-0.5 border-b">
@@ -101,7 +96,7 @@ const InscriptionDetails = (params: { iid: string }) => {
             </tr>
             <tr className="flex flex-col md:table-row py-3 space-y-0.5 border-b">
               <td className="md:py-2 pr-8 whitespace-nowrap underline md:no-underline">
-                Inscribed By
+                Owned By
                 {/* todo: add help tooltip to explain what an address is and how utxo ownership works */}
               </td>
               <td className="md:py-2 break-all">
@@ -112,32 +107,53 @@ const InscriptionDetails = (params: { iid: string }) => {
             </tr>
             <tr className="flex flex-col md:table-row py-3 space-y-0.5 border-b">
               <td className="md:py-2 pr-8 whitespace-nowrap underline md:no-underline">
-                Owned By
+                Inscribed By
                 {/* todo: add help tooltip to explain what an address is and how utxo ownership works */}
               </td>
-              <td className="md:py-2 break-all text-neutral-400 normal-case">
-                <em>coming soon</em>{" "}
+              <td className="md:py-2 break-all">
                 <Link
-                  href="https://github.com/hirosystems/ordinals-api/issues/23"
+                  href={`/address/${data.genesis_address}`}
                   className="underline"
-                  target="_blank"
                 >
-                  hirosystems/ordinals-api#23
+                  {data.genesis_address}
+                </Link>
+              </td>
+            </tr>
+            <tr className="flex flex-col md:table-row py-3 space-y-0.5 border-b">
+              <td className="md:py-2 pr-8 whitespace-nowrap underline md:no-underline">
+                Inscription TxId
+              </td>
+              <td className="md:py-2 break-all underline">
+                <Link href={`https://mempool.space/tx/${data.genesis_tx_id}`}>
+                  {data.genesis_tx_id} ↗
                 </Link>
               </td>
             </tr>
             {/* todo: add Inscription Date */}
             <tr className="flex flex-col md:table-row py-3 space-y-0.5 border-b">
               <td className="md:py-2 pr-8 whitespace-nowrap underline md:no-underline">
-                Last Transfer Date
+                Inscription Date
               </td>
               <td className="md:py-2 break-all">
                 {new Intl.DateTimeFormat("default", {
                   dateStyle: "long",
                   timeStyle: "medium",
-                }).format(new Date(data.timestamp))}
+                }).format(new Date(data.genesis_timestamp))}
               </td>
             </tr>
+            {data.timestamp !== data.genesis_timestamp && (
+              <tr className="flex flex-col md:table-row py-3 space-y-0.5 border-b">
+                <td className="md:py-2 pr-8 whitespace-nowrap underline md:no-underline">
+                  Last Transfer Date
+                </td>
+                <td className="md:py-2 break-all">
+                  {new Intl.DateTimeFormat("default", {
+                    dateStyle: "long",
+                    timeStyle: "medium",
+                  }).format(new Date(data.timestamp))}
+                </td>
+              </tr>
+            )}
             <tr className="flex flex-col md:table-row py-3 space-y-0.5 border-b">
               <td className="md:py-2 pr-8 whitespace-nowrap underline md:no-underline">
                 Inscription Height
@@ -156,12 +172,6 @@ const InscriptionDetails = (params: { iid: string }) => {
                 Inscription Fee
               </td>
               <td className="md:py-2 break-all">{data.genesis_fee}</td>
-            </tr>
-            <tr className="flex flex-col md:table-row py-3 space-y-0.5 border-b">
-              <td className="md:py-2 pr-8 whitespace-nowrap underline md:no-underline">
-                Inscription TxId
-              </td>
-              <td className="md:py-2 break-all">{data.genesis_tx_id}</td>
             </tr>
             <tr className="flex flex-col md:table-row py-3 space-y-0.5 border-b">
               <td className="md:py-2 pr-8 whitespace-nowrap underline md:no-underline">
