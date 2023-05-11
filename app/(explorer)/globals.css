@@ -7,8 +7,9 @@
 /* NOTICE: Don't switch to next/font, since it's unclear if we're allowed to use the font that way. */
 @font-face {
   font-family: "Aeonik Fono";
-  src: url("/AeonikFono-Regular.woff2") format("woff2"),
-    url("/AeonikFono-Regular.woff") format("woff");
+  src: url("https://alphaassets.hiro.so/AeonikFono-Regular.woff2")
+      format("woff2"),
+    url("https://alphaassets.hiro.so/AeonikFono-Regular.woff") format("woff");
   font-weight: normal;
   font-style: normal;
   font-display: block; /* todo: swap better? */
