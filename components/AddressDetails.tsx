@@ -32,9 +32,8 @@ const AddressDetails = (params: { aid: string }) => {
       {data.results.length ? (
         <h2 className="mt-8 text-xl self-start">Inscriptions ({data.total})</h2>
       ) : (
-        <p className="my-3">
-          No inscriptions in locations controller by this address
-        </p>
+        <p className="my-3">No inscriptions currently owned by this address</p>
+        // todo: maybe add ownership history of address?
       )}
       <div className="mt-4 grid grid-cols-3 md:grid-cols-4 gap-4">
         {data.results.map((i, index) => (

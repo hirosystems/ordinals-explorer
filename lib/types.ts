@@ -41,3 +41,14 @@ export type ListResponse<T> = {
   total: number;
   results: T[];
 };
+export type InscriptionTransferResponse = {
+  block_height: number;
+  block_hash: string;
+  address: string;
+  tx_id: string;
+  location: string;
+  output: string;
+  value: string;
+  offset: string;
+  timestamp: number;
+};
