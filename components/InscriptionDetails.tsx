@@ -127,7 +127,10 @@ const InscriptionDetails = (params: { iid: string }) => {
                   Inscription TxId
                 </td>
                 <td className="md:py-2 break-all underline">
-                  <Link href={`https://mempool.space/tx/${data.genesis_tx_id}`}>
+                  <Link
+                    href={`https://mempool.space/tx/${data.genesis_tx_id}`}
+                    target="_blank"
+                  >
                     {data.genesis_tx_id} ↗
                   </Link>
                 </td>
