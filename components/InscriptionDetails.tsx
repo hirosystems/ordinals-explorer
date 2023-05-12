@@ -35,6 +35,9 @@ const InscriptionDetails = (params: { iid: string }) => {
     );
   // todo: reusable error component (maybe including loading)
 
+  // todo: add better check (could be the same if transferred in same block?)
+  const wasTransferred = data.timestamp !== data.genesis_timestamp;
+
   return (
     <>
       <div className="flex flex-col md:flex-row md:space-x-8">
@@ -147,7 +150,7 @@ const InscriptionDetails = (params: { iid: string }) => {
                   }).format(new Date(data.genesis_timestamp))}
                 </td>
               </tr>
-              {data.timestamp !== data.genesis_timestamp && (
+              {wasTransferred && (
                 <tr className="flex flex-col md:table-row py-3 space-y-0.5 border-b">
                   <td className="md:py-2 pr-8 whitespace-nowrap underline md:no-underline">
                     Last Transfer Date
@@ -197,9 +200,11 @@ const InscriptionDetails = (params: { iid: string }) => {
         </div>
       </div>
       {/* todo: complete transfer history */}
-      <div className="mt-10">
-        <TransferHistory inscription={data} />
-      </div>
+      {wasTransferred && (
+        <div className="mt-10">
+          <TransferHistory inscription={data} />
+        </div>
+      )}
     </>
   );
 };
