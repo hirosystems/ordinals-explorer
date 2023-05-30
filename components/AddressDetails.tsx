@@ -6,7 +6,7 @@ import { API_URL } from "../lib/constants";
 import { fetcher } from "../lib/helpers";
 import { InscriptionResponse, ListResponse } from "../lib/types";
 import Ellipsis from "./Ellipsis";
-import InscriptionCard from "./InscriptionCard";
+import InscriptionCard from "./inscriptions/InscriptionCard";
 import Loading from "./Loading";
 
 const AddressDetails = (params: { aid: string }) => {

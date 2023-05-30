@@ -6,7 +6,7 @@ import IconFile from "./icons/IconFile";
 import IconImage from "./icons/IconImage";
 import IconText from "./icons/IconText";
 import IconVideo from "./icons/IconVideo";
-import Iframe from "./Iframe";
+import Iframe from "./inscriptions/Iframe";
 
 // todo: add more types
 const safeTypes = ["image/jpeg", "image/png", "image/gif", "image/webp"];

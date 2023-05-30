@@ -1,11 +1,8 @@
-import { render } from "react-dom";
 import useSWR from "swr";
 import { API_URL } from "../lib/constants";
-
 import { fetcher } from "../lib/helpers";
-
-import InscriptionCard from "./InscriptionCard";
 import { InscriptionResponse, ListResponse } from "../lib/types";
+import InscriptionCard from "./inscriptions/InscriptionCard";
 
 // const limit = 60; // LCM of 3, 4, 5, 6
 const limit = 20; // todo: increase limit on api end

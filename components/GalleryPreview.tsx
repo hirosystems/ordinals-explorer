@@ -5,9 +5,8 @@ import useSWR from "swr";
 import { API_URL } from "../lib/constants";
 import { fetcher } from "../lib/helpers";
 import { lastInscriptionDataAtom } from "../lib/store";
-
 import { InscriptionResponse, ListResponse } from "../lib/types";
-import InscriptionCard from "./InscriptionCard";
+import InscriptionCard from "./inscriptions/InscriptionCard";
 
 const GalleryPreview = () => {
   const setLastInscriptionData = useSetAtom(lastInscriptionDataAtom);

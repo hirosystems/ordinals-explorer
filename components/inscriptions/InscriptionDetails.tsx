@@ -3,12 +3,11 @@
 import Link from "next/link";
 import useSWR from "swr";
 
-import { API_URL } from "../lib/constants";
-import { fetcher } from "../lib/helpers";
-import Loading from "./Loading";
-import { ThumbnailIcon } from "./Thumbnail";
-import { InscriptionResponse } from "../lib/types";
-import TransferHistory from "./TransferHistory";
+import { API_URL } from "../../lib/constants";
+import { fetcher } from "../../lib/helpers";
+import { InscriptionResponse } from "../../lib/types";
+import Loading from "./../Loading";
+import TransferHistory from "./../TransferHistory";
 
 const InscriptionDetails = (params: { iid: string }) => {
   const { data, error, isLoading } = useSWR<
