@@ -1,9 +1,8 @@
-import Link from "next/link";
 import { motion } from "framer-motion";
+import Link from "next/link";
+import { cn } from "../../lib/helpers";
 
-import Iframe from "./Iframe";
-import { cn } from "../lib/helpers";
-import { InscriptionResponse } from "../lib/types";
+import { InscriptionResponse } from "../../lib/types";
 import InscriptionRender from "./InscriptionRender";
 
 const InscriptionCard = ({

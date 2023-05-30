@@ -1,6 +1,8 @@
+import { Metadata } from "next";
 import Footer from "../../../../components/Footer";
 import Header from "../../../../components/Header";
-import InscriptionDetails from "../../../../components/InscriptionDetails";
+import InscriptionDetails from "../../../../components/inscriptions/InscriptionDetails";
+
 import { API_URL } from "../../../../lib/constants";
 import { InscriptionResponse } from "../../../../lib/types";
 
@@ -9,15 +11,17 @@ export async function generateMetadata({
 }: {
   params: { iid: string };
 }) {
-  if (!params.iid) return;
+  // todo: add other metadata information
+
+  if (!params.iid) return {};
 
   const inscription = await getInscription(params.iid);
 
-  if (!inscription.content_type) return;
+  if (!inscription.content_type) return {};
 
-  if (!inscription.content_type.toLowerCase().startsWith("image")) return;
+  if (!inscription.content_type.toLowerCase().startsWith("image")) return {};
 
-  if (inscription.content_type.toLowerCase().includes("image/webp")) return;
+  if (inscription.content_type.toLowerCase().includes("image/webp")) return {};
 
   return {
     openGraph: {

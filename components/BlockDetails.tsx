@@ -6,7 +6,7 @@ import { API_URL } from "../lib/constants";
 import { fetcher } from "../lib/helpers";
 import { InscriptionResponse, ListResponse } from "../lib/types";
 import CtaLink from "./CtaLink";
-import InscriptionCard from "./InscriptionCard";
+import InscriptionCard from "./inscriptions/InscriptionCard";
 import Loading from "./Loading";
 
 const BlockDetails = (params: { bid: string }) => {
