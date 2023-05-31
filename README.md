@@ -1,5 +1,7 @@
 # Hiro Ordinals Explorer
 
+➡️ https://ordinals.hiro.so 🌐
+
 ![Ordinals Explorer](public/og-image.png)
 
 ## Overview
@@ -12,6 +14,10 @@ There are two main parts of this project:
 - The preview API `app/(preview)` — An endpoint to render a specific ordinal inscription
 
 ## Development
+
+```bash
+cp .env.sample .env.local
+```
 
 ```bash
 npm install
