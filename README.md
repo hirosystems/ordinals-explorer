@@ -1,5 +1,7 @@
 # Hiro Ordinals Explorer
 
+![Ordinals Explorer](public/og-image.png)
+
 ## Overview
 
 The Ordinals Explorer is a Next.js (app router) project that uses the [Hiro Ordinals API](https://docs.hiro.so/ordinals).
