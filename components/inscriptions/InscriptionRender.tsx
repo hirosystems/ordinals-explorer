@@ -1,23 +1,23 @@
-import { API_URL } from "../../lib/constants";
 import { InscriptionResponse } from "../../lib/types";
 import Iframe from "./Iframe";
 import InscriptionRenderImage from "./InscriptionRenderImage";
-import InscriptionRenderJson from "./InscriptionRenderJson";
+import InscriptionRenderJson, {
+  WithContentJson,
+} from "./InscriptionRenderJson";
 
-const InscriptionRender = ({
-  inscription,
-}: {
+const InscriptionRender = (props: {
   inscription: InscriptionResponse;
+  className?: string;
 }) => {
-  if (inscription.content_type.startsWith("image/")) {
-    return <InscriptionRenderImage inscription={inscription} />;
+  if (props.inscription.content_type.startsWith("image/")) {
+    return <InscriptionRenderImage inscription={props.inscription} />;
   }
 
-  if (inscription.content_type.startsWith("application/json")) {
-    return <InscriptionRenderJson inscription={inscription} />;
+  if (props.inscription.content_type.startsWith("application/json")) {
+    return WithContentJson(props, InscriptionRenderJson);
   }
 
-  return <Iframe src={`/preview/${inscription.id}`} />;
+  return <Iframe {...props} src={`/preview/${props.inscription.id}`} />;
 };
 
 export default InscriptionRender;

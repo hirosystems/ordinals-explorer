@@ -7,7 +7,7 @@ import { HoverCard, HoverCardContent, HoverCardTrigger } from "./HoverCard";
 
 const Header = ({ children }: { children?: React.ReactNode }) => {
   return (
-    <header className="flex justify-between px-6 md:px-10 py-8 w-full max-w-[88rem] mx-auto">
+    <header className="relative flex justify-between px-6 md:px-10 py-8 w-full max-w-[88rem] mx-auto">
       <a href="/">
         <img src="/logo.svg" alt="Hiro Ordinals Beta" />
       </a>
@@ -56,6 +56,16 @@ const Header = ({ children }: { children?: React.ReactNode }) => {
           <ArrowUpRight className="inline" size={16} />
         </Link>
       </div>
+      {process.env.NODE_ENV !== "production" && (
+        // breakpoint debugging during development
+        <div className="absolute p-2 top-0 right-0 text-xs text-neutral-200">
+          <span className="inline sm:hidden">xs</span>
+          <span className="hidden sm:inline md:hidden">sm</span>
+          <span className="hidden md:inline lg:hidden">md</span>
+          <span className="hidden lg:inline xl:hidden">lg</span>
+          <span className="hidden xl:inline">xl</span>
+        </div>
+      )}
     </header>
   );
 };

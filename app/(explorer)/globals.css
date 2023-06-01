@@ -2,8 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-/* todo: double-check if allowed use of font */
-/* todo: check if allowed to commit to github repo */
 /* NOTICE: Don't switch to next/font, since it's unclear if we're allowed to use the font that way. */
 @font-face {
   font-family: "Aeonik Fono";
@@ -13,6 +11,16 @@
   font-weight: normal;
   font-style: normal;
   font-display: block; /* todo: swap better? */
+}
+
+@font-face {
+  font-family: "Aeonik Mono";
+  src: url("https://alphaassets.hiro.so/AeonikMono-Regular.woff2")
+      format("woff2"),
+    url("https://alphaassets.hiro.so/AeonikMono-Regular.woff") format("woff");
+  font-weight: normal;
+  font-style: normal;
+  font-display: block;
 }
 
 * {
