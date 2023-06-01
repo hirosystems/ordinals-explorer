@@ -41,7 +41,6 @@ const InscriptionDetails = (params: { iid: string }) => {
   return (
     <>
       <div className="flex flex-col md:flex-row md:space-x-8">
-        {/* <div className="font-mono text-center break-words">{params.iid}</div> */}
         <div className="flex-auto basis-[384px]">
           <div className="mx-auto mb-16 max-w-[65%] overflow-hidden rounded-md sm:max-w-[55%] md:mb-0 md:w-0 md:min-w-full md:max-w-none lg:border lg:p-10 xl:p-16 ">
             <InscriptionRender
@@ -54,24 +53,24 @@ const InscriptionDetails = (params: { iid: string }) => {
         {/* todo: add links to linkeable data, add copy icon to copy to clipboard elements (see figma) */}
         <div className="flex-initial">
           <h2 className="my-2 text-2xl">Inscription #{data.number}</h2>
-          <table className="w-full border-collapse text-sm uppercase">
+          <table className="w-full border-collapse text-sm">
             <tbody>
               <tr className="flex flex-col space-y-0.5 border-b py-3 md:table-row">
-                <td className="whitespace-nowrap pr-8 underline md:py-2 md:no-underline">
+                <td className="whitespace-nowrap pr-8 uppercase text-neutral-400 md:py-2 md:text-black">
                   Type
                 </td>
-                <td className="flex items-center space-x-2 break-all md:py-2">
+                <td className="flex items-center space-x-2 break-all uppercase md:py-2">
                   {data.content_type}
                 </td>
               </tr>
               <tr className="flex flex-col space-y-0.5 border-b py-3 md:table-row">
-                <td className="whitespace-nowrap pr-8 underline md:py-2 md:no-underline">
+                <td className="whitespace-nowrap pr-8 uppercase text-neutral-400 md:py-2 md:text-black">
                   Content Length
                 </td>
                 <td className="break-all md:py-2">{data.content_length}</td>
               </tr>
               <tr className="flex flex-col space-y-0.5 border-b py-3 md:table-row">
-                <td className="whitespace-nowrap pr-8 underline md:py-2 md:no-underline">
+                <td className="whitespace-nowrap pr-8 uppercase text-neutral-400 md:py-2 md:text-black">
                   Sat
                 </td>
                 <td className="break-all md:py-2">
@@ -81,24 +80,24 @@ const InscriptionDetails = (params: { iid: string }) => {
                 </td>
               </tr>
               <tr className="flex flex-col space-y-0.5 border-b py-3 md:table-row">
-                <td className="whitespace-nowrap pr-8 underline md:py-2 md:no-underline">
+                <td className="whitespace-nowrap pr-8 uppercase text-neutral-400 md:py-2 md:text-black">
                   Sat Rarity
                 </td>
                 <td className="break-all md:py-2">
-                  <span className="rounded-[4px] bg-neutral-400 px-1 py-0.5 text-white">
+                  <span className="rounded-[4px] bg-neutral-400 px-1 py-0.5 uppercase text-white">
                     {/* todo: fancy rarity component */}
                     {data.sat_rarity}
                   </span>
                 </td>
               </tr>
               <tr className="flex flex-col space-y-0.5 border-b py-3 md:table-row">
-                <td className="whitespace-nowrap pr-8 underline md:py-2 md:no-underline">
+                <td className="whitespace-nowrap pr-8 uppercase text-neutral-400 md:py-2 md:text-black">
                   ID
                 </td>
                 <td className="break-all md:py-2">{data.id}</td>
               </tr>
               <tr className="flex flex-col space-y-0.5 border-b py-3 md:table-row">
-                <td className="whitespace-nowrap pr-8 underline md:py-2 md:no-underline">
+                <td className="whitespace-nowrap pr-8 uppercase text-neutral-400 md:py-2 md:text-black">
                   Owned By
                   {/* todo: add help tooltip to explain what an address is and how utxo ownership works */}
                 </td>
@@ -109,7 +108,7 @@ const InscriptionDetails = (params: { iid: string }) => {
                 </td>
               </tr>
               <tr className="flex flex-col space-y-0.5 border-b py-3 md:table-row">
-                <td className="whitespace-nowrap pr-8 underline md:py-2 md:no-underline">
+                <td className="whitespace-nowrap pr-8 uppercase text-neutral-400 md:py-2 md:text-black">
                   Inscribed By
                   {/* todo: add help tooltip to explain what an address is and how utxo ownership works */}
                 </td>
@@ -123,7 +122,7 @@ const InscriptionDetails = (params: { iid: string }) => {
                 </td>
               </tr>
               <tr className="flex flex-col space-y-0.5 border-b py-3 md:table-row">
-                <td className="whitespace-nowrap pr-8 underline md:py-2 md:no-underline">
+                <td className="whitespace-nowrap pr-8 uppercase text-neutral-400 md:py-2 md:text-black">
                   Inscription TxId
                 </td>
                 <td className="break-all underline md:py-2">
@@ -137,10 +136,10 @@ const InscriptionDetails = (params: { iid: string }) => {
               </tr>
               {/* todo: add Inscription Date */}
               <tr className="flex flex-col space-y-0.5 border-b py-3 md:table-row">
-                <td className="whitespace-nowrap pr-8 underline md:py-2 md:no-underline">
+                <td className="whitespace-nowrap pr-8 uppercase text-neutral-400 md:py-2 md:text-black">
                   Inscription Date
                 </td>
-                <td className="break-all md:py-2">
+                <td className="break-all uppercase md:py-2">
                   {new Intl.DateTimeFormat("default", {
                     dateStyle: "long",
                     timeStyle: "medium",
@@ -149,7 +148,7 @@ const InscriptionDetails = (params: { iid: string }) => {
               </tr>
               {wasTransferred && (
                 <tr className="flex flex-col space-y-0.5 border-b py-3 md:table-row">
-                  <td className="whitespace-nowrap pr-8 underline md:py-2 md:no-underline">
+                  <td className="whitespace-nowrap pr-8 uppercase text-neutral-400 md:py-2 md:text-black">
                     Last Transfer Date
                   </td>
                   <td className="break-all md:py-2">
@@ -161,7 +160,7 @@ const InscriptionDetails = (params: { iid: string }) => {
                 </tr>
               )}
               <tr className="flex flex-col space-y-0.5 border-b py-3 md:table-row">
-                <td className="whitespace-nowrap pr-8 underline md:py-2 md:no-underline">
+                <td className="whitespace-nowrap pr-8 uppercase text-neutral-400 md:py-2 md:text-black">
                   Inscription Height
                 </td>
                 <td className="break-all md:py-2">
@@ -174,19 +173,19 @@ const InscriptionDetails = (params: { iid: string }) => {
                 </td>
               </tr>
               <tr className="flex flex-col space-y-0.5 border-b py-3 md:table-row">
-                <td className="whitespace-nowrap pr-8 underline md:py-2 md:no-underline">
+                <td className="whitespace-nowrap pr-8 uppercase text-neutral-400 md:py-2 md:text-black">
                   Inscription Fee
                 </td>
                 <td className="break-all md:py-2">{data.genesis_fee}</td>
               </tr>
               <tr className="flex flex-col space-y-0.5 border-b py-3 md:table-row">
-                <td className="whitespace-nowrap pr-8 underline md:py-2 md:no-underline">
+                <td className="whitespace-nowrap pr-8 uppercase text-neutral-400 md:py-2 md:text-black">
                   Output
                 </td>
                 <td className="break-all md:py-2">{data.output}</td>
               </tr>
               <tr className="flex flex-col space-y-0.5 py-3 md:table-row">
-                <td className="whitespace-nowrap pr-8 underline md:py-2 md:no-underline">
+                <td className="whitespace-nowrap pr-8 uppercase text-neutral-400 md:py-2 md:text-black">
                   Offset
                 </td>
                 <td className="break-all md:py-2">{data.offset}</td>
