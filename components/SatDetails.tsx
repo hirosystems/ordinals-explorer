@@ -25,72 +25,72 @@ const SatDetails = (params: { sid: string }) => {
 
   // todo: add pagination to allow viewing all inscriptions? or link to explore page
   return (
-    <div className="border px-4 py-12 rounded-lg flex flex-col justify-between items-center">
+    <div className="flex flex-col items-center justify-between rounded-lg border px-4 py-12">
       <h1 className="text-3xl">Sat {params.sid}</h1>
 
       {data.inscription_id && (
         <div className="my-6 flex flex-col items-center">
-          <h2 className="mt-8 mb-3 uppercase">Inscription</h2>
+          <h2 className="mb-3 mt-8 uppercase">Inscription</h2>
           <Inscription id={data.inscription_id} />
         </div>
       )}
 
-      <table className="text-sm border-collapse">
+      <table className="border-collapse text-sm">
         <tbody>
-          <tr className="flex flex-col md:table-row py-4 space-y-0.5 border-b">
-            <td className="uppercase md:py-3 px-2 pr-20 whitespace-nowrap underline md:no-underline">
+          <tr className="flex flex-col space-y-0.5 border-b py-4 md:table-row">
+            <td className="whitespace-nowrap px-2 pr-20 uppercase underline md:py-3 md:no-underline">
               Sat Rarity
             </td>
-            <td className="uppercase md:py-2 break-all">
-              <span className="px-1 py-0.5 bg-neutral-400 text-white rounded-[4px]">
+            <td className="break-all px-2 uppercase md:py-2">
+              <span className="rounded-[4px] bg-neutral-400 px-1 py-0.5 text-white">
                 {/* todo: fancy rarity component */}
                 {data.rarity}
               </span>
             </td>
           </tr>
           {/* todo: Coinbase Timestamp? */}
-          <tr className="flex flex-col md:table-row py-4 space-y-0.5 border-b">
-            <td className="uppercase md:py-3 px-2 pr-20 whitespace-nowrap underline md:no-underline">
+          <tr className="flex flex-col space-y-0.5 border-b py-4 md:table-row">
+            <td className="whitespace-nowrap px-2 pr-20 uppercase underline md:py-3 md:no-underline">
               Name
             </td>
-            <td className="md:py-2 px-2 break-all">{data.name}</td>
+            <td className="break-all px-2 md:py-2">{data.name}</td>
           </tr>
-          <tr className="flex flex-col md:table-row py-4 space-y-0.5 border-b">
-            <td className="uppercase md:py-3 px-2 pr-20 whitespace-nowrap underline md:no-underline">
+          <tr className="flex flex-col space-y-0.5 border-b py-4 md:table-row">
+            <td className="whitespace-nowrap px-2 pr-20 uppercase underline md:py-3 md:no-underline">
               Coinbase Height
             </td>
-            <td className="md:py-2 px-2 break-all">{data.coinbase_height}</td>
+            <td className="break-all px-2 md:py-2">{data.coinbase_height}</td>
           </tr>
-          <tr className="flex flex-col md:table-row py-4 space-y-0.5 border-b">
-            <td className="uppercase md:py-3 px-2 pr-20 whitespace-nowrap underline md:no-underline">
+          <tr className="flex flex-col space-y-0.5 border-b py-4 md:table-row">
+            <td className="whitespace-nowrap px-2 pr-20 uppercase underline md:py-3 md:no-underline">
               Decimal
             </td>
-            <td className="md:py-2 px-2 break-all">{data.decimal}</td>
+            <td className="break-all px-2 md:py-2">{data.decimal}</td>
           </tr>
-          <tr className="flex flex-col md:table-row py-4 space-y-0.5 border-b">
-            <td className="uppercase md:py-3 px-2 pr-20 whitespace-nowrap underline md:no-underline">
+          <tr className="flex flex-col space-y-0.5 border-b py-4 md:table-row">
+            <td className="whitespace-nowrap px-2 pr-20 uppercase underline md:py-3 md:no-underline">
               Degree
             </td>
-            <td className="md:py-2 px-2 break-all">{data.degree}</td>
+            <td className="break-all px-2 md:py-2">{data.degree}</td>
           </tr>
-          <tr className="flex flex-col md:table-row py-4 space-y-0.5 border-b">
-            <td className="uppercase md:py-3 px-2 pr-20 whitespace-nowrap underline md:no-underline">
+          <tr className="flex flex-col space-y-0.5 border-b py-4 md:table-row">
+            <td className="whitespace-nowrap px-2 pr-20 uppercase underline md:py-3 md:no-underline">
               Percentile
             </td>
             {/* todo: something looks wrong here */}
-            <td className="md:py-2 px-2 break-all">{data.percentile}</td>
+            <td className="break-all px-2 md:py-2">{data.percentile}</td>
           </tr>
-          <tr className="flex flex-col md:table-row py-4 space-y-0.5 border-b">
-            <td className="uppercase md:py-3 px-2 pr-20 whitespace-nowrap underline md:no-underline">
+          <tr className="flex flex-col space-y-0.5 border-b py-4 md:table-row">
+            <td className="whitespace-nowrap px-2 pr-20 uppercase underline md:py-3 md:no-underline">
               Cycle
             </td>
-            <td className="md:py-2 px-2 break-all">{data.cycle}</td>
+            <td className="break-all px-2 md:py-2">{data.cycle}</td>
           </tr>
-          <tr className="flex flex-col md:table-row py-4 space-y-0.5">
-            <td className="uppercase md:py-3 px-2 pr-20 whitespace-nowrap underline md:no-underline">
+          <tr className="flex flex-col space-y-0.5 py-4 md:table-row">
+            <td className="whitespace-nowrap px-2 pr-20 uppercase underline md:py-3 md:no-underline">
               Offset
             </td>
-            <td className="md:py-2 px-2 break-all">{data.offset}</td>
+            <td className="break-all px-2 md:py-2">{data.offset}</td>
           </tr>
         </tbody>
         {/* todo: add period? not in api, needs sat coinbase height, or calculate it */}
