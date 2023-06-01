@@ -50,3 +50,11 @@ export const fetcher = (...args: any[]) => {
   // @ts-ignore
   return fetch(...args).then((res) => res.json());
 };
+
+export const textFetcher = (...args: any[]) => {
+  // if first arg is array, consider the second arg as options
+  if (Array.isArray(args[0]))
+    return fetch(args[0][0], args[0][1]).then((res) => res.text());
+  // @ts-ignore
+  return fetch(...args).then((res) => res.text());
+};

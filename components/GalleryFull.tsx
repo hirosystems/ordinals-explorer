@@ -3,6 +3,7 @@ import { API_URL } from "../lib/constants";
 import { fetcher } from "../lib/helpers";
 import { InscriptionResponse, ListResponse } from "../lib/types";
 import InscriptionCard from "./inscriptions/InscriptionCard";
+import Error from "./Error";
 
 // const limit = 60; // LCM of 3, 4, 5, 6
 const limit = 20; // todo: increase limit on api end
@@ -107,9 +108,10 @@ const GalleryFull = ({
     fetcher
   );
 
-  if (error) return <span>Something went wrong ʕ•̠͡•ʔ</span>;
-  if (!error && data && "message" in data)
-    return <span>Something went wrong ʕ•̠͡•ʔ</span>;
+  if (error) return <Error error={error} />;
+  if (!error && data && "message" in data && typeof data.message === "string") {
+    return <Error message={data.message} />;
+  }
 
   if (data && data.results.length === 0) {
     return (
@@ -123,7 +125,7 @@ const GalleryFull = ({
 
   return (
     <>
-      <div className="grid grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-5 3xl:grid-cols-6 gap-4">
+      <div className="grid grid-cols-3 gap-4 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-5 3xl:grid-cols-6">
         {items.map((i, index) => (
           <InscriptionCard key={i?.id ?? index} inscription={i} light />
         ))}
