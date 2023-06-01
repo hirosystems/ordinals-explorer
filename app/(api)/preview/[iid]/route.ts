@@ -233,7 +233,7 @@ function bodyWithFile(data: InscriptionResponse) {
 }
 
 // helper
-function getFontSize(contentLength: number) {
+export function getFontSize(contentLength: number) {
   if (contentLength < 10) return 22;
   if (contentLength < 50) return 20;
   return 14;
