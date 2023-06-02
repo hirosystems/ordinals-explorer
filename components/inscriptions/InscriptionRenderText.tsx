@@ -2,9 +2,8 @@ import useSWR from "swr";
 
 import { API_URL } from "../../lib/constants";
 import { InscriptionResponse } from "../../lib/types";
-import { fetcher, textFetcher } from "../../lib/helpers";
+import { fetcher, getFontSize, textFetcher } from "../../lib/helpers";
 import InscriptionRenderJson from "./InscriptionRenderJson";
-import { getFontSize } from "../../app/(api)/preview/[iid]/route";
 
 const InscriptionRenderText = (props: {
   inscription: InscriptionResponse;

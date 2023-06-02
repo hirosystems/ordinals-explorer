@@ -58,3 +58,10 @@ export const textFetcher = (...args: any[]) => {
   // @ts-ignore
   return fetch(...args).then((res) => res.text());
 };
+
+// helper for textual inscription previews/renders
+export function getFontSize(contentLength: number) {
+  if (contentLength < 10) return 22;
+  if (contentLength < 50) return 20;
+  return 14;
+}

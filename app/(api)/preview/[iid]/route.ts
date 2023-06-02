@@ -1,4 +1,5 @@
 import { API_URL } from "../../../../lib/constants";
+import { getFontSize } from "../../../../lib/helpers";
 import { InscriptionResponse } from "../../../../lib/types";
 
 export async function GET(
@@ -230,13 +231,6 @@ function bodyWithFile(data: InscriptionResponse) {
         ${iconFile()}
       </div>
     </body>`;
-}
-
-// helper
-export function getFontSize(contentLength: number) {
-  if (contentLength < 10) return 22;
-  if (contentLength < 50) return 20;
-  return 14;
 }
 
 // fetch
