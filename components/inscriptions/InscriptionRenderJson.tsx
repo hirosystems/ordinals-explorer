@@ -109,7 +109,10 @@ const JsonViewer = (props: {
             e.preventDefault();
           }}
         >
-          {"✦"}
+          <div className="text-[13px] leading-[12px]">
+            <span className="mr-0.5">{"{"}</span>
+            <span className="">{"}"}</span>
+          </div>
         </button>
       </div>
     </div>
