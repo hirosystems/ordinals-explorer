@@ -17,9 +17,7 @@ const InscriptionRenderText = (props: {
   );
 
   if (error)
-    return (
-      <div>Error loading inscription content. {JSON.stringify(error)}</div>
-    );
+    return <div>Error loading inscription content. {error?.message}</div>;
   if (!data || isLoading) return <div>Loading...</div>;
 
   return pipe(
