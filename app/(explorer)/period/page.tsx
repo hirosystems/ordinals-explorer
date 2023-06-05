@@ -7,7 +7,7 @@ import Header from "../../../components/Header";
 import Loading from "../../../components/Loading";
 import { fetcher } from "../../../lib/helpers";
 import { useHasMounted } from "../../../lib/hooks";
-import { HomepageResponse } from "../../../pages/api/homepage";
+import { HomepageResponse } from "../../../lib/types";
 
 export default function Home() {
   const hasMounted = useHasMounted();
@@ -25,7 +25,7 @@ export default function Home() {
   return (
     <>
       <Header />
-      <main className="flex flex-col justify-between items-center max-w-5xl p-6 mx-auto space-y-6">
+      <main className="mx-auto flex max-w-5xl flex-col items-center justify-between space-y-6 p-6">
         {/* Halving Periods Section */}
         {/* todo: quick intro to ordinals and link to handbook */}
         <motion.div
@@ -33,9 +33,9 @@ export default function Home() {
           animate={{ opacity: 1 }}
           transition={{ duration: 0.2 }}
         >
-          <p className="mt-20 text-sm text-center uppercase">Halving Periods</p>
-          <div className="mx-auto mt-3 mb-4 h-12 w-0 border border-dashed border-l-black"></div>
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 auto-rows-fr gap-2">
+          <p className="mt-20 text-center text-sm uppercase">Halving Periods</p>
+          <div className="mx-auto mb-4 mt-3 h-12 w-0 border border-dashed border-l-black"></div>
+          <div className="grid auto-rows-fr grid-cols-1 gap-2 sm:grid-cols-2 md:grid-cols-3">
             {data &&
               Object.entries(data.periods).map(([p, v]) => (
                 <motion.a
@@ -44,7 +44,7 @@ export default function Home() {
                   animate={{ opacity: 1 }}
                   transition={{ duration: 0.2, delay: 0.05 * parseInt(p) }}
                   href={`/period/${p}`}
-                  className="px-5 py-4 border rounded-md transition-[background,border] duration-150 group hover:bg-neutral-50 hover:border-neutral-400"
+                  className="group rounded-md border px-5 py-4 transition-[background,border] duration-150 hover:border-neutral-400 hover:bg-neutral-50"
                 >
                   <h2 className="mb-3 underline">Period {p}</h2>
                   <span className="inline-block transition-transform group-hover:translate-x-1">
@@ -56,7 +56,7 @@ export default function Home() {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ duration: 0.2, delay: 0.2 }}
-              className="px-5 py-4 border border-dashed rounded-md text-neutral-400 cursor-default"
+              className="cursor-default rounded-md border border-dashed px-5 py-4 text-neutral-400"
             >
               <h2 className="mb-3 underline">Period 4</h2>
               <p>
@@ -65,7 +65,7 @@ export default function Home() {
               </p>
             </motion.div>
           </div>
-          <div className="mt-10 mx-auto max-w-lg space-y-4">
+          <div className="mx-auto mt-10 max-w-lg space-y-4">
             <p>
               Bitcoin is partitioned into periods in which the block reward is
               adjusted. These periods are referred to as &quot;Halving

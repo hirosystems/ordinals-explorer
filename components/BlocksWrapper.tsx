@@ -1,4 +1,4 @@
-import { PeriodResponse } from "../pages/api/period/[pid]";
+import { PeriodResponse } from "../lib/types";
 import Blocks from "./Blocks";
 
 const BlocksWrapper = ({ data }: { data: PeriodResponse }) => {
