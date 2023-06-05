@@ -1,8 +1,10 @@
 import useSWR from "swr";
 
+import { pipe } from "fp-ts/lib/function";
+import { match, tryCatch } from "fp-ts/lib/Option";
 import { API_URL } from "../../lib/constants";
+import { getFontSize, textFetcher } from "../../lib/helpers";
 import { InscriptionResponse } from "../../lib/types";
-import { fetcher, getFontSize, textFetcher } from "../../lib/helpers";
 import InscriptionRenderJson from "./InscriptionRenderJson";
 
 const InscriptionRenderText = (props: {
@@ -20,13 +22,13 @@ const InscriptionRenderText = (props: {
     );
   if (!data || isLoading) return <div>Loading...</div>;
 
-  try {
-    const content = JSON.parse(data);
-    return <InscriptionRenderJson {...props} content={content} />;
-  } catch (e) {
-    if (e instanceof SyntaxError) return <ContentText {...props} text={data} />; // not JSON, just text
-    return <div>Error {JSON.stringify(e)}</div>;
-  }
+  return pipe(
+    tryCatch(() => JSON.parse(data)),
+    match(
+      () => <ContentText {...props} text={data} />,
+      (content) => <InscriptionRenderJson {...props} content={content} />
+    )
+  );
 };
 
 function showGradient(length: number) {
