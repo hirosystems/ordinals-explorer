@@ -1,5 +1,6 @@
 import "./globals.css";
 
+import { Toaster } from "react-hot-toast";
 import Script from "next/script";
 
 export async function generateMetadata() {
@@ -77,7 +78,8 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 })(window,document,'script','dataLayer','GTM-PFK4WN9');`}
         </Script>
       </head>
-      <body className="flex flex-col justify-between min-h-screen">
+      <body className="flex min-h-screen flex-col justify-between">
+        <Toaster position="top-center" reverseOrder={false} />
         {children}
         <noscript>
           <iframe

@@ -1,9 +1,7 @@
 "use client";
 
-import { ArrowTopRightIcon } from "@radix-ui/react-icons";
 import { ArrowUpRight } from "lucide-react";
 import Link from "next/link";
-import { HoverCard, HoverCardContent, HoverCardTrigger } from "./HoverCard";
 
 const Header = ({ children }: { children?: React.ReactNode }) => {
   return (
