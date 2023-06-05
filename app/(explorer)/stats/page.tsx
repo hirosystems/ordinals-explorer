@@ -8,7 +8,7 @@ import Header from "../../../components/Header";
 import Loading from "../../../components/Loading";
 import { fetcher } from "../../../lib/helpers";
 import { useHasMounted } from "../../../lib/hooks";
-import { HomepageResponse } from "../../../pages/api/homepage";
+import { HomepageResponse } from "../../../lib/types";
 
 export default function Home() {
   const hasMounted = useHasMounted();
@@ -26,7 +26,7 @@ export default function Home() {
   return (
     <>
       <Header />
-      <main className="w-full flex flex-col justify-between items-center min-h-screen max-w-5xl p-6 mx-auto space-y-6">
+      <main className="mx-auto flex min-h-screen w-full max-w-5xl flex-col items-center justify-between space-y-6 p-6">
         <div>This page is under construction 🚧</div>
         <div className="opacity-50">
           <motion.div
@@ -35,13 +35,13 @@ export default function Home() {
             transition={{ duration: 0.3, delay: 0.1 }}
             className="w-full max-w-3xl"
           >
-            <h2 className="mt-20 text-2xl text-center ">
+            <h2 className="mt-20 text-center text-2xl ">
               Number of Ordinal Inscriptions
             </h2>
             {/* todo: enable touch on charts (currently not possible to scroll or zoom while touching chart area) */}
             <Charts data={data?.graph} dataCumulative={data?.graphCumulative} />
           </motion.div>
-          <p className="text-sm text-neutral-500 text-center">
+          <p className="text-center text-sm text-neutral-500">
             The numbers shown in these charts are not up-to-date currently.
           </p>
         </div>

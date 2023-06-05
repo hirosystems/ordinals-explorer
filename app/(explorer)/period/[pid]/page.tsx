@@ -7,7 +7,7 @@ import Footer from "../../../../components/Footer";
 import Header from "../../../../components/Header";
 import Loading from "../../../../components/Loading";
 import { fetcher } from "../../../../lib/helpers";
-import { PeriodResponse } from "../../../../pages/api/period/[pid]";
+import { PeriodResponse } from "../../../../lib/types";
 
 const PeriodById = ({ params }: { params: { pid: string } }) => {
   const { data, error, isLoading } = useSWR<PeriodResponse>(
@@ -21,7 +21,7 @@ const PeriodById = ({ params }: { params: { pid: string } }) => {
   return (
     <>
       <Header />
-      <main className="pt-16 min-h-screen w-full max-w-[1280px] mx-auto">
+      <main className="mx-auto min-h-screen w-full max-w-[1280px] pt-16">
         <h2 className="text-2xl font-bold">
           <div className="text-center">Halving Period {params.pid}</div>
         </h2>

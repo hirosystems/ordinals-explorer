@@ -52,3 +52,14 @@ export type InscriptionTransferResponse = {
   offset: string;
   timestamp: number;
 };
+
+export type PeriodResponse = [string, number][];
+
+export type BlockResponse = string[];
+
+// todo: split into multiple responses
+export type HomepageResponse = {
+  periods: { [key: string]: number };
+  graph: [number, number][];
+  graphCumulative: [number, number][];
+};
