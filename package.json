@@ -26,6 +26,7 @@
     "d3-tip": "^0.9.1",
     "eslint": "^8.41.0",
     "eslint-config-next": "^13.4.4",
+    "fp-ts": "^2.16.0",
     "framer-motion": "^10.12.16",
     "jotai": "^2.1.0",
     "lodash": "^4.17.21",
