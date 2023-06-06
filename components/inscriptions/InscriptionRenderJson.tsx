@@ -5,7 +5,7 @@ import { useToggle } from "react-use";
 import { API_URL } from "../../lib/constants";
 import { cn, fetcher } from "../../lib/helpers";
 import { InscriptionResponse } from "../../lib/types";
-
+import Error from "../Error";
 import "./json-viewer.css";
 
 export const WithContentJson = (
@@ -28,31 +28,28 @@ const InscriptionRenderJson = (props: {
   content: any;
   className?: string;
 }) => {
-  // todo: wrap in try function for non-json fallback render
-  const string = JSON.stringify(props.content, null, 1)
-    ?.replace(/^[\{\}]/gm, "")
-    ?.replace(/[\{\}]*,*$/gm, "")
-    ?.replace(/\n\s*\n/gm, "\n")
-    ?.replace(/(?<!\\)"/g, "") // remove all unescaped double quotes
-    ?.replace(/(?<!\\)\\/g, "") // remove all unescaped escape characters
-    ?.replace(/\n\s/g, "\n") // replace escaped newlines with newlines
-    ?.trim();
+  try {
+    const json = cleanJsonString(props.content);
 
-  let badge =
-    props.content?.p ??
-    props.content?.protocol?.name ??
-    props.content?.protocol;
-  badge = badge?.replace(/\-/g, "");
+    let badge =
+      props.content?.p ??
+      props.content?.protocol?.name ??
+      props.content?.protocol;
+    badge = badge?.replace(/\-/g, "");
 
-  // todo: add tooltip for badge showing protocol name and info, links to protocol page?
-  return (
-    <JsonViewer
-      {...props}
-      text={string}
-      content={props.content}
-      protocol={badge}
-    />
-  );
+    // todo: add tooltip for badge showing protocol name and info, links to protocol page?
+    return (
+      <JsonViewer
+        {...props}
+        text={json}
+        content={props.content}
+        protocol={badge}
+      />
+    );
+  } catch (e) {
+    // todo: add more fallbacks?
+    return <Error error={e} />;
+  }
 };
 
 const JsonViewer = (props: {
@@ -120,3 +117,21 @@ const JsonViewer = (props: {
 };
 
 export default InscriptionRenderJson;
+
+function cleanJsonString(content: any) {
+  const json = JSON.stringify(content, null, 1)
+    .replace(/^[\{\}]/gm, "")
+    .replace(/[\{\}]*,*$/gm, "")
+    .replace(/\n\s*\n/gm, "\n");
+
+  try {
+    return json
+      .replace(/(?<!\\)"/g, "") // remove all unescaped double quotes
+      .replace(/(?<!\\)\\/g, "") // remove all unescaped escape characters
+      .replace(/\n\s/g, "\n")
+      .trim();
+  } catch (e) {
+    // fallback solution without lookbehind (not supported in some recent versions of safari)
+    return json.replace(/\n\s/g, "\n").trim();
+  }
+}
