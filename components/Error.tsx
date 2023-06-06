@@ -5,7 +5,6 @@ const Error = ({
   error?: Error & any;
   message?: string;
 }) => {
-  console.log(error);
   message = message ?? error.message ?? null;
   error = error?.cause ?? error;
 
