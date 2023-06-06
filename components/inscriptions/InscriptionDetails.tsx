@@ -4,7 +4,7 @@ import Link from "next/link";
 import useSWR from "swr";
 
 import { API_URL } from "../../lib/constants";
-import { fetcher } from "../../lib/helpers";
+import { fetcher, formatDateTime } from "../../lib/helpers";
 import { InscriptionResponse } from "../../lib/types";
 import CopyButton from "../CopyButton";
 import Loading from "./../Loading";
@@ -56,57 +56,62 @@ const InscriptionDetails = (params: { iid: string }) => {
           <h2 className="my-2 text-2xl">Inscription #{data.number}</h2>
           <table className="w-full border-collapse text-sm">
             <tbody>
-              <tr className="flex flex-col space-y-0.5 border-b py-3 md:table-row">
-                <td className="whitespace-nowrap pr-8 uppercase text-neutral-400 md:text-black">
-                  Type
+              <tr className="flex flex-col border-b pl-3 md:table-row md:py-3 md:pl-0 md:align-middle">
+                <td className="whitespace-nowrap pr-8 pt-2.5 text-neutral-400 md:py-2.5 md:text-black">
+                  <span className="uppercase">Type</span>
                 </td>
-                <td className="group flex min-h-[38px] items-center break-all uppercase">
-                  {data.content_type}
+                <td className="group break-all pb-2.5 align-middle md:py-1.5">
+                  <span className="uppercase">{data.content_type}</span>
                 </td>
               </tr>
-              <tr className="flex flex-col space-y-0.5 border-b py-3 md:table-row">
-                <td className="whitespace-nowrap pr-8 uppercase text-neutral-400 md:text-black">
-                  Content Length
+              <tr className="flex flex-col border-b pl-3 md:table-row md:py-3 md:pl-0 md:align-middle">
+                <td className="whitespace-nowrap pr-8 pt-2.5 text-neutral-400 md:py-2.5 md:text-black">
+                  <span className="uppercase">Content Length</span>
                 </td>
-                <td className="group flex min-h-[38px] items-center break-all">
+                <td className="group break-all pb-2.5 align-middle md:py-1.5">
                   {data.content_length}
                 </td>
               </tr>
-              <tr className="flex flex-col space-y-0.5 border-b py-3 md:table-row">
-                <td className="whitespace-nowrap pr-8 uppercase text-neutral-400 md:text-black">
-                  Sat
+              <tr className="flex flex-col border-b pl-3 md:table-row md:py-3 md:pl-0 md:align-middle">
+                <td className="whitespace-nowrap pr-8 pt-2.5 text-neutral-400 md:py-2.5 md:text-black">
+                  <span className="uppercase">Sat</span>
                 </td>
-                <td className="group flex min-h-[38px] items-center break-all">
-                  <Link className="underline" href={`/sat/${data.sat_ordinal}`}>
-                    {data.sat_ordinal}
-                  </Link>
+                <td className="group break-all pb-2.5 align-middle md:py-1.5">
+                  <CopyButton text={data.sat_ordinal}>
+                    <Link
+                      className="underline"
+                      href={`/sat/${data.sat_ordinal}`}
+                    >
+                      {data.sat_ordinal}
+                    </Link>
+                  </CopyButton>
                 </td>
               </tr>
-              <tr className="flex flex-col space-y-0.5 border-b py-3 md:table-row">
-                <td className="whitespace-nowrap pr-8 uppercase text-neutral-400 md:text-black">
-                  Sat Rarity
+              <tr className="flex flex-col border-b pl-3 md:table-row md:py-3 md:pl-0 md:align-middle">
+                <td className="whitespace-nowrap pr-8 pt-2.5 text-neutral-400 md:py-2.5 md:text-black">
+                  <span className="uppercase">Sat Rarity</span>
                 </td>
-                <td className="group flex min-h-[38px] items-center break-all">
+                <td className="group break-all pb-2.5 align-middle md:py-1.5">
                   <span className="rounded-[4px] bg-neutral-400 px-1 py-0.5 uppercase text-white">
                     {/* todo: fancy rarity component */}
                     {data.sat_rarity}
                   </span>
                 </td>
               </tr>
-              <tr className="flex flex-col space-y-0.5 border-b py-3 md:table-row">
-                <td className="whitespace-nowrap pr-8 uppercase text-neutral-400 md:text-black">
-                  ID
+              <tr className="flex flex-col border-b pl-3 md:table-row md:py-3 md:pl-0 md:align-middle">
+                <td className="whitespace-nowrap pr-8 pt-2.5 text-neutral-400 md:py-2.5 md:text-black">
+                  <span className="uppercase">ID</span>
                 </td>
-                <td className="group flex min-h-[38px] items-center break-all">
+                <td className="group break-all pb-2.5 align-middle md:py-1.5">
                   <CopyButton>{data.id}</CopyButton>
                 </td>
               </tr>
-              <tr className="flex flex-col space-y-0.5 border-b py-3 md:table-row">
-                <td className="whitespace-nowrap pr-8 uppercase text-neutral-400 md:text-black">
-                  Owned By
+              <tr className="flex flex-col border-b pl-3 md:table-row md:py-3 md:pl-0 md:align-middle">
+                <td className="whitespace-nowrap pr-8 pt-2.5 text-neutral-400 md:py-2.5 md:text-black">
+                  <span className="uppercase">Owned By</span>
                   {/* todo: add help tooltip to explain what an address is and how utxo ownership works */}
                 </td>
-                <td className="group flex min-h-[38px] items-center break-all">
+                <td className="group break-all pb-2.5 align-middle md:py-1.5">
                   <CopyButton text={data.address}>
                     <Link
                       className="underline"
@@ -117,12 +122,12 @@ const InscriptionDetails = (params: { iid: string }) => {
                   </CopyButton>
                 </td>
               </tr>
-              <tr className="flex flex-col space-y-0.5 border-b py-3 md:table-row">
-                <td className="whitespace-nowrap pr-8 uppercase text-neutral-400 md:text-black">
-                  Inscribed By
+              <tr className="flex flex-col border-b pl-3 md:table-row md:py-3 md:pl-0 md:align-middle">
+                <td className="whitespace-nowrap pr-8 pt-2.5 text-neutral-400 md:py-2.5 md:text-black">
+                  <span className="uppercase">Inscribed By</span>
                   {/* todo: add help tooltip to explain what an address is and how utxo ownership works */}
                 </td>
-                <td className="group flex min-h-[38px] items-center break-all">
+                <td className="group break-all pb-2.5 align-middle md:py-1.5">
                   <CopyButton text={data.genesis_address}>
                     <Link
                       className="underline"
@@ -133,11 +138,11 @@ const InscriptionDetails = (params: { iid: string }) => {
                   </CopyButton>
                 </td>
               </tr>
-              <tr className="flex flex-col space-y-0.5 border-b py-3 md:table-row">
-                <td className="whitespace-nowrap pr-8 uppercase text-neutral-400 md:text-black">
-                  Inscription TxId
+              <tr className="flex flex-col border-b pl-3 md:table-row md:py-3 md:pl-0 md:align-middle">
+                <td className="whitespace-nowrap pr-8 pt-2.5 text-neutral-400 md:py-2.5 md:text-black">
+                  <span className="uppercase">Inscription TxId</span>
                 </td>
-                <td className="group flex min-h-[38px] items-center break-all">
+                <td className="group break-all pb-2.5 align-middle md:py-1.5">
                   <CopyButton text={data.genesis_tx_id}>
                     <div>
                       <Link
@@ -152,36 +157,36 @@ const InscriptionDetails = (params: { iid: string }) => {
                   </CopyButton>
                 </td>
               </tr>
-              {/* todo: add Inscription Date */}
-              <tr className="flex flex-col space-y-0.5 border-b py-3 md:table-row">
-                <td className="whitespace-nowrap pr-8 uppercase text-neutral-400 md:text-black">
-                  Inscription Date
+              <tr className="flex flex-col border-b pl-3 md:table-row md:py-3 md:pl-0 md:align-middle">
+                <td className="whitespace-nowrap pr-8 pt-2.5 text-neutral-400 md:py-2.5 md:text-black">
+                  <span className="uppercase">Inscription Date</span>
                 </td>
-                <td className="group flex min-h-[38px] items-center break-all uppercase">
-                  {new Intl.DateTimeFormat("default", {
-                    dateStyle: "long",
-                    timeStyle: "medium",
-                  }).format(new Date(data.genesis_timestamp))}
+                <td className="group break-all pb-2.5 align-middle md:py-1.5">
+                  <span className="uppercase">
+                    {formatDateTime(data.genesis_timestamp)}
+                  </span>
                 </td>
               </tr>
               {wasTransferred && (
-                <tr className="flex flex-col space-y-0.5 border-b py-3 md:table-row">
-                  <td className="whitespace-nowrap pr-8 uppercase text-neutral-400 md:text-black">
-                    Last Transfer Date
+                <tr className="flex flex-col border-b pl-3 md:table-row md:py-3 md:pl-0 md:align-middle">
+                  <td className="whitespace-nowrap pr-8 pt-2.5 text-neutral-400 md:py-2.5 md:text-black">
+                    <span className="uppercase">Last Transfer Date</span>
                   </td>
-                  <td className="group flex min-h-[38px] items-center break-all">
-                    {new Intl.DateTimeFormat("default", {
-                      dateStyle: "long",
-                      timeStyle: "medium",
-                    }).format(new Date(data.timestamp))}
+                  <td className="group break-all pb-2.5 align-middle md:py-1.5">
+                    <span className="uppercase">
+                      {new Intl.DateTimeFormat("default", {
+                        dateStyle: "long",
+                        timeStyle: "medium",
+                      }).format(new Date(data.timestamp))}
+                    </span>
                   </td>
                 </tr>
               )}
-              <tr className="flex flex-col space-y-0.5 border-b py-3 md:table-row">
-                <td className="whitespace-nowrap pr-8 uppercase text-neutral-400 md:text-black">
-                  Inscription Height
+              <tr className="flex flex-col border-b pl-3 md:table-row md:py-3 md:pl-0 md:align-middle">
+                <td className="whitespace-nowrap pr-8 pt-2.5 text-neutral-400 md:py-2.5 md:text-black">
+                  <span className="uppercase">Inscription Height</span>
                 </td>
-                <td className="group flex min-h-[38px] items-center break-all">
+                <td className="group break-all pb-2.5 align-middle md:py-1.5">
                   <Link
                     href={`/block/${data.genesis_block_height}`}
                     className="underline"
@@ -190,27 +195,27 @@ const InscriptionDetails = (params: { iid: string }) => {
                   </Link>
                 </td>
               </tr>
-              <tr className="flex flex-col space-y-0.5 border-b py-3 md:table-row">
-                <td className="whitespace-nowrap pr-8 uppercase text-neutral-400 md:text-black">
-                  Inscription Fee
+              <tr className="flex flex-col border-b pl-3 md:table-row md:py-3 md:pl-0 md:align-middle">
+                <td className="whitespace-nowrap pr-8 pt-2.5 text-neutral-400 md:py-2.5 md:text-black">
+                  <span className="uppercase">Inscription Fee</span>
                 </td>
-                <td className="group flex min-h-[38px] items-center break-all">
+                <td className="group break-all pb-2.5 align-middle md:py-1.5">
                   {data.genesis_fee}
                 </td>
               </tr>
-              <tr className="flex flex-col space-y-0.5 border-b py-3 md:table-row">
-                <td className="whitespace-nowrap pr-8 uppercase text-neutral-400 md:text-black">
-                  Output
+              <tr className="flex flex-col border-b pl-3 md:table-row md:py-3 md:pl-0 md:align-middle">
+                <td className="whitespace-nowrap pr-8 pt-2.5 text-neutral-400 md:py-2.5 md:text-black">
+                  <span className="uppercase">Output</span>
                 </td>
-                <td className="group flex min-h-[38px] items-center break-all">
+                <td className="group break-all pb-2.5 align-middle md:py-1.5">
                   <CopyButton>{data.output}</CopyButton>
                 </td>
               </tr>
-              <tr className="flex flex-col space-y-0.5 py-3 md:table-row">
-                <td className="whitespace-nowrap pr-8 uppercase text-neutral-400 md:text-black">
-                  Offset
+              <tr className="flex flex-col pl-3 md:table-row md:py-3 md:pl-0 md:align-middle">
+                <td className="whitespace-nowrap pr-8 pt-2.5 text-neutral-400 md:py-2.5 md:text-black">
+                  <span className="uppercase">Offset</span>
                 </td>
-                <td className="group flex min-h-[38px] items-center break-all">
+                <td className="group break-all pb-2.5 align-middle md:py-1.5">
                   {data.offset}
                 </td>
               </tr>
