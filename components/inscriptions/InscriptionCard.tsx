@@ -8,19 +8,26 @@ import InscriptionRender from "./InscriptionRender";
 const InscriptionCard = ({
   inscription,
   light = false,
+  className,
 }: {
   inscription?: InscriptionResponse;
   light?: boolean;
+  className?: string;
 }) => {
   if (!inscription?.id)
     return (
       // make the grid take up the maximal space, even when a grid item is empty
       // todo: double-check skeleton styles are the same as the real ones
-      <div className="border sm:p-2 md:p-3 lg:p-5 rounded-md space-y-2 md:space-y-3 lg:space-y-5">
-        <div className="rounded-[4px] aspect-square" />
+      <div
+        className={cn(
+          "block space-y-2 rounded-md border sm:p-2 md:space-y-3 md:p-3 lg:space-y-5 lg:p-5",
+          className
+        )}
+      >
+        <div className="aspect-square rounded-[4px]" />
         <div
           className={cn(
-            "opacity-0 hidden sm:inline-block text-sm rounded-[4px] px-1 md:px-2 md:py-1",
+            "hidden rounded-[4px] px-1 text-sm opacity-0 sm:inline-block md:px-2 md:py-1",
             light && "border"
           )}
         >
@@ -33,9 +40,12 @@ const InscriptionCard = ({
   return (
     <Link
       href={`/inscription/${inscription.id}`}
-      className="border sm:p-2 md:p-3 lg:p-5 rounded-md space-y-2 md:space-y-3 lg:space-y-5"
+      className={cn(
+        "block space-y-2 rounded-md border sm:p-2 md:space-y-3 md:p-3 lg:space-y-5 lg:p-5",
+        className
+      )}
     >
-      <div className="w-full rounded-[4px] aspect-square overflow-hidden">
+      <div className="aspect-square w-full overflow-hidden rounded-[4px]">
         <InscriptionRender inscription={inscription} />
       </div>
       <motion.div
@@ -43,8 +53,8 @@ const InscriptionCard = ({
         animate={{ opacity: 1 }}
         transition={{ duration: 0.2 }}
         className={cn(
-          "hidden sm:inline-block text-sm rounded-[4px] px-1 md:px-2 md:py-1 bg-black text-white",
-          light && "bg-white text-neutral-300 border"
+          "hidden rounded-[4px] bg-black px-1 text-sm text-white sm:inline-block md:px-2 md:py-1",
+          light && "border bg-white text-neutral-300"
         )}
       >
         #{inscription.number}

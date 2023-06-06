@@ -10,7 +10,7 @@ const limit = 20; // todo: increase limit on api end
 
 // todo: add more common mime types
 // From https://developer.mozilla.org/en-US/docs/Web/HTTP/Basics_of_HTTP/MIME_types
-const mimeTypes = {
+export const mimeTypes = {
   // Safe Images https://developer.mozilla.org/en-US/docs/Web/HTTP/Basics_of_HTTP/MIME_types#image_types
   image: [
     "image/apng",
