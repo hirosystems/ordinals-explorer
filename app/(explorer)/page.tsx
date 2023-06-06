@@ -1,12 +1,14 @@
 import Link from "next/link";
 
+import { Metadata } from "next";
 import CtaLink from "../../components/CtaLink";
 import Footer from "../../components/Footer";
+import { mimeTypes } from "../../components/GalleryFull";
 import GalleryPreview from "../../components/GalleryPreview";
+import GalleryRow from "../../components/GalleryRow";
 import Header from "../../components/Header";
 import Intro from "../../components/Intro";
 import SearchBar from "../../components/SearchBar";
-import { Metadata } from "next";
 
 export const metadata: Metadata = {
   title: "Hiro Ordinals Explorer | ordinals.hiro.so",
@@ -41,6 +43,26 @@ export default function Home() {
           </p>
           <div className="mx-auto mb-4 mt-3 h-12 w-0 border border-dashed border-l-black" />
           <GalleryPreview />
+
+          <div className="mt-16 flex justify-around">
+            <CtaLink href="/explore">
+              Explore all, sort, and filter &rarr;
+            </CtaLink>
+          </div>
+        </div>
+
+        {/* Gallery Section */}
+        <div className="w-full">
+          <p className="mt-20 text-center text-sm uppercase">
+            Latest Image Inscriptions
+          </p>
+          <div className="mx-auto mb-4 mt-3 h-12 w-0 border border-dashed border-l-black" />
+
+          <GalleryRow
+            params={
+              new URLSearchParams(mimeTypes.image.map((i) => ["mime_type", i]))
+            }
+          />
 
           <div className="mt-16 flex justify-around">
             <CtaLink href="/explore">
