@@ -65,3 +65,10 @@ export function getFontSize(contentLength: number) {
   if (contentLength < 50) return 20;
   return 14;
 }
+
+export function formatDateTime(timestamp: number) {
+  return new Intl.DateTimeFormat("default", {
+    dateStyle: "long",
+    timeStyle: "medium",
+  }).format(new Date(timestamp));
+}

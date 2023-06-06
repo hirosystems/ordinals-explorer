@@ -1,6 +1,7 @@
 "use client";
 
 import { CopyIcon } from "@radix-ui/react-icons";
+import { motion } from "framer-motion";
 import { toast } from "react-hot-toast";
 
 const CopyButton = (
@@ -13,7 +14,8 @@ const CopyButton = (
         text: string;
       }
 ) => {
-  async function onClick() {
+  async function onClick(e) {
+    e.preventDefault();
     try {
       await navigator.clipboard.writeText(
         "text" in props ? props.text : props.children
@@ -25,15 +27,16 @@ const CopyButton = (
   }
 
   return (
-    <>
-      <div>{props.children}</div>
-      <button
-        className="ml-1 flex items-center justify-center rounded-[50%] p-2 text-neutral-500 opacity-0 transition-all hover:bg-neutral-0 hover:opacity-100 group-hover:bg-neutral-0 group-hover:opacity-100"
+    <span className="inline-flex items-center">
+      {props.children}
+      <motion.button
+        className="ml-1 self-center rounded-[50%] bg-neutral-0 p-2 text-neutral-500 transition-opacity hover:opacity-100 group-hover:opacity-100 md:opacity-0"
+        whileTap={{ backgroundColor: "#e4e0dc", color: "#000" }}
         onClick={onClick}
       >
         <CopyIcon />
-      </button>
-    </>
+      </motion.button>
+    </span>
   );
 };
 
