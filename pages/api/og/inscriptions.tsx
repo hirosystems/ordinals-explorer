@@ -11,9 +11,9 @@ export const config = {
 };
 
 // todo: re-add aeonik font when rewriting in puppetteer
-const font = fetch(new URL("../../../assets/Inter.ttf", import.meta.url)).then(
-  (res) => res.arrayBuffer()
-);
+const font = fetch(
+  new URL("../../../assets/Inter-Regular.woff", import.meta.url)
+).then((res) => res.arrayBuffer());
 
 export default async function handler(req: NextRequest) {
   const { searchParams } = new URL(req.url);
