@@ -3,6 +3,7 @@
 import Link from "next/link";
 import useSWR from "swr";
 
+import { ExternalLinkIcon } from "@radix-ui/react-icons";
 import { API_URL } from "../../lib/constants";
 import { fetcher, formatDateTime } from "../../lib/helpers";
 import { InscriptionResponse } from "../../lib/types";
@@ -53,7 +54,17 @@ const InscriptionDetails = (params: { iid: string }) => {
 
         {/* todo: add links to linkeable data, add copy icon to copy to clipboard elements (see figma) */}
         <div className="flex-initial">
-          <h2 className="my-2 text-2xl">Inscription #{data.number}</h2>
+          <div className="flex items-center space-x-2">
+            <h2 className="my-2 text-2xl">Inscription #{data.number}</h2>
+            <Link
+              href={`https://ordinals.com/inscription/${data.id}`}
+              className="relative rounded bg-neutral-0 px-1 py-1 transition-colors hover:bg-neutral-50"
+              title="View on ordinals.com"
+              target="_blank"
+            >
+              <ExternalLinkIcon />
+            </Link>
+          </div>
           <table className="w-full border-collapse text-sm">
             <tbody>
               <tr className="flex flex-col border-b pl-3 md:table-row md:py-3 md:pl-0 md:align-middle">
