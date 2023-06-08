@@ -1,14 +1,22 @@
 import { API_URL } from "../../lib/constants";
+import { cn } from "../../lib/helpers";
 import { InscriptionResponse } from "../../lib/types";
 
 const InscriptionRenderImage = ({
   inscription,
+  className,
 }: {
   inscription: InscriptionResponse;
+  className?: string;
 }) => {
   // todo: background image with hidden semantic element better?
   return (
-    <div className="w-full h-full flex justify-center items-center bg-[#F2F0ED]">
+    <div
+      className={cn(
+        "flex h-full w-full items-center justify-center bg-[#F2F0ED]",
+        className
+      )}
+    >
       {/* eslint-disable-next-line @next/next/no-img-element */}
       <img
         alt={`Inscription #${inscription.number}`}
