@@ -114,7 +114,9 @@ const InscriptionDetails = (params: { iid: string }) => {
                   <span className="uppercase">ID</span>
                 </td>
                 <td className="group break-all pb-2.5 align-middle md:py-1.5">
-                  <CopyButton>{data.id}</CopyButton>
+                  <span className="font-['Aeonik_Mono'] tracking-tight">
+                    <CopyButton>{data.id}</CopyButton>
+                  </span>
                 </td>
               </tr>
               <tr className="flex flex-col border-b pl-3 md:table-row md:py-3 md:pl-0 md:align-middle">
@@ -125,7 +127,7 @@ const InscriptionDetails = (params: { iid: string }) => {
                 <td className="group break-all pb-2.5 align-middle md:py-1.5">
                   <CopyButton text={data.address}>
                     <Link
-                      className="underline"
+                      className="font-['Aeonik_Mono'] underline"
                       href={`/address/${data.address}`}
                     >
                       {data.address}
@@ -139,14 +141,16 @@ const InscriptionDetails = (params: { iid: string }) => {
                   {/* todo: add help tooltip to explain what an address is and how utxo ownership works */}
                 </td>
                 <td className="group break-all pb-2.5 align-middle md:py-1.5">
-                  <CopyButton text={data.genesis_address}>
-                    <Link
-                      className="underline"
-                      href={`/address/${data.genesis_address}`}
-                    >
-                      {data.genesis_address}
-                    </Link>
-                  </CopyButton>
+                  <span className="font-['Aeonik_Mono'] tracking-tight">
+                    <CopyButton text={data.genesis_address}>
+                      <Link
+                        className="underline"
+                        href={`/address/${data.genesis_address}`}
+                      >
+                        {data.genesis_address}
+                      </Link>
+                    </CopyButton>
+                  </span>
                 </td>
               </tr>
               <tr className="flex flex-col border-b pl-3 md:table-row md:py-3 md:pl-0 md:align-middle">
@@ -154,18 +158,20 @@ const InscriptionDetails = (params: { iid: string }) => {
                   <span className="uppercase">Inscription TxId</span>
                 </td>
                 <td className="group break-all pb-2.5 align-middle md:py-1.5">
-                  <CopyButton text={data.genesis_tx_id}>
-                    <div>
-                      <Link
-                        className="underline"
-                        href={`https://mempool.space/tx/${data.genesis_tx_id}`}
-                        target="_blank"
-                      >
-                        {data.genesis_tx_id}
-                      </Link>
-                      <span className="ml-1">↗</span>
-                    </div>
-                  </CopyButton>
+                  <span className="font-['Aeonik_Mono'] tracking-tight">
+                    <CopyButton text={data.genesis_tx_id}>
+                      <div>
+                        <Link
+                          className="underline"
+                          href={`https://mempool.space/tx/${data.genesis_tx_id}`}
+                          target="_blank"
+                        >
+                          {data.genesis_tx_id}
+                        </Link>
+                        <span className="ml-1">↗</span>
+                      </div>
+                    </CopyButton>
+                  </span>
                 </td>
               </tr>
               <tr className="flex flex-col border-b pl-3 md:table-row md:py-3 md:pl-0 md:align-middle">
@@ -219,7 +225,9 @@ const InscriptionDetails = (params: { iid: string }) => {
                   <span className="uppercase">Output</span>
                 </td>
                 <td className="group break-all pb-2.5 align-middle md:py-1.5">
-                  <CopyButton>{data.output}</CopyButton>
+                  <span className="font-['Aeonik_Mono'] tracking-tight">
+                    <CopyButton>{data.output}</CopyButton>
+                  </span>
                 </td>
               </tr>
               <tr className="flex flex-col pl-3 md:table-row md:py-3 md:pl-0 md:align-middle">
