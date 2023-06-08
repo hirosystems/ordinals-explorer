@@ -37,7 +37,6 @@ const InscriptionRenderJson = (props: {
     protocol = protocol?.replace(/\-/g, "");
 
     if (protocol === "brc20") {
-      console.log("brc20");
       return (
         <JsonViewer {...props} json={props.json} protocol={protocol}>
           <ContentBrc20 json={props.json} />
@@ -97,18 +96,18 @@ const JsonViewer = (props: {
           />
         </>
       )}
-      <div className="absolute bottom-1 left-1 flex space-x-0.5 text-xs uppercase text-neutral-0">
+      <div className="absolute bottom-1 left-1 flex space-x-0.5 text-xs uppercase text-neutral-400">
         {props.protocol && (
-          <div className="cursor-default rounded border border-neutral-400 bg-neutral-400 px-1 py-0.5 leading-none shadow-[0_1px_2px_0_rgba(0,0,0,0.2)]">
+          <div className="cursor-default rounded border border-neutral-300 bg-neutral-100 px-1 py-0.5 leading-none  shadow-[0_1px_2px_0_rgba(0,0,0,0.1)]">
             {props.protocol}
           </div>
         )}
         <button
           className={cn(
-            "rounded border border-neutral-400 px-1 py-0.5 leading-none shadow-[0_1px_2px_0_rgba(0,0,0,0.2)] transition-colors",
+            "rounded border border-neutral-300  px-1 py-0.5 leading-none shadow-[0_1px_2px_0_rgba(0,0,0,0.2)] transition-colors",
             isJsonViewEnabled
-              ? "border-slate-500 bg-slate-300 text-slate-700  hover:bg-slate-200"
-              : "bg-neutral-400 hover:border-neutral-300 hover:bg-neutral-300"
+              ? "border-slate-500 bg-slate-300 text-slate-700 hover:bg-slate-200"
+              : "bg-neutral-100 hover:border-neutral-400 hover:bg-neutral-50"
           )}
           onClick={(e) => {
             toggleJsonView();
