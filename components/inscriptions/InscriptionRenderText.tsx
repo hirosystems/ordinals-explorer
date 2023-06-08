@@ -3,7 +3,7 @@ import useSWR from "swr";
 import { pipe } from "fp-ts/lib/function";
 import { match, tryCatch } from "fp-ts/lib/Option";
 import { API_URL } from "../../lib/constants";
-import { getFontSize, textFetcher } from "../../lib/helpers";
+import { cn, getFontSize, textFetcher } from "../../lib/helpers";
 import { InscriptionResponse } from "../../lib/types";
 import InscriptionRenderJson from "./InscriptionRenderJson";
 
@@ -18,13 +18,13 @@ const InscriptionRenderText = (props: {
 
   if (error)
     return <div>Error loading inscription content. {error?.message}</div>;
-  if (!data || isLoading) return <div>Loading...</div>;
+  if (!data || isLoading) return <></>;
 
   return pipe(
     tryCatch(() => JSON.parse(data)),
     match(
-      () => <ContentText {...props} text={data} />,
-      (content) => <InscriptionRenderJson {...props} content={content} />
+      () => <RenderText {...props} text={data} />,
+      (content) => <InscriptionRenderJson {...props} json={content} />
     )
   );
 };
@@ -33,16 +33,18 @@ function showGradient(length: number) {
   return length > 20;
 }
 
-const ContentText = (props: {
+export const RenderText = (props: {
   inscription: InscriptionResponse;
   text: string;
   className?: string;
 }) => {
   return (
-    <div className="relative flex aspect-square w-full items-center justify-center overflow-hidden bg-[#F2F0ED] p-3">
+    <div className="relative flex aspect-square w-full justify-center overflow-hidden bg-[#F2F0ED] p-3">
       <p
-        className="inline-block w-full whitespace-pre-wrap break-all text-center"
-        style={{ fontSize: getFontSize(props.inscription.content_length) }}
+        className={cn(
+          "inline-block w-full whitespace-pre-wrap",
+          contentLengthClassName(props.inscription.content_length)
+        )}
       >
         {props.text}
       </p>
@@ -60,3 +62,9 @@ const ContentText = (props: {
 };
 
 export default InscriptionRenderText;
+
+export function contentLengthClassName(contentLength: number) {
+  if (contentLength < 10) return "text-[1.375em] text-center self-center";
+  if (contentLength < 50) return "text-[20px] text-center self-center";
+  return "text-sm tracking-tight";
+}
