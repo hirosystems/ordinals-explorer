@@ -19,6 +19,10 @@ const InscriptionRender = (props: {
   }
 
   if (props.inscription.content_type.startsWith("text/")) {
+    return <Iframe {...props} src={`/preview/${props.inscription.id}`} />;
+  }
+
+  if (props.inscription.content_type.startsWith("text/")) {
     // also handles json parseable content from plain text
     return <InscriptionRenderText {...props} />;
   }
