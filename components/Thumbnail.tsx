@@ -32,7 +32,12 @@ export const ThumbnailIcon = ({
     return <IconText className={className} style={style} />;
 
   if (showImage && safeTypes.includes(inscription.content_type.toLowerCase()))
-    return <Iframe src={`/preview/${inscription.id}`} />;
+    return (
+      <Iframe
+        src={`/preview/${inscription.id}`}
+        className="pointer-events-none"
+      />
+    );
   if (type.startsWith("image/"))
     return <IconImage className={className} style={style} />;
 
@@ -53,7 +58,7 @@ const Thumbnail = ({
   return (
     <div
       className={cn(
-        "w-full h-full flex justify-around items-center bg-neutral-50",
+        "flex h-full w-full items-center justify-around bg-neutral-50",
         className
       )}
     >
