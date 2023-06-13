@@ -4,10 +4,7 @@ import * as d3 from "d3";
 // @ts-ignore
 import d3Tip from "d3-tip";
 import { useLayoutEffect, useRef } from "react";
-import {
-  blockHeightToMinedSats,
-  blockHeightToRewardSats,
-} from "../lib/helpers";
+import { blockHeightToMinedSats, blockHeightToRewardSats } from "../lib/utils";
 
 import "./Sats.css";
 

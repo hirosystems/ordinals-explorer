@@ -1,7 +1,7 @@
 import { ChevronDown } from "lucide-react";
 import { useState } from "react";
 
-import { cn } from "../lib/helpers";
+import { cn } from "../lib/utils";
 import {
   Collapsible,
   CollapsibleContent,
@@ -31,22 +31,22 @@ const RangeFilter = ({
   return (
     <div className={className}>
       <Collapsible defaultOpen={defaultOpen}>
-        <CollapsibleTrigger className="w-full flex justify-between">
+        <CollapsibleTrigger className="flex w-full justify-between">
           <div className="uppercase text-neutral-300">{name}</div>
           {/* todo: better/thinner ChevronDown icon alternative */}
           <ChevronDown size={16} className="text-neutral-300" />
           {/* todo: rotate on expand */}
         </CollapsibleTrigger>
         <CollapsibleContent>
-          <div className="mt-4 mb-6">
-            <div className="flex justify-between items-center space-x-2">
+          <div className="mb-6 mt-4">
+            <div className="flex items-center justify-between space-x-2">
               {/* todo: hidden labels for accessibility with name prefix */}
               <input
                 type="number"
                 min="0"
                 placeholder="0"
                 defaultValue={start ?? ""}
-                className="w-[90px] border rounded-[4px] px-1.5 py-1"
+                className="w-[90px] rounded-[4px] border px-1.5 py-1"
                 onChange={(e) => setCurrentStart(e.target.value)}
               />
               <p className="uppercase">to</p>
@@ -55,13 +55,13 @@ const RangeFilter = ({
                 min="0"
                 placeholder="..."
                 defaultValue={end ?? ""}
-                className="w-[90px] border rounded-[4px] px-1.5 py-1"
+                className="w-[90px] rounded-[4px] border px-1.5 py-1"
                 onChange={(e) => setCurrentEnd(e.target.value)}
               />
             </div>
             <button
               className={cn(
-                "mt-4 block w-full px-4 py-2 border text-neutral-600 rounded-[4px] uppercase",
+                "mt-4 block w-full rounded-[4px] border px-4 py-2 uppercase text-neutral-600",
                 isAppliable && "text-red-600"
               )}
               onClick={() => onApply(currentStart, currentEnd)}

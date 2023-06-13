@@ -20,7 +20,7 @@ import {
 import * as DialogPrimitive from "@radix-ui/react-dialog";
 import { X } from "lucide-react";
 
-import { scrollIntoView } from "../lib/helpers";
+import { scrollIntoView } from "../lib/utils";
 import SatsListWrapper from "./SatsListWrapper";
 
 const size = 17;
@@ -67,13 +67,13 @@ function Blocks({ blocks }: { blocks: [string, number][] }) {
         </button>
       </div> */}
       <div className="m-5">
-        <h3 className="font-bold text-lg">Legend</h3>
-        <div className="flex justify-start items-center">
-          <div className="blocks-pattern !mx-0 w-[17px] h-[17px]"></div>
+        <h3 className="text-lg font-bold">Legend</h3>
+        <div className="flex items-center justify-start">
+          <div className="blocks-pattern !mx-0 h-[17px] w-[17px]"></div>
           <div className="ml-2">Blocks without inscribed sats</div>
         </div>
-        <div className="flex justify-start items-center">
-          <div className="w-[16px] h-[16px] rounded-[3px] bg-gradient-to-r from-[pink] to-[red]"></div>
+        <div className="flex items-center justify-start">
+          <div className="h-[16px] w-[16px] rounded-[3px] bg-gradient-to-r from-[pink] to-[red]"></div>
           <div className="ml-[9px]">Blocks with inscribed sats</div>
           {/* todo: tooltip with gradient number of inscriptions */}
         </div>
@@ -101,7 +101,7 @@ function Blocks({ blocks }: { blocks: [string, number][] }) {
           </div>
           <DialogPrimitive.Close
             onClick={unselectSat}
-            className="absolute top-4 right-4 rounded-sm opacity-70 transition-opacity hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2 disabled:pointer-events-none data-[state=open]:bg-slate-100 dark:focus:ring-slate-400 dark:focus:ring-offset-slate-900 dark:data-[state=open]:bg-slate-800"
+            className="absolute right-4 top-4 rounded-sm opacity-70 transition-opacity hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2 disabled:pointer-events-none data-[state=open]:bg-slate-100 dark:focus:ring-slate-400 dark:focus:ring-offset-slate-900 dark:data-[state=open]:bg-slate-800"
           >
             <X className="h-4 w-4" />
             <span className="sr-only">Close</span>

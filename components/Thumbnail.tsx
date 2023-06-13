@@ -1,6 +1,6 @@
 import { CSSProperties } from "react";
 
-import { cn } from "../lib/helpers";
+import { cn } from "../lib/utils";
 import IconAudio from "./icons/IconAudio";
 import IconFile from "./icons/IconFile";
 import IconImage from "./icons/IconImage";

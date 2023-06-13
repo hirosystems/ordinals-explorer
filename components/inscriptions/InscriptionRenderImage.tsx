@@ -1,5 +1,5 @@
 import { API_URL } from "../../lib/constants";
-import { cn } from "../../lib/helpers";
+import { cn } from "../../lib/utils";
 import { InscriptionResponse } from "../../lib/types";
 
 const InscriptionRenderImage = ({

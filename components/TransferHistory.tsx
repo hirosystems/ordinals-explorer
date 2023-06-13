@@ -5,12 +5,12 @@ import ReactTimeAgo from "react-time-ago";
 import useSWR from "swr";
 
 import { API_URL } from "../lib/constants";
-import { fetcher } from "../lib/helpers";
 import {
   InscriptionResponse,
   InscriptionTransferResponse,
   ListResponse,
 } from "../lib/types";
+import { fetcher } from "../lib/utils";
 import Loading from "./Loading";
 import {
   Tooltip,
@@ -45,9 +45,9 @@ const TransferHistory = (params: { inscription: InscriptionResponse }) => {
     );
 
   return (
-    <div className="text-center flex flex-col items-center p-2">
-      <h2 className="text-center text-xl my-4">Transfer History</h2>
-      <div className="flex flex-col items-center w-full max-w-2xl border rounded-lg p-8 space-y-4">
+    <div className="flex flex-col items-center p-2 text-center">
+      <h2 className="my-4 text-center text-xl">Transfer History</h2>
+      <div className="flex w-full max-w-2xl flex-col items-center space-y-4 rounded-lg border p-8">
         {data.results.map((transfer, i) => (
           <TransferRowItem
             key={transfer.tx_id}
@@ -86,19 +86,19 @@ function TransferRowItem(params: {
         <ReactTimeAgo date={params.transfer.timestamp} locale="en-US" />
       </div>
       <div className="flex">
-        <div className="flex items-center text-sm w-16">
+        <div className="flex w-16 items-center text-sm">
           #{params.transfer.block_height}
         </div>
-        <div className="relative group rounded-[6px] overflow-hidden">
+        <div className="group relative overflow-hidden rounded-[6px]">
           <div
-            className={`${styles.gradient} group-hover:filter-none absolute inset-0 w-full h-full transition-[filter] duration-350 z-0`}
+            className={`${styles.gradient} duration-350 absolute inset-0 z-0 h-full w-full transition-[filter] group-hover:filter-none`}
             style={{
               background: `linear-gradient(${degree}deg, rgba(${startR}, ${startG}, ${startB}, ${startOpacity}), rgba(${endR}, ${endG}, ${endB}, ${endOpacity})), url('/noise.png')`,
               backgroundBlendMode: "multiply",
             }}
           />
-          <div className="relative min-w-0 flex flex-row px-1.5 max-w-sm py-0.5 z-10">
-            <span className="whitespace-nowrap text-white overflow-hidden overflow-ellipsis">
+          <div className="relative z-10 flex min-w-0 max-w-sm flex-row px-1.5 py-0.5">
+            <span className="overflow-hidden overflow-ellipsis whitespace-nowrap text-white">
               {params.transfer.address}
             </span>
             {isGenesis && (
@@ -108,14 +108,14 @@ function TransferRowItem(params: {
                 <TooltipProvider delayDuration={0}>
                   <Tooltip>
                     <TooltipTrigger>
-                      <div className="relative w-4 h-4 bg-[rgba(242,240,237,.4)] rounded border border-white mr-[1px] z-20">
-                        <div className="absolute text-white w-full h-full mt-[-3px]">
+                      <div className="relative z-20 mr-[1px] h-4 w-4 rounded border border-white bg-[rgba(242,240,237,.4)]">
+                        <div className="absolute mt-[-3px] h-full w-full text-white">
                           *
                         </div>
                       </div>
                     </TooltipTrigger>
-                    <TooltipContent>
-                      <p>Inscription genesis</p>
+                    <TooltipContent variant="light">
+                      Inscription genesis
                     </TooltipContent>
                   </Tooltip>
                 </TooltipProvider>

@@ -6,7 +6,7 @@ import Charts from "../../../components/Charts";
 import Footer from "../../../components/Footer";
 import Header from "../../../components/Header";
 import Loading from "../../../components/Loading";
-import { fetcher } from "../../../lib/helpers";
+import { fetcher } from "../../../lib/utils";
 import { useHasMounted } from "../../../lib/hooks";
 import { HomepageResponse } from "../../../lib/types";
 

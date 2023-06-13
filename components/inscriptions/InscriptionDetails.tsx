@@ -3,14 +3,24 @@
 import Link from "next/link";
 import useSWR from "swr";
 
-import { ExternalLinkIcon } from "@radix-ui/react-icons";
+import { ArrowTopRightIcon, ExternalLinkIcon } from "@radix-ui/react-icons";
+import { useState } from "react";
 import { API_URL } from "../../lib/constants";
-import { fetcher, formatDateTime } from "../../lib/helpers";
 import { InscriptionResponse } from "../../lib/types";
+import { cn, fetcher, formatDateTime } from "../../lib/utils";
 import CopyButton from "../CopyButton";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "../Tooltip";
+import IconExpand from "../icons/IconExpand";
+import IconShrink from "../icons/IconShrink";
 import Loading from "./../Loading";
 import TransferHistory from "./../TransferHistory";
 import InscriptionRender from "./InscriptionRender";
+import IconUpRight from "../icons/IconUpRight";
 
 const InscriptionDetails = (params: { iid: string }) => {
   const { data, error, isLoading } = useSWR<
@@ -22,6 +32,8 @@ const InscriptionDetails = (params: { iid: string }) => {
         statusCode: number;
       }
   >(`${API_URL}/inscriptions/${params.iid}`, fetcher);
+
+  const [showExpanded, setShowExpanded] = useState(false);
 
   if (!params.iid) return <div>404</div>;
 
@@ -44,11 +56,51 @@ const InscriptionDetails = (params: { iid: string }) => {
     <>
       <div className="flex flex-col md:flex-row md:space-x-8">
         <div className="flex-auto basis-[384px]">
-          <div className="mx-auto mb-16 max-w-[65%] overflow-hidden rounded-md sm:max-w-[55%] md:mb-0 md:w-0 md:min-w-full md:max-w-none lg:border lg:p-10 xl:p-16 ">
+          <div
+            className={cn(
+              "relative mx-auto mb-16 max-w-[65%] overflow-hidden rounded-md sm:max-w-[55%] md:mb-0 md:w-0 md:min-w-full md:max-w-none lg:border",
+              showExpanded ? "p-0" : "lg:p-10 xl:p-16"
+            )}
+          >
             <InscriptionRender
               className="overflow-hidden rounded-md"
               inscription={data}
             />
+            <TooltipProvider delayDuration={0}>
+              <div className="absolute right-2 top-2 space-y-2">
+                <div>
+                  <Tooltip>
+                    <TooltipContent variant="dark" side="right" sideOffset={6}>
+                      <p>{showExpanded ? "Shrink" : "Expand"}</p>
+                    </TooltipContent>
+                    <TooltipTrigger>
+                      <button
+                        className="flex h-8 w-8 items-center justify-center rounded-[4px] border border-[] bg-[rgba(255,255,255,.35)] transition-colors hover:bg-[rgba(255,255,255,.4)]"
+                        onClick={() => setShowExpanded((b) => !b)}
+                      >
+                        {showExpanded ? <IconShrink /> : <IconExpand />}
+                      </button>
+                    </TooltipTrigger>
+                  </Tooltip>
+                </div>
+                <div>
+                  <Tooltip>
+                    <TooltipContent variant="dark" side="right" sideOffset={6}>
+                      <p>View content</p>
+                    </TooltipContent>
+                    <TooltipTrigger>
+                      <Link
+                        href={`/content/${data.id}`}
+                        className="flex h-8 w-8 items-center justify-center rounded-[4px] border border-[] bg-[rgba(255,255,255,.35)] transition-colors hover:bg-[rgba(255,255,255,.4)]"
+                        target="_blank"
+                      >
+                        <IconUpRight />
+                      </Link>
+                    </TooltipTrigger>
+                  </Tooltip>
+                </div>
+              </div>
+            </TooltipProvider>
           </div>
         </div>
 

@@ -1,6 +1,6 @@
 import { motion } from "framer-motion";
 import Link from "next/link";
-import { cn } from "../../lib/helpers";
+import { cn } from "../../lib/utils";
 
 import { InscriptionResponse } from "../../lib/types";
 import InscriptionRender from "./InscriptionRender";

@@ -2,7 +2,7 @@
 
 import * as React from "react";
 import * as TooltipPrimitive from "@radix-ui/react-tooltip";
-import { cn } from "../lib/helpers";
+import { cn } from "../lib/utils";
 
 const TooltipProvider = TooltipPrimitive.Provider;
 
@@ -13,14 +13,24 @@ const TooltipTrigger = TooltipPrimitive.Trigger;
 
 const TooltipContent = React.forwardRef<
   React.ElementRef<typeof TooltipPrimitive.Content>,
-  React.ComponentPropsWithoutRef<typeof TooltipPrimitive.Content>
->(({ className, sideOffset = 4, ...props }, ref) => (
+  React.ComponentPropsWithoutRef<typeof TooltipPrimitive.Content> & {
+    variant: "light" | "dark";
+  }
+>(({ className, variant = "light", sideOffset = 4, ...props }, ref) => (
   <TooltipPrimitive.Content
     ref={ref}
     sideOffset={sideOffset}
     className={cn(
-      "z-50 overflow-hidden cursor-default rounded-[4px] border bg-white px-3 py-1.5 text-xs text-neutral-900 shadow-md animate-in fade-in-50 data-[side=bottom]:slide-in-from-top-1 data-[side=top]:slide-in-from-bottom-1 data-[side=left]:slide-in-from-right-1 data-[side=right]:slide-in-from-left-1",
+      variant == "light" &&
+        "z-50 cursor-default overflow-hidden rounded-[4px] border bg-white px-3 py-1.5 text-xs text-neutral-900 shadow-md animate-in fade-in-50 data-[side=bottom]:slide-in-from-top-1 data-[side=left]:slide-in-from-right-1 data-[side=right]:slide-in-from-left-1 data-[side=top]:slide-in-from-bottom-1",
+      variant == "dark" &&
+        "z-50 overflow-hidden rounded-md bg-black px-2.5 py-1.5 text-sm text-white shadow-md animate-in fade-in-50 data-[side=bottom]:slide-in-from-top-1 data-[side=left]:slide-in-from-right-1 data-[side=right]:slide-in-from-left-1 data-[side=top]:slide-in-from-bottom-1",
       className
+      // todo: add triangle to tooltip
+      // e.g. something like
+      // <div class="w-16 overflow-hidden inline-block">
+      // <div class=" h-11 w-11 bg-black -rotate-45 transform origin-top-left"></div>
+      // </div>
     )}
     {...props}
   />

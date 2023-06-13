@@ -3,7 +3,7 @@ import useSWR from "swr";
 import { pipe } from "fp-ts/lib/function";
 import { match, tryCatch } from "fp-ts/lib/Option";
 import { API_URL } from "../../lib/constants";
-import { cn, getFontSize, textFetcher } from "../../lib/helpers";
+import { cn, getFontSize, textFetcher } from "../../lib/utils";
 import { InscriptionResponse } from "../../lib/types";
 import InscriptionRenderJson from "./InscriptionRenderJson";
 

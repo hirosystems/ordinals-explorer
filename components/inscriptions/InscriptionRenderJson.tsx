@@ -4,7 +4,7 @@ import useSWR from "swr";
 import { ReactNode } from "react";
 import { useToggle } from "react-use";
 import { API_URL } from "../../lib/constants";
-import { cn, fetcher } from "../../lib/helpers";
+import { cn, fetcher } from "../../lib/utils";
 import { InscriptionResponse } from "../../lib/types";
 import InscriptionRenderText from "./InscriptionRenderText";
 import "./json-viewer.css";
