@@ -3,7 +3,7 @@
 import * as React from "react";
 import * as SelectPrimitive from "@radix-ui/react-select";
 import { Check, ChevronDown } from "lucide-react";
-import { cn } from "../lib/helpers";
+import { cn } from "../lib/utils";
 
 const Select = SelectPrimitive.Root;
 
@@ -17,7 +17,7 @@ const SelectTrigger = React.forwardRef<
 >(({ className, children, ...props }, ref) => (
   <SelectPrimitive.Trigger
     ref={ref}
-    className={cn("flex justify-between px-2 py-1 space-x-1.5", className)}
+    className={cn("flex justify-between space-x-1.5 px-2 py-1", className)}
     {...props}
   >
     {children}
@@ -34,7 +34,7 @@ const SelectContent = React.forwardRef<
     <SelectPrimitive.Content
       ref={ref}
       className={cn(
-        "relative z-50 overflow-hidden rounded-md border bg-white animate-in fade-in-80",
+        "animate-in fade-in-80 relative z-50 overflow-hidden rounded-md border bg-white",
         className
       )}
       {...props}
@@ -53,7 +53,7 @@ const SelectLabel = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <SelectPrimitive.Label
     ref={ref}
-    className={cn("py-1.5 pr-2 pl-8", className)}
+    className={cn("py-1.5 pl-8 pr-2", className)}
     {...props}
   />
 ));
@@ -66,7 +66,7 @@ const SelectItem = React.forwardRef<
   <SelectPrimitive.Item
     ref={ref}
     className={cn(
-      "selectitem px-2 py-1 relative flex cursor-default select-none items-center rounded-sm outline-none focus:bg-neutral-100 data-[disabled]:pointer-events-none data-[disabled]:opacity-50",
+      "selectitem relative flex cursor-default select-none items-center rounded-sm px-2 py-1 outline-none focus:bg-neutral-100 data-[disabled]:pointer-events-none data-[disabled]:opacity-50",
       className
     )}
     {...props}

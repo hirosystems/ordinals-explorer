@@ -1,4 +1,4 @@
-import { cn } from "../lib/helpers";
+import { cn } from "../lib/utils";
 
 const Loading = ({ className }: { className?: string }) => {
   return (

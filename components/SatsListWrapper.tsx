@@ -3,7 +3,7 @@
 import useSWR from "swr";
 
 import { API_URL } from "../lib/constants";
-import { fetcher } from "../lib/helpers";
+import { fetcher } from "../lib/utils";
 import { InscriptionResponse, ListResponse } from "../lib/types";
 import CtaLink from "./CtaLink";
 import InscriptionCard from "./inscriptions/InscriptionCard";
@@ -23,12 +23,12 @@ const SatsListWrapper = ({ bid }: { bid: string }) => {
 
   return (
     <div className="py-4">
-      <div className="pt-4 grid grid-cols-3 md:grid-cols-5 gap-4">
+      <div className="grid grid-cols-3 gap-4 pt-4 md:grid-cols-5">
         {data.results.map((i, index) => (
           <InscriptionCard key={index} inscription={i} />
         ))}
       </div>
-      <div className="mt-16 mb-32 flex justify-around">
+      <div className="mb-32 mt-16 flex justify-around">
         <CtaLink href={`/explore?cf=${bid}&ct=${bid}`}>
           Explore inscriptions from block #{bid} &rarr;
         </CtaLink>

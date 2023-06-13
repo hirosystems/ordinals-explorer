@@ -14,7 +14,7 @@ const Header = ({ children }: { children?: React.ReactNode }) => {
       <div className="hidden sm:block">
         <Link
           href="/explore"
-          className="rounded-md px-3.5 py-2.5 hover:bg-neutral-0"
+          className="rounded-md px-3.5 py-2.5 transition-colors hover:bg-neutral-0"
         >
           Explore All
         </Link>

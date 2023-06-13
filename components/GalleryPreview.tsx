@@ -3,7 +3,7 @@ import { useEffect } from "react";
 import useSWR from "swr";
 
 import { API_URL } from "../lib/constants";
-import { fetcher } from "../lib/helpers";
+import { fetcher } from "../lib/utils";
 import { lastInscriptionDataAtom } from "../lib/store";
 import { InscriptionResponse, ListResponse } from "../lib/types";
 import InscriptionCard from "./inscriptions/InscriptionCard";
@@ -31,7 +31,7 @@ const GalleryPreview = () => {
 
   return (
     <>
-      <div className="grid grid-cols-3 md:grid-cols-4 gap-4">
+      <div className="grid grid-cols-3 gap-4 md:grid-cols-4">
         {previews.slice(0, 12).map((i, index) => (
           <InscriptionCard key={index} inscription={i} />
         ))}

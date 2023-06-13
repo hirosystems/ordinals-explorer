@@ -1,6 +1,6 @@
 import useSWR from "swr";
 import { API_URL } from "../lib/constants";
-import { fetcher } from "../lib/helpers";
+import { fetcher } from "../lib/utils";
 import { InscriptionResponse, ListResponse } from "../lib/types";
 import InscriptionCard from "./inscriptions/InscriptionCard";
 import Error from "./Error";

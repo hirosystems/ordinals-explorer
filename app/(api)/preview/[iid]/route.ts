@@ -1,5 +1,5 @@
 import { API_URL } from "../../../../lib/constants";
-import { getFontSize } from "../../../../lib/helpers";
+import { getFontSize } from "../../../../lib/utils";
 import { InscriptionResponse } from "../../../../lib/types";
 
 export async function GET(

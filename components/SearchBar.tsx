@@ -7,7 +7,7 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import useSWR from "swr";
 
 import { API_URL } from "@/lib/constants";
-import { cn } from "@/lib/helpers";
+import { cn } from "@/lib/utils";
 
 import "./SearchBar.css";
 import Thumbnail from "./Thumbnail";
@@ -115,7 +115,7 @@ async function searchFetcher(searches: SearchTypes[]) {
 const InscriptionLink = (props: SearchResult) => {
   return (
     <>
-      <div className="inline-block w-9 h-9 rounded border border-neutral-100 text-[8px] text-center leading-8">
+      <div className="inline-block h-9 w-9 rounded border border-neutral-100 text-center text-[8px] leading-8">
         <Thumbnail
           inscription={{
             id: props.id,
@@ -222,24 +222,24 @@ const SearchBar = () => {
   return (
     <div
       className={cn(
-        "search-bar-container relative text-neutral-400 transition-colors h-12 mb-10",
+        "search-bar-container relative mb-10 h-12 text-neutral-400 transition-colors",
         isFocused && "focused"
       )}
     >
-      <div className="search-bar-box absolute w-full p-[1px] bg-gradient-to-b from-neutral-0 to-neutral-200 rounded-[5px]">
-        <div className=" bg-white m-0 p-5 pt-10 w-full text-neutral-400 transition-colors rounded-[4px]">
+      <div className="search-bar-box absolute w-full rounded-[5px] bg-gradient-to-b from-neutral-0 to-neutral-200 p-[1px]">
+        <div className=" m-0 w-full rounded-[4px] bg-white p-5 pt-10 text-neutral-400 transition-colors">
           {groupedResult && isFocused
             ? Object.entries(groupedResult).map(([type, results]) =>
                 results.length ? (
                   <div key={type}>
-                    <p className="uppercase text-neutral-300 mt-3 mb-1">
+                    <p className="mb-1 mt-3 uppercase text-neutral-300">
                       {type}
                     </p>
 
                     {results.map((result) => (
                       <Link
                         className={cn(
-                          "flex items-center gap-2 p-3 border-2 border-transparent rounded hover:bg-neutral-0 whitespace-nowrap overflow-hidden text-ellipsis leading-5",
+                          "flex items-center gap-2 overflow-hidden text-ellipsis whitespace-nowrap rounded border-2 border-transparent p-3 leading-5 hover:bg-neutral-0",
                           result.index === selected && "border-peach"
                         )}
                         key={result.id}
@@ -261,7 +261,7 @@ const SearchBar = () => {
               )
             : null}
           {search.length && searchResults === null ? (
-            <p className="text-neutral-300 uppercase mt-5">
+            <p className="mt-5 uppercase text-neutral-300">
               ¯\_(ツ)_/¯ No results
             </p>
           ) : null}
@@ -272,7 +272,7 @@ const SearchBar = () => {
           <SearchIcon className="text-neutral-300" />
           <input
             ref={searchInputRef}
-            className="w-full outline-none font-normal placeholder:text-neutral-300"
+            className="w-full font-normal outline-none placeholder:text-neutral-300"
             type="text"
             value={search}
             onChange={(ev) => setSearch(ev.target.value.trim().toLowerCase())}

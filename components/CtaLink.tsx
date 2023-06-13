@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { ReactNode } from "react";
 
-import { cn } from "../lib/helpers";
+import { cn } from "../lib/utils";
 
 const CtaLink = (props: {
   children: ReactNode;
@@ -12,7 +12,7 @@ const CtaLink = (props: {
     <Link
       href={props.href}
       className={cn(
-        "cta-link px-[24px] py-[15px] text-white bg-neutral-500 border-2 border-black rounded-[4px]",
+        "cta-link rounded-[4px] border-2 border-black bg-neutral-500 px-[24px] py-[15px] text-white",
         props.className
       )}
     >

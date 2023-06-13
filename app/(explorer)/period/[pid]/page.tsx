@@ -6,7 +6,7 @@ import BlocksWrapper from "../../../../components/BlocksWrapper";
 import Footer from "../../../../components/Footer";
 import Header from "../../../../components/Header";
 import Loading from "../../../../components/Loading";
-import { fetcher } from "../../../../lib/helpers";
+import { fetcher } from "../../../../lib/utils";
 import { PeriodResponse } from "../../../../lib/types";
 
 const PeriodById = ({ params }: { params: { pid: string } }) => {

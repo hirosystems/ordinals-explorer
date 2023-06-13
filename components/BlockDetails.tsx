@@ -3,7 +3,7 @@
 import useSWR from "swr";
 
 import { API_URL } from "../lib/constants";
-import { fetcher } from "../lib/helpers";
+import { fetcher } from "../lib/utils";
 import { InscriptionResponse, ListResponse } from "../lib/types";
 import CtaLink from "./CtaLink";
 import InscriptionCard from "./inscriptions/InscriptionCard";
@@ -22,14 +22,14 @@ const BlockDetails = (params: { bid: string }) => {
 
   // todo: add pagination to allow viewing all inscriptions? or link to explore page
   return (
-    <div className="border p-4 pt-10 rounded-lg flex flex-col justify-between items-center">
+    <div className="flex flex-col items-center justify-between rounded-lg border p-4 pt-10">
       <h1 className="text-3xl">Block #{params.bid}</h1>
       {data.results.length ? (
         <>
-          <p className="hidden md:block my-3 uppercase break-all">
+          <p className="my-3 hidden break-all uppercase md:block">
             Block Hash: {data.results[0].genesis_block_hash}
           </p>
-          <h2 className="mt-8 text-xl self-start">
+          <h2 className="mt-8 self-start text-xl">
             Inscriptions ({data.total})
           </h2>
         </>
@@ -37,13 +37,13 @@ const BlockDetails = (params: { bid: string }) => {
         <p className="my-3">No inscriptions from transactions in this block</p>
       )}
 
-      <div className="mt-4 grid grid-cols-3 md:grid-cols-4 gap-4">
+      <div className="mt-4 grid grid-cols-3 gap-4 md:grid-cols-4">
         {data.results.map((i, index) => (
           <InscriptionCard key={index} inscription={i} />
         ))}
       </div>
 
-      <div className="mt-16 mb-8 flex justify-around">
+      <div className="mb-8 mt-16 flex justify-around">
         <CtaLink href={`/explore?hf=${params.bid}&ht=${params.bid}`}>
           Explore inscriptions from block #{params.bid} &rarr;
         </CtaLink>

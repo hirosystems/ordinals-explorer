@@ -3,7 +3,7 @@
 import * as React from "react";
 import * as HoverCardPrimitive from "@radix-ui/react-hover-card";
 
-import { cn } from "../lib/helpers";
+import { cn } from "../lib/utils";
 
 const HoverCard = HoverCardPrimitive.Root;
 
@@ -18,7 +18,7 @@ const HoverCardContent = React.forwardRef<
     align={align}
     sideOffset={sideOffset}
     className={cn(
-      "animate-in zoom-in-90 z-50 mx-3 rounded-lg border-neutral-0 border-2 bg-white p-1",
+      "animate-in zoom-in-90 z-50 mx-3 rounded-lg border-2 border-neutral-0 bg-white p-1",
       className
     )}
     {...props}
