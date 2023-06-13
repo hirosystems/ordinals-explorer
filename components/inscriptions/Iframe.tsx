@@ -7,7 +7,6 @@ const Iframe = (props: { src: string; className?: string }) => {
       className={cn("aspect-square h-full w-full border-none", props.className)}
       loading="lazy"
       sandbox="allow-scripts"
-      scrolling="no"
     />
   );
 };
