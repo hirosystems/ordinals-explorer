@@ -12,7 +12,7 @@ const Error = ({
   const status = error.status ?? error.statusText ?? error.code ?? null;
 
   return (
-    <div>
+    <div className="w-full text-center">
       <p>Something went wrong ʕ•̠͡•ʔ</p>
       {/* todo: hide additional info in dropdown/details element */}
       {action && <p>{action}</p>}

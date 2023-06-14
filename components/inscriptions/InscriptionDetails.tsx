@@ -137,7 +137,7 @@ const InscriptionDetails = (params: { iid: string }) => {
                   <TooltipTrigger asChild>
                     <Link
                       href={`https://twitter.com/intent/tweet?text=${encodeURI(
-                        `Inscription ${data.number} on the @hirosystems Ordinals Explorer https://ordinals.hiro.so/inscription/${data.id}`
+                        `Inscription ${data.number} on the @hirosystems Ordinals Explorer https://ordinals.hiro.so/inscription/${data.number}`
                       )}`}
                       className="rounded bg-neutral-0 px-1 py-1 transition-colors hover:bg-neutral-50"
                       target="_blank"

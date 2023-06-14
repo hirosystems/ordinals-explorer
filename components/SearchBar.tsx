@@ -222,7 +222,7 @@ const SearchBar = () => {
   return (
     <div
       className={cn(
-        "search-bar-container relative mb-10 h-12 text-neutral-400 transition-colors",
+        "search-bar-container relative z-50 mb-10 h-12 text-neutral-400 transition-colors",
         isFocused && "focused"
       )}
     >
