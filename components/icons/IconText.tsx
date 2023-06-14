@@ -11,14 +11,14 @@ const IconText = (params: { className?: string; style?: CSSProperties }) => {
     >
       <path
         stroke="#8C877D"
-        strokeLinecap="square"
-        strokeLinejoin="bevel"
+        strokeLinecap="round"
+        strokeLinejoin="round"
         d="M22.308 28.97H1.692a1.145 1.145 0 0 1-1.146-1.146V2.625A1.145 1.145 0 0 1 1.692 1.48h13.744l8.018 8.018v18.326a1.145 1.145 0 0 1-1.146 1.145Z"
       />
       <path
         stroke="#8C877D"
-        strokeLinecap="square"
-        strokeLinejoin="bevel"
+        strokeLinecap="round"
+        strokeLinejoin="round"
         d="M15.436 1.871v7.626h7.606"
       />
       <path
