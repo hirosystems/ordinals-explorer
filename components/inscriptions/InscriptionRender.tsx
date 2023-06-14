@@ -27,6 +27,9 @@ const InscriptionRender = (props: {
     return <InscriptionRenderText {...props} />;
   }
 
+  // todo: add overlay without pointer events with a variant of the render component
+  //       that can be used for non-clickable iframes (aka cards with links)
+  //       this would need to go in the iframe component (wrap in div and add absoolute inset-0 overlay)
   return <Iframe {...props} src={`/preview/${props.inscription.id}`} />;
 };
 
