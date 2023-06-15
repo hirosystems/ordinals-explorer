@@ -5,6 +5,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useCallback, useEffect, useRef, useState } from "react";
 import useSWR from "swr";
+import { motion } from "framer-motion";
 
 import { API_URL } from "@/lib/constants";
 import { cn } from "@/lib/utils";
@@ -97,19 +98,17 @@ async function searchFetcher(searches: SearchTypes[]) {
   });
 
   const results = await Promise.all(fetchPromises);
-  return results
-    .filter((r) => !!r)
-    .map(
-      (r, i): SearchResult => ({
-        id: `${r!.id}`,
-        index: i,
-        link: r!.link,
-        text: `${r!.text}`,
-        secondaryText: r!.secondaryText,
-        contentType: r!.content_type,
-        type: r!.type,
-      })
-    );
+  return results.filter(Boolean).map(
+    (r, i): SearchResult => ({
+      id: `${r!.id}`,
+      index: i,
+      link: r!.link,
+      text: `${r!.text}`,
+      secondaryText: r!.secondaryText,
+      contentType: r!.content_type,
+      type: r!.type,
+    })
+  );
 }
 
 const InscriptionLink = (props: SearchResult) => {
@@ -219,69 +218,87 @@ const SearchBar = () => {
     } as GroupedResults
   );
 
+  // todo: maybe switch to refs, right now the components are re-rendered on input click (visible in shadow re-rendering)
+  //      or potentially it would work to push down the search logic into a child component
   return (
     <div
       className={cn(
-        "search-bar-container relative z-50 mb-10 h-12 text-neutral-400 transition-colors",
+        "search-bar-container relative z-20 mb-10 h-12 text-neutral-400 transition-colors",
         isFocused && "focused"
       )}
     >
-      <div className="search-bar-box absolute w-full rounded-[5px] bg-gradient-to-b from-neutral-0 to-neutral-200 p-[1px]">
-        <div className=" m-0 w-full rounded-[4px] bg-white p-5 pt-10 text-neutral-400 transition-colors">
-          {groupedResult && isFocused
-            ? Object.entries(groupedResult).map(([type, results]) =>
-                results.length ? (
-                  <div key={type}>
-                    <p className="mb-1 mt-3 uppercase text-neutral-300">
-                      {type}
-                    </p>
-
-                    {results.map((result) => (
-                      <Link
-                        className={cn(
-                          "flex items-center gap-2 overflow-hidden text-ellipsis whitespace-nowrap rounded border-2 border-transparent p-3 leading-5 hover:bg-neutral-0",
-                          result.index === selected && "border-peach"
-                        )}
-                        key={result.id}
-                        href={result.link}
-                        onMouseDown={(e) => {
-                          // avoid loosing focus on the input
-                          e.preventDefault();
-                        }}
-                      >
-                        {type === GoToTypes.Inscription && (
-                          <InscriptionLink {...result} />
-                        )}
-                        {type === GoToTypes.Sat && <SatLink {...result} />}
-                        {type === GoToTypes.Block && <BlockLink {...result} />}
-                      </Link>
-                    ))}
-                  </div>
-                ) : null
-              )
-            : null}
+      {/* search bar input */}
+      <div className="absolute w-full p-[1px]">
+        <div className="relative z-40 rounded-[4px] bg-white p-[18px]">
+          <div className="flex gap-4 ">
+            <SearchIcon className="text-neutral-300" />
+            <input
+              ref={searchInputRef}
+              className="w-full font-normal outline-none placeholder:text-neutral-300"
+              type="text"
+              value={search}
+              onChange={(ev) => setSearch(ev.target.value.trim().toLowerCase())}
+              onFocus={() => setIsFocused(true)}
+              onBlur={() => setIsFocused(false)}
+              placeholder="Search by inscription, sat, or block"
+            />
+          </div>
+        </div>
+      </div>
+      {/* 1 px wrapper for gradient border */}
+      <motion.div
+        layout
+        transition={{ duration: 0.1 }}
+        className="search-bar-box absolute z-30 min-h-[62px] w-full overflow-hidden rounded-[5px] bg-gradient-to-b from-neutral-0 to-neutral-200 p-[1px] transition-[box-shadow]"
+      >
+        {/* search results content */}
+        <div className="m-0 w-full overflow-hidden rounded-[4px] bg-white text-neutral-400 transition-colors">
+          <div className="m-5 mt-[54px]">
+            <div
+              className={cn("space-y-1.5", isFocused ? "visible" : "hidden")}
+            >
+              {groupedResult
+                ? Object.entries(groupedResult).map(([type, results]) =>
+                    results.length ? (
+                      <div key={type}>
+                        <p className="relative z-50 uppercase text-neutral-300">
+                          {type}
+                        </p>
+                        {results.map((result) => (
+                          <Link
+                            className={cn(
+                              "flex items-center gap-2 overflow-hidden text-ellipsis whitespace-nowrap rounded border-2 border-transparent p-2 leading-5 transition-colors hover:bg-neutral-0",
+                              result.index === selected && "border-peach"
+                            )}
+                            key={result.id}
+                            href={result.link}
+                            onMouseDown={(e) => {
+                              // avoid loosing focus on the input
+                              e.preventDefault();
+                            }}
+                          >
+                            {type === GoToTypes.Inscription && (
+                              <InscriptionLink {...result} />
+                            )}
+                            {type === GoToTypes.Sat && <SatLink {...result} />}
+                            {type === GoToTypes.Block && (
+                              <BlockLink {...result} />
+                            )}
+                          </Link>
+                        ))}
+                      </div>
+                    ) : null
+                  )
+                : null}
+            </div>
+          </div>
           {search.length && searchResults === null ? (
             <p className="mt-5 uppercase text-neutral-300">
               ¯\_(ツ)_/¯ No results
             </p>
           ) : null}
         </div>
-      </div>
-      <div className="absolute w-full p-5">
-        <div className="flex gap-4">
-          <SearchIcon className="text-neutral-300" />
-          <input
-            ref={searchInputRef}
-            className="w-full font-normal outline-none placeholder:text-neutral-300"
-            type="text"
-            value={search}
-            onChange={(ev) => setSearch(ev.target.value.trim().toLowerCase())}
-            onFocus={() => setIsFocused(true)}
-            onBlur={() => setIsFocused(false)}
-            placeholder="Search by inscription, sat, or block"
-          />
-        </div>
-      </div>
+      </motion.div>
     </div>
   );
 };

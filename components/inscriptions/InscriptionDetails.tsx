@@ -163,7 +163,8 @@ const InscriptionDetails = (params: { iid: string }) => {
                     <span className="uppercase">Content Length</span>
                   </td>
                   <td className="group break-all pb-2.5 align-middle md:py-1.5">
-                    {data.content_length}
+                    {data.content_length}{" "}
+                    <span className="uppercase">bytes</span>
                   </td>
                 </tr>
                 <tr className="flex flex-col border-b pl-3 md:table-row md:py-3 md:pl-0 md:align-middle">
