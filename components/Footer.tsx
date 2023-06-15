@@ -1,5 +1,6 @@
 import { GitHubLogoIcon, TwitterLogoIcon } from "@radix-ui/react-icons";
 import IconTwitter from "./icons/IconTwitter";
+import Link from "next/link";
 
 const Footer = () => {
   return (
@@ -32,16 +33,20 @@ const Footer = () => {
               <a href="https://www.hiro.so/terms-privacy">Terms & Privacy</a>
             </div>
             <div className="flex justify-center space-x-3">
-              <a href="https://twitter.com/hirosystems">
+              <Link href="https://twitter.com/hirosystems" target="_blank">
                 {/* todo: find filled twitter icon */}
                 <IconTwitter className="inline-block h-3.5 text-neutral-0" />
-              </a>
-              <a href="https://github.com/hirosystems">
+              </Link>
+              <Link href="https://github.com/hirosystems" target="_blank">
                 <GitHubLogoIcon className="inline-block h-[18px] w-[18px] text-neutral-0" />
-              </a>
-              <a href="https://hiro.so" className="inline-block">
+              </Link>
+              <Link
+                href="https://hiro.so"
+                className="inline-block"
+                target="_blank"
+              >
                 &copy; {new Date().getFullYear()} Hiro Systems PBC
-              </a>
+              </Link>
             </div>
           </div>
         </div>
