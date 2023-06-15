@@ -3,7 +3,11 @@
 import Link from "next/link";
 import useSWR from "swr";
 
-import { ArrowTopRightIcon, ExternalLinkIcon } from "@radix-ui/react-icons";
+import {
+  ArrowTopRightIcon,
+  EnterFullScreenIcon,
+  ExternalLinkIcon,
+} from "@radix-ui/react-icons";
 import { useState } from "react";
 import { API_URL } from "../../lib/constants";
 import { InscriptionResponse } from "../../lib/types";
@@ -22,6 +26,14 @@ import TransferHistory from "./../TransferHistory";
 import InscriptionRender from "./InscriptionRender";
 import IconUpRight from "../icons/IconUpRight";
 import IconTwitter from "../icons/IconTwitter";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "../ui/dialog";
 
 const InscriptionDetails = (params: { iid: string }) => {
   const { data, error, isLoading } = useSWR<
@@ -61,15 +73,16 @@ const InscriptionDetails = (params: { iid: string }) => {
             <div
               className={cn(
                 "relative mx-auto mb-16 max-w-[65%] overflow-hidden rounded-md sm:max-w-[55%] md:mb-0 md:w-0 md:min-w-full md:max-w-none lg:border",
-                showExpanded ? "p-0" : "lg:p-10 xl:p-16"
+                showExpanded ? "p-0" : "lg:p-9 xl:p-[60px]"
               )}
             >
               <InscriptionRender
                 className="overflow-hidden rounded-md"
                 inscription={data}
               />
+              {/* todo: if image add glow */}
 
-              <div className="absolute right-2 top-2 space-y-2">
+              <div className="absolute right-0.5 top-0.5 space-y-0.5 xl:right-2 xl:top-2 xl:space-y-2">
                 <div>
                   <Tooltip>
                     <TooltipContent variant="dark" side="right" sideOffset={6}>
@@ -78,7 +91,8 @@ const InscriptionDetails = (params: { iid: string }) => {
                     <TooltipTrigger asChild>
                       <button
                         className={cn(
-                          "flex h-8 w-8 items-center justify-center rounded-[4px] border border-[] bg-[rgba(255,255,255,.35)] transition-colors hover:bg-[rgba(255,255,255,.4)]"
+                          "flex h-8 w-8 items-center justify-center rounded-[4px] bg-[rgba(255,255,255,.35)] transition-colors hover:bg-[rgba(255,255,255,.4)]",
+                          showExpanded ? "border-0" : "border-0 lg:border"
                         )}
                         onClick={() => setShowExpanded((b) => !b)}
                       >
@@ -86,6 +100,39 @@ const InscriptionDetails = (params: { iid: string }) => {
                       </button>
                     </TooltipTrigger>
                   </Tooltip>
+                </div>
+                <div>
+                  <Dialog>
+                    <DialogTrigger
+                      className={cn(
+                        "flex h-8 w-8 items-center justify-center rounded-[4px] bg-[rgba(255,255,255,.35)] transition-colors hover:bg-[rgba(255,255,255,.4)]",
+                        showExpanded ? "border-0" : "border-0 lg:border"
+                      )}
+                    >
+                      <Tooltip>
+                        <TooltipContent
+                          variant="dark"
+                          side="right"
+                          sideOffset={6}
+                        >
+                          <p>Full screen</p>
+                        </TooltipContent>
+                        <TooltipTrigger>
+                          <EnterFullScreenIcon
+                            width={16}
+                            height={16}
+                            className="scale-105"
+                          />
+                        </TooltipTrigger>
+                      </Tooltip>
+                    </DialogTrigger>
+                    <DialogContent className="h-full border-none bg-white p-0 shadow-none sm:max-w-full">
+                      <InscriptionRender
+                        className="h-full w-full"
+                        inscription={data}
+                      />
+                    </DialogContent>
+                  </Dialog>
                 </div>
                 <div>
                   <Tooltip>
@@ -96,7 +143,8 @@ const InscriptionDetails = (params: { iid: string }) => {
                       <Link
                         href={`/content/${data.id}`}
                         className={cn(
-                          "flex h-8 w-8 items-center justify-center rounded-[4px] border border-[] bg-[rgba(255,255,255,.35)] transition-colors hover:bg-[rgba(255,255,255,.4)]"
+                          "flex h-8 w-8 items-center justify-center rounded-[4px] bg-[rgba(255,255,255,.35)] transition-colors hover:bg-[rgba(255,255,255,.4)]",
+                          showExpanded ? "border-0" : "border-0 lg:border"
                         )}
                         target="_blank"
                       >
@@ -112,7 +160,9 @@ const InscriptionDetails = (params: { iid: string }) => {
           {/* todo: add links to linkeable data, add copy icon to copy to clipboard elements (see figma) */}
           <div className="flex-initial">
             <div className="flex items-center space-x-2">
-              <h2 className="my-2 text-2xl">Inscription #{data.number}</h2>
+              <h2 className="my-2 pl-3 text-2xl md:pl-0">
+                Inscription #{data.number}
+              </h2>
               <div className="flex">
                 <Tooltip>
                   <TooltipContent variant="dark" side="top" sideOffset={6}>
