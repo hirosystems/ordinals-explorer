@@ -39,7 +39,12 @@ export const RenderText = (props: {
   className?: string;
 }) => {
   return (
-    <div className="relative flex aspect-square w-full justify-center overflow-hidden bg-[#F2F0ED] p-3">
+    <div
+      className={cn(
+        "relative flex aspect-square w-full justify-center overflow-hidden bg-[#F2F0ED] p-3",
+        props.className
+      )}
+    >
       <p
         className={cn(
           "inline-block w-full whitespace-pre-wrap",

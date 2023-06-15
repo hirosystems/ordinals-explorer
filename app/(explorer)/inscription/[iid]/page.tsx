@@ -12,25 +12,14 @@ export async function generateMetadata({
   params: { iid: string };
 }) {
   // todo: add other metadata information
-
-  if (!params.iid) return {};
-
-  const inscription = await getInscription(params.iid);
-
-  if (!inscription.content_type) return {};
-
-  if (!inscription.content_type.toLowerCase().startsWith("image")) return {};
-
-  if (inscription.content_type.toLowerCase().includes("image/webp")) return {};
-
   return {
     openGraph: {
       // todo: add inscription number, override title, etc.
       images: [
         {
-          url: `/api/og/inscriptions?id=${params.iid}`,
+          url: `/api/ogimage/${params.iid}`,
           width: 1200,
-          height: 600,
+          height: 630,
         },
       ],
     },
@@ -41,7 +30,7 @@ const InscriptionById = ({ params }: { params: { iid: string } }) => {
   return (
     <>
       <Header />
-      <main className="p-8 flex-grow w-full max-w-7xl mx-auto">
+      <main className="mx-auto w-full max-w-7xl flex-grow p-8">
         <InscriptionDetails iid={params.iid} />
       </main>
       <Footer />

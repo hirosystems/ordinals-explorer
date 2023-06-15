@@ -3,11 +3,7 @@
 import Link from "next/link";
 import useSWR from "swr";
 
-import {
-  ArrowTopRightIcon,
-  EnterFullScreenIcon,
-  ExternalLinkIcon,
-} from "@radix-ui/react-icons";
+import { EnterFullScreenIcon, ExternalLinkIcon } from "@radix-ui/react-icons";
 import { useState } from "react";
 import { API_URL } from "../../lib/constants";
 import { InscriptionResponse } from "../../lib/types";
@@ -21,19 +17,12 @@ import {
 } from "../Tooltip";
 import IconExpand from "../icons/IconExpand";
 import IconShrink from "../icons/IconShrink";
+import IconTwitter from "../icons/IconTwitter";
+import IconUpRight from "../icons/IconUpRight";
+import { Dialog, DialogContent, DialogTrigger } from "../ui/dialog";
 import Loading from "./../Loading";
 import TransferHistory from "./../TransferHistory";
 import InscriptionRender from "./InscriptionRender";
-import IconUpRight from "../icons/IconUpRight";
-import IconTwitter from "../icons/IconTwitter";
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "../ui/dialog";
 
 const InscriptionDetails = (params: { iid: string }) => {
   const { data, error, isLoading } = useSWR<
