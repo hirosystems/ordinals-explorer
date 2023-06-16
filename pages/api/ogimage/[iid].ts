@@ -19,10 +19,12 @@ export default async function handler(
     res.statusCode = 200;
     res.setHeader("Content-Type", `image/png`);
     res.end(file);
-  } catch (e) {
+  } catch (e: any) {
     res.statusCode = 500;
     res.setHeader("Content-Type", "text/html");
-    res.end("<h1>Internal Error</h1><p>Sorry, there was a problem</p>");
+    res.end(
+      `<h1>Internal Error</h1><p>Sorry, there was a problem: <pre>${e.message}</pre><pre>${e.stack}</pre></p>`
+    );
     console.error(e);
   }
 }
