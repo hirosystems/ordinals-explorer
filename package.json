@@ -20,7 +20,7 @@
     "@scure/base": "^1.1.1",
     "@stacks/stacking": "^6.5.4",
     "@vercel/og": "^0.5.6",
-    "chrome-aws-lambda": "^10.1.0",
+    "chrome-aws-lambda": "1.6.3",
     "class-variance-authority": "^0.6.0",
     "clsx": "^1.2.1",
     "d3": "^7.8.4",
@@ -36,7 +36,7 @@
     "next-usequerystate": "^1.7.2",
     "node-fetch": "2.6.11",
     "pretty-bytes": "^6.1.0",
-    "puppeteer-core": "^10.1.0",
+    "puppeteer-core": "^13.7.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-hot-toast": "^2.4.1",
@@ -60,8 +60,5 @@
     "prettier": "^2.8.8",
     "prettier-plugin-tailwindcss": "^0.3.0",
     "tailwindcss": "^3.3.2"
-  },
-  "overrides": {
-    "node-fetch": "2.6.11"
   }
 }

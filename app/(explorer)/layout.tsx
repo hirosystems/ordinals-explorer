@@ -62,7 +62,7 @@ export default function RootLayout({
         {process.env.ENABLE_CSP && (
           <meta
             httpEquiv="Content-Security-Policy"
-            content={`frame-src ${
+            content={`frame-src${
               process.env.NODE_ENV === "production"
                 ? ""
                 : " http://localhost:3000"
