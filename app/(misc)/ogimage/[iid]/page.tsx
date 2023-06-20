@@ -5,6 +5,7 @@ import InscriptionRender from "../../../../components/inscriptions/InscriptionRe
 import { API_URL } from "../../../../lib/constants";
 import { InscriptionResponse } from "../../../../lib/types";
 import { fetcher } from "../../../../lib/utils";
+import { useSearchParams } from "next/navigation";
 
 const OgImagePage = ({ params }: { params: { iid: string } }) => {
   const { data, error, isLoading } = useSWR<
@@ -17,13 +18,23 @@ const OgImagePage = ({ params }: { params: { iid: string } }) => {
       }
   >(`${API_URL}/inscriptions/${params.iid}`, fetcher);
 
+  const searchParams = useSearchParams();
+  const width = searchParams.get("w") ?? 1200;
+  const height = searchParams.get("h") ?? 630;
+
   if (!data || error || isLoading || "error" in data) {
     // todo: add loading state
     return <div>loading...</div>;
   }
 
   return (
-    <div className="flex h-[630px] w-[1200px] flex-col justify-around space-y-[16px] overflow-hidden p-[72px]">
+    <div
+      className="flex flex-col justify-around space-y-[16px] overflow-hidden p-[72px]"
+      style={{
+        width: `${width}px`,
+        height: `${height}px`,
+      }}
+    >
       <div className="mt-[20px] flex">
         <div className="flex aspect-square h-[390px] rounded-md border-2 p-[30px]">
           <InscriptionRender
