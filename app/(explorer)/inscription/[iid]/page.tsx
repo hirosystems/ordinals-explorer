@@ -11,10 +11,25 @@ export async function generateMetadata({
 }: {
   params: { iid: string };
 }) {
+  const inscription = await getInscription(params.iid);
   // todo: add other metadata information
+
+  const title = `Inscription #${inscription.number} | ordinals.hiro.so`;
+  const description = "Explore Ordinals inscriptions.";
+
   return {
+    title,
+    description,
+    twitter: {
+      card: "summary_large_image",
+      creator: "@hirosystems",
+      title,
+      description,
+    },
     openGraph: {
       // todo: add inscription number, override title, etc.
+      title,
+      description,
       images: [
         {
           url: `https://ordinals-ogimage.vercel.app/api/ogimage/${params.iid}`,
