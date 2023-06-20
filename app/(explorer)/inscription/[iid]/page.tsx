@@ -17,7 +17,7 @@ export async function generateMetadata({
       // todo: add inscription number, override title, etc.
       images: [
         {
-          url: `/api/ogimage/${params.iid}`,
+          url: `https://ordinals-ogimage.vercel.app/api/ogimage/${params.iid}`,
           width: 1200,
           height: 630,
         },
