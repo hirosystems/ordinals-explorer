@@ -1,5 +1,3 @@
-"use client";
-
 import Link from "next/link";
 
 import CtaLink from "../../components/CtaLink";
@@ -8,21 +6,28 @@ import GalleryPreview from "../../components/GalleryPreview";
 import Header from "../../components/Header";
 import Intro from "../../components/Intro";
 import SearchBar from "../../components/SearchBar";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Hiro Ordinals Explorer | ordinals.hiro.so",
+  description:
+    "Discover the world of Ordinal Inscriptions with the Hiro Ordinals Explorer. Dive deep into this unique universe of digital assets inscribed on satoshis, the smallest unit of Bitcoin. Search, filter, and sort Ordinals by address, ID, sat number, or block. The explorer uses the open-source Hiro Ordinals API powered by Chainhooks.",
+};
 
 export default function Home() {
   return (
     <>
       <Header />
-      <main className="flex flex-col justify-between items-center min-h-screen max-w-5xl p-6 mx-auto space-y-6">
+      <main className="mx-auto flex min-h-screen max-w-5xl flex-col items-center justify-between space-y-6 p-6">
         {/* Intro Section */}
-        <div className="max-w-2xl mx-auto space-y-10">
+        <div className="mx-auto max-w-2xl space-y-10">
           {/* todo: wrap in motion */}
           <Intro />
           <div>
             <SearchBar />
             <Link
               href="/explore"
-              className="mt-4 text-neutral-300 flex justify-center"
+              className="mt-4 flex justify-center text-neutral-300"
             >
               or explore all
             </Link>
@@ -31,10 +36,10 @@ export default function Home() {
 
         {/* Gallery Section */}
         <div className="w-full">
-          <p className="mt-20 text-sm text-center uppercase">
+          <p className="mt-20 text-center text-sm uppercase">
             Latest Inscriptions
           </p>
-          <div className="mx-auto mt-3 mb-4 h-12 w-0 border border-dashed border-l-black" />
+          <div className="mx-auto mb-4 mt-3 h-12 w-0 border border-dashed border-l-black" />
           <GalleryPreview />
 
           <div className="mt-16 flex justify-around">
@@ -48,10 +53,10 @@ export default function Home() {
           <hr className="border-dashed border-neutral-200" />
         </div>
 
-        <div className="grid md:grid-cols-2 w-full gap-5">
-          <div className="p-8 border border-neutral-0 rounded-[6px]">
-            <div className="rounded bg-neutral-0 w-16 h-16 pl-2 flex items-center text-xl overflow-hidden">
-              <span className="bg-clip-text text-transparent bg-gradient-to-r from-neutral-300 to-neutral-0 pointer-events-none select-none">
+        <div className="grid w-full gap-5 md:grid-cols-2">
+          <div className="rounded-[6px] border border-neutral-0 p-8">
+            <div className="flex h-16 w-16 items-center overflow-hidden rounded bg-neutral-0 pl-2 text-xl">
+              <span className="pointer-events-none select-none bg-gradient-to-r from-neutral-300 to-neutral-0 bg-clip-text text-transparent">
                 #8030
               </span>
             </div>
@@ -75,8 +80,8 @@ export default function Home() {
               </a>
             </p>
           </div>
-          <div className="p-8 border border-neutral-0 rounded-[6px]">
-            <div className="rounded bg-neutral-0 w-16 h-16 flex justify-center items-center pointer-events-none">
+          <div className="rounded-[6px] border border-neutral-0 p-8">
+            <div className="pointer-events-none flex h-16 w-16 items-center justify-center rounded bg-neutral-0">
               <img src="/b-illustration.svg" alt="Bitcoin Icon" />
             </div>
             <h4 className="mt-7 text-2xl">What are Ordinals?</h4>
