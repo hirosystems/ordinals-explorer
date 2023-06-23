@@ -1,10 +1,10 @@
 import useSWR from "swr";
 
+import { match, tryCatchK } from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
-import { match, tryCatch } from "fp-ts/lib/Option";
 import { API_URL } from "../../lib/constants";
-import { cn, getFontSize, textFetcher } from "../../lib/utils";
 import { InscriptionResponse } from "../../lib/types";
+import { cn, textFetcher } from "../../lib/utils";
 import InscriptionRenderJson from "./InscriptionRenderJson";
 
 const InscriptionRenderText = (props: {
@@ -21,7 +21,8 @@ const InscriptionRenderText = (props: {
   if (!data || isLoading) return <></>;
 
   return pipe(
-    tryCatch(() => JSON.parse(data)),
+    data,
+    tryCatchK(jsonParseLoose),
     match(
       () => <RenderText {...props} text={data} />,
       (content) => <InscriptionRenderJson {...props} json={content} />
@@ -72,4 +73,10 @@ export function contentLengthClassName(contentLength: number) {
   if (contentLength < 10) return "text-[1.375em] text-center self-center";
   if (contentLength < 50) return "text-[20px] text-center self-center";
   return "text-sm tracking-tight";
+}
+
+function jsonParseLoose(jsonLike: string) {
+  // remove trailing comma before closing bracket
+  jsonLike = jsonLike.replace(/,\s*(\})/g, "$1");
+  return JSON.parse(jsonLike);
 }
