@@ -1,3 +1,5 @@
+"use client";
+
 import { useAtomValue } from "jotai";
 import { lastInscriptionDataAtom } from "../lib/store";
 import AnimatedText from "./AnimatedText";

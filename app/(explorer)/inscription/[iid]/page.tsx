@@ -1,4 +1,3 @@
-import { Metadata } from "next";
 import Footer from "../../../../components/Footer";
 import Header from "../../../../components/Header";
 import InscriptionDetails from "../../../../components/inscriptions/InscriptionDetails";
