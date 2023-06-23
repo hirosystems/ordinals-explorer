@@ -30,7 +30,7 @@ const CopyButton = (
     <span className="inline-flex items-center">
       {props.children}
       <motion.button
-        className="ml-1 self-center rounded-[50%] bg-transparent p-2 text-neutral-500 transition-[color,background-color,opacity] hover:bg-neutral-0 group-hover:opacity-100 md:hover:opacity-100 md:group-hover:bg-neutral-0 xl:opacity-0"
+        className="ml-1 self-center rounded-[50%] bg-transparent p-2 text-neutral-500 transition-[color,background-color,opacity] hover:bg-neutral-0 group-hover:opacity-100 md:hover:opacity-100 md:hover:bg-neutral-0 xl:opacity-0"
         whileTap={{
           scale: 0.8,
         }}

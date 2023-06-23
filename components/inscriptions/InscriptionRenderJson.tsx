@@ -217,5 +217,6 @@ function ContentBrc20({ json }: { json: Brc20Content }) {
     );
   }
 
+  // todo: add better invalid/fallback view of content
   throw "Invalid brc20 content";
 }
