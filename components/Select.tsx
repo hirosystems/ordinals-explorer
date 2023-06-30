@@ -17,7 +17,10 @@ const SelectTrigger = React.forwardRef<
 >(({ className, children, ...props }, ref) => (
   <SelectPrimitive.Trigger
     ref={ref}
-    className={cn("flex justify-between space-x-1.5 px-2 py-1", className)}
+    className={cn(
+      "flex items-center justify-between space-x-1.5 px-2 py-1",
+      className
+    )}
     {...props}
   >
     {children}
@@ -34,7 +37,7 @@ const SelectContent = React.forwardRef<
     <SelectPrimitive.Content
       ref={ref}
       className={cn(
-        "animate-in fade-in-80 relative z-50 overflow-hidden rounded-md border bg-white",
+        "relative z-50 overflow-hidden rounded-md border bg-white animate-in fade-in-80",
         className
       )}
       {...props}

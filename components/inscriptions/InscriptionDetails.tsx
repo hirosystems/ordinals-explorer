@@ -92,29 +92,29 @@ const InscriptionDetails = (params: { iid: string }) => {
                 </div>
                 <div>
                   <Dialog>
-                    <DialogTrigger
-                      className={cn(
-                        "flex h-8 w-8 items-center justify-center rounded-[4px] bg-[rgba(255,255,255,.35)] transition-colors hover:bg-[rgba(255,255,255,.4)]",
-                        showExpanded ? "border-0" : "border-0 lg:border"
-                      )}
-                    >
-                      <Tooltip>
-                        <TooltipContent
-                          variant="dark"
-                          side="right"
-                          sideOffset={6}
+                    <Tooltip>
+                      <TooltipContent
+                        variant="dark"
+                        side="right"
+                        sideOffset={6}
+                      >
+                        <p>Full screen</p>
+                      </TooltipContent>
+                      <TooltipTrigger>
+                        <DialogTrigger
+                          className={cn(
+                            "flex h-8 w-8 items-center justify-center rounded-[4px] bg-[rgba(255,255,255,.35)] transition-colors hover:bg-[rgba(255,255,255,.4)]",
+                            showExpanded ? "border-0" : "border-0 lg:border"
+                          )}
                         >
-                          <p>Full screen</p>
-                        </TooltipContent>
-                        <TooltipTrigger>
                           <EnterFullScreenIcon
                             width={16}
                             height={16}
                             className="scale-105"
                           />
-                        </TooltipTrigger>
-                      </Tooltip>
-                    </DialogTrigger>
+                        </DialogTrigger>
+                      </TooltipTrigger>
+                    </Tooltip>
                     <DialogContent className="h-full border-none bg-white p-0 shadow-none sm:max-w-full">
                       <InscriptionRender
                         className="h-full w-full"
@@ -366,12 +366,18 @@ const InscriptionDetails = (params: { iid: string }) => {
             </table>
           </div>
         </div>
-        {/* todo: complete transfer history */}
-        {wasTransferred && (
-          <div className="mt-10">
+        <div className="mt-10">
+          {wasTransferred ? (
             <TransferHistory inscription={data} />
-          </div>
-        )}
+          ) : (
+            <div className="flex flex-col p-2">
+              <h2 className="my-4 text-xl">Transfer History</h2>
+              <div className="text-neutral-400">
+                This inscription has not been transferred yet.
+              </div>
+            </div>
+          )}
+        </div>
       </TooltipProvider>
     </>
   );
