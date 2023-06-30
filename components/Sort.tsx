@@ -17,17 +17,17 @@ export const sortOptions = {
 const Sort = ({ sortKey, updateSort }: any) => {
   return (
     <Select value={sortKey} onValueChange={updateSort}>
-      <SelectTrigger className="uppercase text-xs">
+      <SelectTrigger className="text-xs uppercase">
         <div className="space-x-3">
-          <span>Sort By</span>
+          <label htmlFor="sortby">Sort By</label>
           <span>
             [<SelectValue />]
           </span>
         </div>
       </SelectTrigger>
-      <SelectContent>
+      <SelectContent id="sortby">
         {Object.entries(sortOptions).map(([key, value], i) => (
-          <SelectItem key={i} value={key} className="uppercase text-xs">
+          <SelectItem key={i} value={key} className="text-xs uppercase">
             {value}
           </SelectItem>
         ))}

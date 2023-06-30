@@ -3,16 +3,18 @@
 import { CopyIcon } from "@radix-ui/react-icons";
 import { motion } from "framer-motion";
 import { toast } from "react-hot-toast";
+import { cn } from "../lib/utils";
 
 const CopyButton = (
-  props:
+  props: (
     | {
         children: string;
       }
     | {
-        children: React.ReactElement;
+        children: React.ReactElement | React.ReactElement[] | string | string[];
         text: string;
       }
+  ) & { className?: string }
 ) => {
   async function onClick() {
     try {
@@ -27,10 +29,11 @@ const CopyButton = (
 
   return (
     // todo: add tooltip
-    <span className="inline-flex items-center">
+    // todo: abstract and re-use as RoundIconButton component
+    <span className={cn("inline-flex items-center", props.className)}>
       {props.children}
       <motion.button
-        className="ml-1 self-center rounded-[50%] bg-transparent p-2 text-neutral-500 transition-[color,background-color,opacity] hover:bg-neutral-0 group-hover:opacity-100 md:hover:opacity-100 md:hover:bg-neutral-0 xl:opacity-0"
+        className="ml-1 self-center rounded-[50%] bg-transparent p-2 text-neutral-500 transition-[color,background-color,opacity] hover:bg-neutral-0 group-hover:opacity-100 md:hover:bg-neutral-0 md:hover:opacity-100 xl:opacity-0"
         whileTap={{
           scale: 0.8,
         }}
