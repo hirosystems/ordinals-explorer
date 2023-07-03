@@ -19,6 +19,16 @@ const nextConfig = {
         source: "/:path*",
         headers: [{ key: "Access-Control-Allow-Origin", value: "*" }],
       },
+      {
+        source: "/preview/:path*",
+        headers: [
+          {
+            key: "content-security-policy",
+            value:
+              "default-src 'none'; frame-ancestors 'self' https://*.hiro.so https://*.vercel.app",
+          },
+        ],
+      },
     ];
   },
 
