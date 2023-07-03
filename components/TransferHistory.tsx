@@ -97,7 +97,7 @@ const TransferHistory = (props: { inscription: InscriptionResponse }) => {
     >
       <h2 className="my-4 text-xl">Transfer History</h2>
       <div className="max-w-full">
-        <div className="relative overflow-hidden rounded-t-[4px]">
+        <div className="relative overflow-x-auto rounded-t-[4px]">
           <table className="w-full border-collapse rounded-t-[4px] border border-neutral-50">
             <thead className="w-full table-fixed">
               <tr>
@@ -133,14 +133,20 @@ const TransferHistory = (props: { inscription: InscriptionResponse }) => {
         {/* Spacer */}
         <div className="h-1 w-full border-x" />
         <div className="flex items-center justify-between rounded-b-[4px] border py-0.5 pl-3 pr-2 text-sm">
-          <div className="text-neutral-500">
-            <sup title="Inscription genesis">+</sup> Inscription genesis
+          {/* Responsive legend */}
+          <div className="text-neutral-500 ">
+            <span className="hidden sm:inline">
+              <sup title="Inscription genesis">+</sup> Inscription genesis
+            </span>
           </div>
           <div className="flex items-center space-x-6">
-            {/* Limit selector */}
+            {/* Page size selector */}
             <Select value={rowsPerPage} onValueChange={setRowsPerPage}>
               <SelectTrigger
-                className={cn(isOnlyPage && "text-neutral-200")}
+                className={cn(
+                  "hidden sm:flex",
+                  isOnlyPage && "text-neutral-200"
+                )}
                 disabled={isOnlyPage}
               >
                 <div className="space-x-3">
@@ -169,6 +175,7 @@ const TransferHistory = (props: { inscription: InscriptionResponse }) => {
                     scale: 0.8,
                   }}
                   onClick={() => updatePage(-1)}
+                  title="Previous page"
                 >
                   <ChevronLeftIcon className="h-4 w-4" />
                 </motion.button>
@@ -194,12 +201,17 @@ const TransferHistory = (props: { inscription: InscriptionResponse }) => {
                     scale: 0.8,
                   }}
                   onClick={() => updatePage(+1)}
+                  title="Next page"
                 >
                   <ChevronRightIcon className="h-4 w-4" />
                 </motion.button>
               )}
             </div>
           </div>
+        </div>
+        {/* Responsive legend */}
+        <div className="mx-2 my-2 text-sm sm:hidden">
+          <sup title="Inscription genesis">+</sup> Inscription genesis
         </div>
       </div>
     </motion.div>
