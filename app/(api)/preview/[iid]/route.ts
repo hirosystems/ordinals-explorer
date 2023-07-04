@@ -6,6 +6,14 @@ export async function GET(
   request: Request,
   { params }: { params: { iid: string } }
 ) {
+  if (request.url.includes("hiro.so")) {
+    // todo: add this as an ENV config
+    // don't show the preview (with potentially unsafe content) on the main domain
+    return new Response("Arbitrary previews not allowed on this domain.", {
+      status: 400,
+    });
+  }
+
   try {
     const id = params.iid;
     const data = await getInscription(id);

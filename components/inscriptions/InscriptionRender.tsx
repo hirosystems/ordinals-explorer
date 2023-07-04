@@ -19,7 +19,12 @@ const InscriptionRender = (props: {
   }
 
   if (props.inscription.content_type.startsWith("text/html")) {
-    return <Iframe {...props} src={`/preview/${props.inscription.id}`} />;
+    return (
+      <Iframe
+        {...props}
+        src={`${process.env.NEXT_PUBLIC_PREVIEW_URL}/preview/${props.inscription.id}`}
+      />
+    );
   }
 
   if (props.inscription.content_type.startsWith("text/")) {
@@ -30,7 +35,12 @@ const InscriptionRender = (props: {
   // todo: add overlay without pointer events with a variant of the render component
   //       that can be used for non-clickable iframes (aka cards with links)
   //       this would need to go in the iframe component (wrap in div and add absoolute inset-0 overlay)
-  return <Iframe {...props} src={`/preview/${props.inscription.id}`} />;
+  return (
+    <Iframe
+      {...props}
+      src={`${process.env.NEXT_PUBLIC_PREVIEW_URL}/preview/${props.inscription.id}`}
+    />
+  );
 };
 
 export default InscriptionRender;

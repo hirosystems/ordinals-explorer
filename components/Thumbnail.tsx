@@ -34,7 +34,7 @@ export const ThumbnailIcon = ({
   if (showImage && safeTypes.includes(inscription.content_type.toLowerCase()))
     return (
       <Iframe
-        src={`/preview/${inscription.id}`}
+        src={`${process.env.NEXT_PUBLIC_PREVIEW_URL}/preview/${inscription.id}`}
         className="pointer-events-none"
       />
     );
