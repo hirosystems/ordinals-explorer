@@ -62,11 +62,7 @@ export default function RootLayout({
         {process.env.ENABLE_CSP && (
           <meta
             httpEquiv="Content-Security-Policy"
-            content={`frame-src${
-              process.env.NODE_ENV === "production"
-                ? ""
-                : " http://localhost:3000"
-            } https://api.hiro.so https://ordinals.hiro.so;`}
+            content="frame-src https://*.hiro.so https://*.vercel.app http://localhost:*;"
           />
         )}
 

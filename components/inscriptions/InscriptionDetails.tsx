@@ -61,7 +61,7 @@ const InscriptionDetails = (params: { iid: string }) => {
           <div className="flex-auto basis-[384px]">
             <div
               className={cn(
-                "relative mx-auto mb-16 max-w-[65%] overflow-hidden rounded-md sm:max-w-[55%] md:mb-0 md:w-0 md:min-w-full md:max-w-none lg:border",
+                "relative mx-auto mb-16 aspect-square max-w-[65%] overflow-hidden rounded-md sm:max-w-[55%] md:mb-0 md:w-0 md:min-w-full md:max-w-none lg:border",
                 showExpanded ? "p-0" : "lg:p-9 xl:p-[60px]"
               )}
             >
