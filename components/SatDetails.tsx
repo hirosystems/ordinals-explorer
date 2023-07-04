@@ -3,11 +3,12 @@
 import useSWR from "swr";
 
 import { API_URL } from "../lib/constants";
-import { fetcher } from "../lib/utils";
 import { SatResponse } from "../lib/types";
+import { fetcher } from "../lib/utils";
 import InscriptionCard from "./inscriptions/InscriptionCard";
 
 import Loading from "./Loading";
+import RarityTag from "./RarityTag";
 import WithInscription from "./WithInscription";
 
 const Inscription = ({ id }: { id: string }) =>
@@ -31,6 +32,7 @@ const SatDetails = (params: { sid: string }) => {
       {data.inscription_id && (
         <div className="my-6 flex flex-col items-center">
           <h2 className="mb-3 mt-8 uppercase">Inscription</h2>
+          {/* todo: fix inscription preview sizing from growing too large */}
           <Inscription id={data.inscription_id} />
         </div>
       )}
@@ -42,10 +44,7 @@ const SatDetails = (params: { sid: string }) => {
               Sat Rarity
             </td>
             <td className="break-all px-2 uppercase md:py-2">
-              <span className="rounded-[4px] bg-neutral-400 px-1 py-0.5 text-white">
-                {/* todo: fancy rarity component */}
-                {data.rarity}
-              </span>
+              <RarityTag rarity={data.rarity} />
             </td>
           </tr>
           {/* todo: Coinbase Timestamp? */}

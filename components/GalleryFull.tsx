@@ -121,6 +121,7 @@ const GalleryFull = ({
     );
   }
 
+  // todo: use number of previous results as limit value, so when results only show few elements the loading skeleton doesn't interfere / flash around
   const items = data?.results ?? Array(limit).fill(null); // skeleton values
 
   return (

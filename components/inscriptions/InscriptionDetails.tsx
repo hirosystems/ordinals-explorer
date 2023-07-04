@@ -9,6 +9,7 @@ import { API_URL } from "../../lib/constants";
 import { InscriptionResponse } from "../../lib/types";
 import { cn, fetcher, formatDateTime } from "../../lib/utils";
 import CopyButton from "../CopyButton";
+import RarityTag from "../RarityTag";
 import {
   Tooltip,
   TooltipContent,
@@ -226,10 +227,7 @@ const InscriptionDetails = (params: { iid: string }) => {
                     <span className="uppercase">Sat Rarity</span>
                   </td>
                   <td className="group break-all pb-2.5 align-middle md:py-1.5">
-                    <span className="rounded-[4px] bg-neutral-400 px-1 py-0.5 uppercase text-white">
-                      {/* todo: fancy rarity component */}
-                      {data.sat_rarity}
-                    </span>
+                    <RarityTag rarity={data.sat_rarity} />
                   </td>
                 </tr>
                 <tr className="flex flex-col border-b pl-3 md:table-row md:py-3 md:pl-0 md:align-middle">
@@ -250,7 +248,7 @@ const InscriptionDetails = (params: { iid: string }) => {
                   <td className="group break-all pb-2.5 align-middle md:py-1.5">
                     <CopyButton text={data.address}>
                       <Link
-                        className="font-['Aeonik_Mono'] underline"
+                        className="font-['Aeonik_Mono'] tracking-tight underline"
                         href={`/address/${data.address}`}
                       >
                         {data.address}
