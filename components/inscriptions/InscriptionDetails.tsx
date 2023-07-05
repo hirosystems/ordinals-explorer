@@ -73,7 +73,7 @@ const InscriptionDetails = (params: { iid: string }) => {
               {/* todo: if image add glow */}
 
               <div className="absolute right-0.5 top-0.5 space-y-0.5 xl:right-2 xl:top-2 xl:space-y-2">
-                <div>
+                <div className="hidden lg:block">
                   <Tooltip>
                     <TooltipContent variant="dark" side="right" sideOffset={6}>
                       <p>{showExpanded ? "Shrink" : "Expand"}</p>
