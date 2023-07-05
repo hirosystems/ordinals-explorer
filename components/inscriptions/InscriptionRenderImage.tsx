@@ -12,10 +12,7 @@ const InscriptionRenderImage = ({
   // todo: background image with hidden semantic element better?
   return (
     <div
-      className={cn(
-        "flex h-full w-full items-center justify-center bg-[#F2F0ED]",
-        className
-      )}
+      className={cn("flex items-center justify-center bg-[#F2F0ED]", className)}
     >
       {/* eslint-disable-next-line @next/next/no-img-element */}
       <img
