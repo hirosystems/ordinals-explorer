@@ -13,6 +13,7 @@ import Header from "../../../components/Header";
 import RangeFilter from "../../../components/RangeFilter";
 
 import Sort, { sortOptions } from "../../../components/Sort";
+import TextFilter from "../../../components/TextFilter";
 import { useHasMounted } from "../../../lib/hooks";
 
 const fParams = ["image", "video", "audio", "text", "binary"];
@@ -61,6 +62,9 @@ const Page = () => {
   const sortKey = `${sort}-${order}` as keyof typeof sortOptions;
   const page = parseInt(searchParams.get("p") ?? "0");
 
+  // text parameters
+  const mimeTypes = searchParams.get("m") ?? "";
+
   // array filter parameters
   const fSelected = new Set(searchParams.getAll("f"));
   const rSelected = new Set(searchParams.getAll("r"));
@@ -77,6 +81,7 @@ const Page = () => {
 
   // todo: add all other filters
   const arrayCount = fSelected.size + rSelected.size;
+  const textCount = mimeTypes ? 1 : 0;
   const paramsCount = [
     dStart,
     dEnd,
@@ -87,7 +92,7 @@ const Page = () => {
     hStart,
     hEnd,
   ].filter(Boolean).length; // todo: rather count each range param as 1 filter max?
-  const filterCount = arrayCount + paramsCount;
+  const filterCount = arrayCount + textCount + paramsCount;
 
   function toggle(key: string, type: string) {
     const set = new Set(searchParams.getAll(key));
@@ -112,6 +117,13 @@ const Page = () => {
     searchParams.delete(`${key}t`);
     if (start) searchParams.set(`${key}f`, start);
     if (end) searchParams.set(`${key}t`, end);
+    window.history.pushState({}, "", `${pathname}?${searchParams.toString()}`);
+    update(); // force re-render
+  }
+
+  function updateParam(key: string, value: string | null) {
+    searchParams.delete(key);
+    if (value) searchParams.set(key, value);
     window.history.pushState({}, "", `${pathname}?${searchParams.toString()}`);
     update(); // force re-render
   }
@@ -143,7 +155,7 @@ const Page = () => {
         </div>
       );
     return (
-      <div>
+      <div className="text-center">
         <p>¯\_(ツ)_/¯</p>
         <p className="uppercase">No results</p>
       </div>
@@ -155,7 +167,7 @@ const Page = () => {
     order,
     order_by: sort,
 
-    mime_type: [] as string[], // todo: allow addition comma separated mime types
+    mime_type: mimeTypes.split(",").filter(Boolean),
     file_type: Array.from(fSelected),
     rarity: Array.from(rSelected),
 
@@ -180,13 +192,20 @@ const Page = () => {
               <div className="py-1 uppercase">Filter</div>
               <hr className="border-dashed border-neutral-300" />
             </div>
-            <div className="mt-5"></div>
+            <div className="mt-5" />
             <Filter
               defaultOpen={true}
               name="File Types"
               options={fParams}
               onClick={(t) => toggle("f", t)}
               selected={fSelected}
+            />
+            <div className="mt-5" />
+            <TextFilter
+              name="Mime Types"
+              text={mimeTypes}
+              placeholder="Comma-separated types"
+              onApply={(t) => updateParam("m", t)}
             />
             <hr className="my-3 border-dashed border-neutral-200" />
             <Filter
@@ -224,12 +243,10 @@ const Page = () => {
               end={cEnd}
               onApply={(f, t) => updateRange("c", f, t)}
             />
-
-            {/* todo: inscription number filter */}
             {/* todo: period filter */}
 
             <hr className="my-3 border-dashed border-neutral-200" />
-            <div className="my-6"></div>
+            <div className="my-6" />
             <button
               className="block w-full rounded-[4px] border px-4 py-2 uppercase text-neutral-600"
               onClick={clear}

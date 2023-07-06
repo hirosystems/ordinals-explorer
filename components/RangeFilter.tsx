@@ -62,7 +62,7 @@ const RangeFilter = ({
             <button
               className={cn(
                 "mt-4 block w-full rounded-[4px] border px-4 py-2 uppercase text-neutral-600",
-                isAppliable && "text-red-600"
+                isAppliable && "text-orange"
               )}
               onClick={() => onApply(currentStart, currentEnd)}
             >

@@ -5,11 +5,13 @@ const Error = ({
   error?: Error & any;
   message?: string;
 }) => {
-  message = message ?? error.message ?? null;
   error = error?.cause ?? error;
+  message = message ?? error.message ?? null;
 
-  const action = "Try refreshing the page in a bit.";
-  const status = error.status ?? error.statusText ?? error.code ?? null;
+  const action = recommendAction(message);
+  const status = error?.status ?? error?.statusText ?? error?.code ?? null;
+
+  console.error(error, message);
 
   return (
     <div className="w-full text-center">
@@ -25,5 +27,11 @@ const Error = ({
     </div>
   );
 };
+
+function recommendAction(message?: string) {
+  if (message == "Load failed") {
+    return "Try refreshing the page in a bit.";
+  }
+}
 
 export default Error;
