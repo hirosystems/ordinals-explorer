@@ -47,7 +47,7 @@ const TextFilter = ({
               <input
                 type="text"
                 placeholder={placeholder}
-                defaultValue={text}
+                defaultValue={currentText ?? text}
                 className="w-full rounded-[4px] border px-1.5 py-1"
                 onChange={(e) => setCurrentText(e.target.value)}
                 onSubmit={() => onApply(currentText)}

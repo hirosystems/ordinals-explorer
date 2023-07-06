@@ -143,7 +143,7 @@ const Page = () => {
   function renderEmpty() {
     if (filterCount > 0)
       return (
-        <div className="flex-grow uppercase text-neutral-400">
+        <div className="flex-grow text-center uppercase text-neutral-400">
           No matching results for the filters selected.
           <button
             className="big-button broder-2 mx-auto my-6 block rounded-[4px] border border-black bg-neutral-500 px-5 py-3 text-white"
