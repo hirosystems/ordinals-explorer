@@ -8,25 +8,23 @@ import {
   CollapsibleTrigger,
 } from "./Collapsible";
 
-const DateFilter = ({
+const TextFilter = ({
   name,
   onApply,
-  start,
-  end,
+  text = "",
+  placeholder,
   defaultOpen = false,
   className,
 }: {
   name: string;
-  onApply: (start: string | null, end: string | null) => void;
-  start: string | null;
-  end: string | null;
+  onApply: (text: string) => void;
+  text?: string;
+  placeholder?: string;
   defaultOpen?: boolean;
   className?: string;
 }) => {
-  const [currentStart, setCurrentStart] = useState(start);
-  const [currentEnd, setCurrentEnd] = useState(end);
-
-  const isAppliable = start !== currentStart || end !== currentEnd;
+  const [currentText, setCurrentText] = useState(text);
+  const isAppliable = text !== currentText;
 
   return (
     <div className={className}>
@@ -38,40 +36,38 @@ const DateFilter = ({
           {/* todo: rotate on expand */}
         </CollapsibleTrigger>
         <CollapsibleContent>
-          <div className="mb-6 mt-4">
+          <form
+            className="mb-6 mt-4"
+            onSubmit={(e) => {
+              e.preventDefault();
+              onApply(currentText);
+            }}
+          >
             <div className="flex items-center justify-between space-x-2">
-              {/* todo: hidden labels for accessibility with name prefix */}
               <input
-                type="date"
-                defaultValue={start ?? ""}
-                className="w-[90px] rounded-[4px] border px-1.5 py-1 uppercase"
-                onClick={(e) => e.currentTarget.showPicker()} // todo: is this still accessible?
-                onChange={(e) => setCurrentStart(e.target.value)}
-              />
-              <p className="uppercase">to</p>
-              <input
-                type="date"
-                defaultValue={end ?? ""}
-                className="w-[90px] rounded-[4px] border px-1.5 py-1 uppercase"
-                onClick={(e) => e.currentTarget.showPicker()} // todo: is this still accessible?
-                onChange={(e) => setCurrentEnd(e.target.value)}
+                type="text"
+                placeholder={placeholder}
+                defaultValue={text}
+                className="w-full rounded-[4px] border px-1.5 py-1"
+                onChange={(e) => setCurrentText(e.target.value)}
+                onSubmit={() => onApply(currentText)}
               />
             </div>
             <button
+              type="submit"
               className={cn(
                 "mt-4 block w-full rounded-[4px] border px-4 py-2 uppercase text-neutral-600",
                 isAppliable && "text-orange"
               )}
-              onClick={() => onApply(currentStart, currentEnd)}
             >
               {/* todo: apply button color state, hover, etc. */}
               Apply
             </button>
-          </div>
+          </form>
         </CollapsibleContent>
       </Collapsible>
     </div>
   );
 };
 
-export default DateFilter;
+export default TextFilter;

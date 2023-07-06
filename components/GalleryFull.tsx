@@ -108,15 +108,15 @@ const GalleryFull = ({
     fetcher
   );
 
-  if (error) return <Error error={error} />;
+  // if (error) return <Error error={error} />;
   if (!error && data && "message" in data && typeof data.message === "string") {
     return <Error message={data.message} />;
   }
 
   if (data && data.results.length === 0) {
     return (
-      <div className="flex flex-grow items-center text-center">
-        {renderEmpty ? renderEmpty() : "No results"}
+      <div className="flex flex-grow items-center justify-center">
+        {renderEmpty?.() ?? "No results"}
       </div>
     );
   }
