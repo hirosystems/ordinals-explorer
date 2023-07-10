@@ -1,6 +1,7 @@
 import { API_URL } from "../../../../lib/constants";
 import { getFontSize } from "../../../../lib/utils";
 import { InscriptionResponse } from "../../../../lib/types";
+import { redirect } from "next/navigation";
 
 export async function GET(
   request: Request,
@@ -9,15 +10,16 @@ export async function GET(
   if (request.url.includes("hiro.so")) {
     // todo: add this as an ENV config
     // don't show the preview (with potentially unsafe content) on the main domain
-    return new Response("Arbitrary previews not allowed on this domain.", {
-      status: 400,
-    });
+    const url = new URL(request.url);
+    // todo: add redirect url to ENV config
+    url.hostname = "ordinal.vercel.app";
+    return redirect(url.toString());
   }
 
   try {
     const id = params.iid;
     const data = await getInscription(id);
-    // todo: errors
+    // todo: errors?
 
     return new Response(await page(data), {
       status: 200,
