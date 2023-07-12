@@ -19,9 +19,9 @@ const Footer = () => {
             powered by{" "}
             <a
               className="underline"
-              href="https://github.com/hirosystems/chainhook"
+              href="https://github.com/hirosystems/hord"
             >
-              Chainhooks
+              Hord
             </a>
             .
           </p>
