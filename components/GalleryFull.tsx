@@ -126,7 +126,7 @@ const GalleryFull = ({
 
   return (
     <>
-      <div className="grid grid-cols-3 gap-4 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-5 3xl:grid-cols-6">
+      <div className="grid grid-cols-3 gap-4 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-5">
         {items.map((i, index) => (
           <InscriptionCard key={i?.id ?? index} inscription={i} light />
         ))}
