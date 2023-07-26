@@ -1,6 +1,31 @@
 import { ClassValue, clsx } from "clsx";
 import { twMerge } from "tailwind-merge";
 
+// todo: add more common mime types
+// From https://developer.mozilla.org/en-US/docs/Web/HTTP/Basics_of_HTTP/MIME_types
+export const mimeTypes = {
+  // Safe Images https://developer.mozilla.org/en-US/docs/Web/HTTP/Basics_of_HTTP/MIME_types#image_types
+  image: [
+    "image/apng",
+    "image/avif",
+    "image/gif",
+    "image/jpg",
+    "image/jpeg",
+    "image/png",
+    "image/svg+xml",
+    "image/webp",
+  ],
+  audio: ["audio/midi", "audio/mod", "audio/mpeg"],
+  video: ["video/mp4", "video/webm"],
+  text: ["text/html", "text/markdown", "text/plain"],
+  binary: [
+    "application/epub+zip",
+    "application/json",
+    "application/pdf",
+    "application/pgp-signature",
+  ],
+} as const;
+
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }

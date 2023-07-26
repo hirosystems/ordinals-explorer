@@ -1,37 +1,14 @@
+"use client";
+
 import useSWR from "swr";
 import { API_URL } from "../lib/constants";
-import { fetcher } from "../lib/utils";
 import { InscriptionResponse, ListResponse } from "../lib/types";
-import InscriptionCard from "./inscriptions/InscriptionCard";
+import { fetcher, mimeTypes } from "../lib/utils";
 import Error from "./Error";
+import InscriptionCard from "./inscriptions/InscriptionCard";
 
 // const limit = 60; // LCM of 3, 4, 5, 6
 const limit = 20; // todo: increase limit on api end
-
-// todo: add more common mime types
-// From https://developer.mozilla.org/en-US/docs/Web/HTTP/Basics_of_HTTP/MIME_types
-export const mimeTypes = {
-  // Safe Images https://developer.mozilla.org/en-US/docs/Web/HTTP/Basics_of_HTTP/MIME_types#image_types
-  image: [
-    "image/apng",
-    "image/avif",
-    "image/gif",
-    "image/jpg",
-    "image/jpeg",
-    "image/png",
-    "image/svg+xml",
-    "image/webp",
-  ],
-  audio: ["audio/midi", "audio/mod", "audio/mpeg"],
-  video: ["video/mp4", "video/webm"],
-  text: ["text/html", "text/markdown", "text/plain"],
-  binary: [
-    "application/epub+zip",
-    "application/json",
-    "application/pdf",
-    "application/pgp-signature",
-  ],
-} as const;
 
 export type V1InscriptionsOptions = {
   page: number;

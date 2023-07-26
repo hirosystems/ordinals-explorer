@@ -5,10 +5,12 @@ import { useEffect } from "react";
 import useSWR from "swr";
 
 import { API_URL } from "../lib/constants";
-import { fetcher } from "../lib/utils";
+import { cn, fetcher } from "../lib/utils";
 import { lastInscriptionDataAtom } from "../lib/store";
 import { InscriptionResponse, ListResponse } from "../lib/types";
 import InscriptionCard from "./inscriptions/InscriptionCard";
+
+const limit = 8
 
 const GalleryPreview = () => {
   const setLastInscriptionData = useSetAtom(lastInscriptionDataAtom);
@@ -29,13 +31,13 @@ const GalleryPreview = () => {
 
   if (error) return <span>Something went wrong ʕ•̠͡•ʔ</span>;
 
-  const previews = data ? data.results : Array(12).fill(null); // skeleton values
+  const previews = data ? data.results : Array(limit).fill(null); // skeleton values
 
   return (
     <>
       <div className="grid grid-cols-3 gap-4 md:grid-cols-4">
-        {previews.slice(0, 12).map((i, index) => (
-          <InscriptionCard key={index} inscription={i} />
+        {previews.slice(0, limit).map((i, index) => (
+          <InscriptionCard key={index} inscription={i} className={cn(index >= 6 && "hidden md:block")}/>
         ))}
       </div>
       {/* todo: re-add figma link to full feed */}
