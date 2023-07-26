@@ -12,7 +12,7 @@ import GalleryFull, {
 import Header from "../../../components/Header";
 import RangeFilter from "../../../components/RangeFilter";
 
-import Sort, { sortOptions } from "../../../components/Sort";
+import Sort, { inscriptionSortOptions } from "../../../components/Sort";
 import TextFilter from "../../../components/TextFilter";
 import { useHasMounted } from "../../../lib/hooks";
 
@@ -59,7 +59,7 @@ const Page = () => {
   // basic parameters
   const sort = searchParams.get("s") ?? "genesis_block_height"; // genesis_block_height, rarity
   const order = searchParams.get("o") ?? "desc"; // asc, desc
-  const sortKey = `${sort}-${order}` as keyof typeof sortOptions;
+  const sortKey = `${sort}-${order}` as keyof typeof inscriptionSortOptions;
   const page = parseInt(searchParams.get("p") ?? "0");
 
   // text parameters
@@ -200,7 +200,7 @@ const Page = () => {
               onClick={(t) => toggle("f", t)}
               selected={fSelected}
             />
-            <div className="mt-5" />
+            <hr className="my-3 border-dashed border-neutral-200" />
             <TextFilter
               name="Mime Types"
               text={mimeTypes}

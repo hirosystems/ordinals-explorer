@@ -13,10 +13,16 @@ const Header = ({ children }: { children?: React.ReactNode }) => {
       {/* todo: explore button, stats, hiro.so */}
       <div className="hidden sm:block">
         <Link
-          href="/explore"
+          href="/inscriptions"
           className="rounded-md px-3.5 py-2.5 transition-colors hover:bg-neutral-0"
         >
-          Explore All
+          Inscriptions
+        </Link>
+        <Link
+          href="/protocols/brc20"
+          className="rounded-md px-3.5 py-2.5 transition-colors hover:bg-neutral-0"
+        >
+          BRC-20
         </Link>
         {/* todo: re-enable different explore modes */}
         {/* <HoverCard openDelay={0}>

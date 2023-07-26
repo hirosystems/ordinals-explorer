@@ -8,7 +8,7 @@ const SatPage = ({ params }: { params: { sid: string } }) => {
   return (
     <>
       <Header />
-      <main className="p-8 flex-grow w-full max-w-5xl mx-auto">
+      <main className="mx-auto w-full max-w-3xl flex-grow p-8 px-4">
         <SatDetails sid={params.sid} />
       </main>
       <Footer />

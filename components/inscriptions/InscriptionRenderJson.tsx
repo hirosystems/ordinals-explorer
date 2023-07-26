@@ -98,7 +98,7 @@ const JsonViewer = (props: {
       )}
       <div className="absolute bottom-1 left-1 flex space-x-0.5 text-xs uppercase text-neutral-400">
         {props.protocol && (
-          <div className="cursor-default rounded border border-neutral-300 bg-neutral-100 px-1 py-0.5 leading-none  shadow-[0_1px_2px_0_rgba(0,0,0,0.1)]">
+          <div className="cursor-default rounded border border-neutral-300 bg-neutral-100 px-1 py-0.5 leading-none shadow-[0_1px_2px_0_rgba(0,0,0,0.1)]">
             {props.protocol}
           </div>
         )}

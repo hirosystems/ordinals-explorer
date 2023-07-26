@@ -6,7 +6,7 @@ import {
   SelectValue,
 } from "./Select";
 
-export const sortOptions = {
+export const inscriptionSortOptions = {
   // todo: sat ordinal
   "genesis_block_height-desc": "Newest First",
   "genesis_block_height-asc": "Oldest First",
@@ -26,7 +26,7 @@ const Sort = ({ sortKey, updateSort }: any) => {
         </div>
       </SelectTrigger>
       <SelectContent id="sortby">
-        {Object.entries(sortOptions).map(([key, value], i) => (
+        {Object.entries(inscriptionSortOptions).map(([key, value], i) => (
           <SelectItem key={i} value={key} className="text-xs uppercase">
             {value}
           </SelectItem>
