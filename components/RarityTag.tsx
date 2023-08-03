@@ -40,12 +40,12 @@ const RarityTag = (props: { rarity: string }) => {
 const RarityDots = ({ dots }: { dots: number }) => {
   return (
     <div className="flex items-center space-x-1">
-      {Array(dots).fill(
-        <div className="inline-block h-2 w-2 rounded-full bg-black" />
-      )}
-      {Array(6 - dots).fill(
-        <div className="inline-block h-2 w-2 rounded-full bg-neutral-200" />
-      )}
+      {Array.from({length:dots}, (_, i) =>(
+        <div key={i} className="inline-block h-2 w-2 rounded-full bg-black" />
+      ))}
+      {Array.from({length: 6 -dots}, (_, i) =>(
+        <div key={i} className="inline-block h-2 w-2 rounded-full bg-neutral-200" />
+      ))}
     </div>
   );
 };

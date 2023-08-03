@@ -101,7 +101,7 @@ const InscriptionDetails = (params: { iid: string }) => {
                       >
                         <p>Full screen</p>
                       </TooltipContent>
-                      <TooltipTrigger>
+                      <TooltipTrigger asChild>
                         <DialogTrigger
                           className={cn(
                             "flex h-8 w-8 items-center justify-center rounded-[4px] bg-[rgba(255,255,255,.35)] transition-colors hover:bg-[rgba(255,255,255,.4)]",
