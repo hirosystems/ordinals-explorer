@@ -365,36 +365,62 @@ const Brc20Homepage = () => {
         <div className="border-r border-neutral-0 p-3">y</div>
         <div className="p-3 ">z</div>
       </div>
-      <p className="py-6">
-        BRC-20 &mdash; an{" "}
-        <Link
-          className="text-neutral-400 underline"
-          href="https://twitter.com/domodata/status/1633658974686855168"
-          target="_blank"
-        >
-          experiment by @domodata
-        </Link>{" "}
-        &mdash; is a{" "}
-        <Link
-          className="text-neutral-400 underline"
-          href="https://domo-2.gitbook.io/brc-20-experiment/"
-          target="_blank"
-        >
-          protocol
-        </Link>{" "}
-        on top of Ordinal inscriptions. Et labore aute ipsum incididunt do
-        occaecat duis cillum velit. Sint in pariatur sint. Nisi et tempor
-        consequat labore nisi proident sit. Voluptate qui eu eiusmod do ad
-        nostrud occaecat consectetur duis velit pariatur.
-      </p>
 
-      {/* todo: switch to react table and allow sorting filters column removal etc. */}
-      {/* todo: shadcn/ui */}
-      <div className="flex-1 ">
-        <div>
+      <div className="grid gap-4 lg:grid-cols-2">
+        <div className="rounded-lg border border-neutral-0 p-7 pt-6">
+          BRC-20 &mdash; an{" "}
+          <Link
+            className="text-neutral-400 underline"
+            href="https://twitter.com/domodata/status/1633658974686855168"
+            target="_blank"
+          >
+            experiment by @domodata
+          </Link>{" "}
+          &mdash; is a{" "}
+          <Link
+            className="text-neutral-400 underline"
+            href="https://domo-2.gitbook.io/brc-20-experiment/"
+            target="_blank"
+          >
+            protocol
+          </Link>{" "}
+          on top of Ordinal inscriptions. Et labore aute ipsum incididunt do
+          occaecat duis cillum velit. Sint in pariatur sint. Nisi et tempor
+          consequat labore nisi proident sit. Voluptate qui eu eiusmod do ad
+          nostrud occaecat consectetur duis velit pariatur.
+        </div>
+        <div className="space-y-4 rounded-lg border border-neutral-0 p-7 pt-6">
+          <h2 className="text-xl">BRC-20 Balance Lookup</h2>
+          <div className="flex space-x-1.5">
+            <div className="group relative inline-block text-neutral-300 focus-within:text-neutral-600">
+              <input
+                className="rounded-[3px] bg-neutral-0 px-2 py-1.5 ps-[38px] text-sm text-neutral-600 placeholder-neutral-300"
+                type="text"
+                placeholder="Address search"
+                title="Search for BRC-20 balance by address"
+                maxLength={4}
+              />
+              <div className="absolute bottom-0 left-2.5 top-0 flex items-center">
+                <SearchIcon className="h-5 w-5 " fontSize={32} />
+              </div>
+            </div>
+            <button className="rounded border-2 border-neutral-50 px-3 text-sm text-neutral-600 shadow-sm transition-shadow hover:shadow">
+              Lookup Balance
+            </button>
+          </div>
+        </div>
+      </div>
+
+      {/* todo: ? switch to react table and allow sorting filters column removal etc. -- shadcn/ui */}
+      <div className="flex-1">
+        <h2 className="my-5 text-center text-xl">All Deployed BRC-20 Tokens</h2>
+        <div className="mx-auto mt-3 h-12 w-0 border border-dashed border-l-black" />
+
+        {/* todo: filter row */}
+        <div className="ps-[67px]">
           <div className="group relative inline-block text-neutral-300 focus-within:text-neutral-600">
             <input
-              className="m-1 rounded-[3px] bg-neutral-0 px-2 py-1.5 ps-8 text-sm text-neutral-600 placeholder-neutral-300"
+              className="rounded-[3px] bg-neutral-0 px-2 py-1.5 ps-[38px] text-sm text-neutral-600 placeholder-neutral-300"
               type="text"
               placeholder="Ticker search"
               title="Search for BRC-20 token by ticker"
@@ -405,32 +431,11 @@ const Brc20Homepage = () => {
             </div>
           </div>
         </div>
+
+        <hr className="my-2 border-dashed border-neutral-300" />
+
         <div className="w-full overflow-scroll">
           <table className="w-full min-w-[640px]">
-            <thead className="my-2 rounded-md bg-neutral-100 p-0 text-sm">
-              <tr>
-                <td>
-                  <div className="group relative text-neutral-200 focus-within:text-neutral-300">
-                    <span className="sr-only">Token name / Ticker</span>
-                    <input
-                      className="m-1 rounded-[3px] px-2 py-1.5 ps-8 text-sm text-neutral-600"
-                      type="text"
-                      placeholder="Ticker search"
-                      title="Search for BRC-20 token by ticker"
-                      maxLength={4}
-                    />
-                    <div className="absolute bottom-0 left-2.5 top-0 flex items-center">
-                      <SearchIcon className="h-5 w-5 " fontSize={32} />
-                    </div>
-                  </div>
-                </td>
-                <td className="px-4 text-right uppercase">Max Supply</td>
-                <td className="px-4 text-center uppercase">Mint Progress</td>
-                <td className="px-4 text-right uppercase">Holders</td>
-                <td className="px-4 text-right uppercase">Txs</td>
-                <td className="px-4 text-center uppercase">Deployed</td>
-              </tr>
-            </thead>
             <tbody>
               {EXAMPLE_DATA.map((i, index) => (
                 <Brc20TokenRow key={i?.ticker ?? index} token={i as any} />
@@ -519,10 +524,17 @@ const Brc20TokenRow = ({ token }: { token: EXAMPLE_ROW_TYPE }) => {
   const deployedTime = Date.parse(token.deploy_ts);
 
   return (
-    <tr className="group border-b border-neutral-100 bg-white text-end font-['Aeonik_Mono'] text-sm text-neutral-500 transition-colors hover:bg-neutral-0 hover:text-black">
-      <td className=" border-neutral-100 text-start text-black ">
-        <Link href={`/protocols/brc-20/${token.ticker}`}>
-          <div className="flex flex-col px-3 py-1.5 ps-[38px]">
+    <tr className="group border-b border-neutral-0 bg-white font-['Aeonik_Mono'] text-sm text-neutral-500 transition-colors hover:bg-neutral-0 hover:text-black">
+      <td className="px-3 py-2.5 text-black">
+        <Link
+          className="flex items-center"
+          href={`/protocols/brc-20/${token.ticker}`}
+        >
+          <div className="flex h-12 w-12 flex-col items-center justify-center rounded-full bg-neutral-50 text-neutral-200">
+            <div className="leading-none">BRC</div>
+            <div className="text-lg leading-none">20</div>
+          </div>
+          <div className="flex flex-col px-2">
             <span className="text-lg">{token.ticker}</span>
             <div className="pb-1 text-neutral-300 transition-colors group-hover:text-neutral-400">
               {token.tx_count} txs
@@ -530,41 +542,63 @@ const Brc20TokenRow = ({ token }: { token: EXAMPLE_ROW_TYPE }) => {
           </div>
         </Link>
       </td>
-      <td className="  px-3 py-1.5 text-end">
-        <Tooltip>
-          <TooltipTrigger>
-            {humanReadableCount(token.max_supply, 1)}
-          </TooltipTrigger>
-          <TooltipContent variant="light">{token.max_supply}</TooltipContent>
-        </Tooltip>
-      </td>
-      <td className=" px-3 py-1.5 text-center">
-        <span>{progress}%</span>
-        <div className="flex justify-center">
-          <progress max="100" value={progress} className="sr-only" />
-          <div className="relative h-1 w-20 overflow-hidden rounded-full bg-neutral-0">
-            <div
-              className="absolute h-1 bg-sky"
-              style={{ width: `${progress}%` }}
-            />
+      <td className="px-3">
+        <div className="flex flex-col items-end">
+          <span>{progress}% Minted</span>
+          <div className="flex justify-center">
+            <progress max="100" value={progress} className="sr-only" />
+            <div className="relative h-1.5 w-28 overflow-hidden rounded-full bg-neutral-0">
+              <div
+                className="absolute h-1.5 bg-sky"
+                style={{ width: `${progress}%` }}
+              />
+            </div>
+          </div>
+          <div className="text-neutral-400">
+            {progress < 100 && (
+              <>
+                <Tooltip>
+                  <TooltipTrigger>
+                    {humanReadableCount(token.minted_supply, 1)}
+                  </TooltipTrigger>
+                  <TooltipContent variant="light">
+                    {token.minted_supply}
+                  </TooltipContent>
+                </Tooltip>
+                /
+              </>
+            )}
+            <Tooltip>
+              <TooltipTrigger>
+                {humanReadableCount(token.max_supply, 1)}
+              </TooltipTrigger>
+              <TooltipContent variant="light">
+                {token.max_supply}
+              </TooltipContent>
+            </Tooltip>
           </div>
         </div>
       </td>
-      <td className=" px-3 py-1.5 ">{token.holder_count}</td>
-      <td className="hidden px-3 py-1.5 lg:table-cell ">{token.tx_count}</td>
-      <td className="  px-3 py-1.5">
-        <Tooltip>
-          <TooltipTrigger>
-            <TimeAgo
-              className="tracking-tight"
-              date={deployedTime}
-              tooltip={false}
-            />
-          </TooltipTrigger>
-          <TooltipContent variant="light">
-            {formatDateTime(deployedTime)}
-          </TooltipContent>
-        </Tooltip>
+      <td className=" px-3 text-right">{token.holder_count} holders</td>
+      <td className="hidden px-3 text-right lg:table-cell">
+        {token.tx_count} txs
+      </td>
+      <td className="  px-3">
+        <div className="flex flex-col items-end">
+          Deployed
+          <Tooltip>
+            <TooltipTrigger>
+              <TimeAgo
+                className="tracking-tight"
+                date={deployedTime}
+                tooltip={false}
+              />
+            </TooltipTrigger>
+            <TooltipContent variant="light">
+              {formatDateTime(deployedTime)}
+            </TooltipContent>
+          </Tooltip>
+        </div>
       </td>
     </tr>
   );
