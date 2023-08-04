@@ -32,11 +32,10 @@ const InscriptionRenderJson = (props: {
   try {
     const content = cleanJsonString(props.json);
 
-    let protocol =
+    const protocol =
       props.json?.p ?? props.json?.protocol?.name ?? props.json?.protocol;
-    protocol = protocol?.replace(/\-/g, "");
 
-    if (protocol === "brc20") {
+    if (protocol === "brc-20") {
       return (
         <JsonViewer {...props} json={props.json} protocol={protocol}>
           <ContentBrc20 json={props.json} />
@@ -218,5 +217,5 @@ function ContentBrc20({ json }: { json: Brc20Content }) {
   }
 
   // todo: add better invalid/fallback view of content
-  throw "Invalid brc20 content";
+  throw "Invalid BRC-20 content";
 }

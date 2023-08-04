@@ -11,24 +11,23 @@ import { useState } from "react";
 import ReactTimeAgo from "react-time-ago";
 import { useUpdate } from "react-use";
 import useSWR from "swr";
-import Footer from "../../../../components/Footer";
-import Header from "../../../../components/Header";
-import { inscriptionSortOptions } from "../../../../components/Sort";
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipProvider,
-  TooltipTrigger,
-} from "../../../../components/Tooltip";
-import { useHasMounted } from "../../../../lib/hooks";
-import { cn, fetcher, formatDateTime } from "../../../../lib/utils";
+
+import { useHasMounted } from "../lib/hooks";
+import { cn, fetcher, formatDateTime } from "../lib/utils";
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "../../../../components/Select";
+} from "./Select";
+import { inscriptionSortOptions } from "./Sort";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "./Tooltip";
 
 // SEARCH PARAMS MAP
 // s: sort
@@ -284,7 +283,7 @@ const EXAMPLE_DATA = [
 
 type EXAMPLE_ROW_TYPE = (typeof EXAMPLE_DATA)[0];
 
-const Page = () => {
+const Brc20Homepage = () => {
   const hasMounted = useHasMounted();
   const update = useUpdate();
   const pathname = usePathname();
@@ -361,126 +360,138 @@ const Page = () => {
 
   return (
     <>
-      <Header />
-      <main className="mx-auto flex w-full max-w-5xl flex-1 flex-col items-stretch justify-between space-y-6 p-6">
-        <h1 className="text-2xl">BRC-20 Tokens</h1>
-        <p className="text-sm">
-          Et labore aute ipsum incididunt do occaecat duis cillum velit. Sint in
-          pariatur sint. Nisi et tempor consequat labore nisi proident sit.
-          Voluptate qui eu eiusmod do ad nostrud occaecat consectetur duis velit
-          pariatur. Lorem Lorem aliqua consectetur mollit occaecat veniam dolore
-          excepteur sunt sint sint non non. Reprehenderit culpa sit occaecat
-          consequat. Nostrud dolor culpa in{" "}
-          <a href="" className="text-neutral-500 underline">
-            link to standard
-          </a>{" "}
-          cillum dolore consectetur laborum magna aute qui et nisi.
-        </p>
-        <div className="flex-1">
-          <table className="w-full text-sm ">
-            <thead className="my-2 bg-neutral-100">
-              <tr className="p-0.5">
-                <th className="rounded-l-md font-normal">
-                  <div className="group relative flex text-neutral-200 focus-within:text-neutral-300">
-                    <span className="sr-only">Token name / Ticker</span>
-                    <input
-                      className="m-1 rounded-[3px] px-2 py-1.5 ps-8 text-neutral-600"
-                      type="text"
-                      placeholder="Ticker search"
-                      title="Search for BRC-20 token by ticker"
-                      maxLength={4}
-                    />
-                    <div className="absolute left-2.5 flex h-full items-center">
-                      <SearchIcon className="h-5 w-5 " fontSize={32} />
-                    </div>
-                  </div>
-                </th>
-                <th className="font-normal">Max Supply</th>
-                <th className="font-normal">Mint Progress</th>
-                <th className="font-normal">Holders</th>
-                <th className="font-normal">Txs</th>
-                <th className="rounded-r-md font-normal">Deployed</th>
-              </tr>
-            </thead>
+      <h1 className="text-2xl">BRC-20 Tokens</h1>
+      <div className="grid grid-cols-3 rounded-lg border border-neutral-0">
+        <div className="border-r border-neutral-0 p-3">x</div>
+        <div className="border-r border-neutral-0 p-3">y</div>
+        <div className="p-3 ">z</div>
+      </div>
+      <p className="py-6">
+        BRC-20 &mdash; an{" "}
+        <Link
+          className="text-neutral-400 underline"
+          href="https://twitter.com/domodata/status/1633658974686855168"
+          target="_blank"
+        >
+          experiment by @domodata
+        </Link>{" "}
+        &mdash; is a{" "}
+        <Link
+          className="text-neutral-400 underline"
+          href="https://domo-2.gitbook.io/brc-20-experiment/"
+          target="_blank"
+        >
+          protocol
+        </Link>{" "}
+        on top of Ordinal inscriptions. Et labore aute ipsum incididunt do
+        occaecat duis cillum velit. Sint in pariatur sint. Nisi et tempor
+        consequat labore nisi proident sit. Voluptate qui eu eiusmod do ad
+        nostrud occaecat consectetur duis velit pariatur.
+      </p>
 
-            {EXAMPLE_DATA.map((i, index) => (
-              <Brc20TokenRow key={i?.ticker ?? index} token={i as any} />
-            ))}
-          </table>
-          <div className="flex flex-row-reverse py-0.5 pl-3 pr-2 text-sm">
-            <div className="flex items-center space-x-6">
-              {/* Page size selector */}
-              <Select value={rowsPerPage} onValueChange={setRowsPerPage}>
-                <SelectTrigger
-                  className={cn(
-                    "hidden sm:flex",
-                    isOnlyPage && "text-neutral-200"
-                  )}
-                  disabled={isOnlyPage}
-                >
-                  <div className="space-x-3">
-                    <label htmlFor="rows">Rows per page:</label>
-                    <span>
-                      [<SelectValue />]
-                    </span>
+      <div className="flex-1">
+        <table className="w-full text-sm ">
+          <thead className="my-2 bg-neutral-100">
+            <tr className="p-0.5">
+              <th className="rounded-l-md font-normal">
+                <div className="group relative flex text-neutral-200 focus-within:text-neutral-300">
+                  <span className="sr-only">Token name / Ticker</span>
+                  <input
+                    className="m-1 rounded-[3px] px-2 py-1.5 ps-8 text-neutral-600"
+                    type="text"
+                    placeholder="Ticker search"
+                    title="Search for BRC-20 token by ticker"
+                    maxLength={4}
+                  />
+                  <div className="absolute left-2.5 flex h-full items-center">
+                    <SearchIcon className="h-5 w-5 " fontSize={32} />
                   </div>
-                </SelectTrigger>
-                <SelectContent id="rows" className="text-sm">
-                  <SelectItem value="20">20</SelectItem>
-                  <SelectItem value="30">30</SelectItem>
-                  <SelectItem value="50">50</SelectItem>
-                </SelectContent>
-              </Select>
-              <div className="font-['Aeonik_Mono'] tracking-tight">
-                {/* {page * limit + 1}-
+                </div>
+              </th>
+              <th className="font-normal">Max Supply</th>
+              <th className="font-normal">Mint Progress</th>
+              <th className="font-normal">Holders</th>
+              <th className="font-normal">Txs</th>
+              <th className="rounded-r-md font-normal">Deployed</th>
+            </tr>
+          </thead>
+
+          {EXAMPLE_DATA.map((i, index) => (
+            <Brc20TokenRow key={i?.ticker ?? index} token={i as any} />
+          ))}
+        </table>
+        <div className="flex flex-row-reverse py-0.5 pl-3 pr-2 text-sm">
+          <div className="flex items-center space-x-6">
+            {/* Page size selector */}
+            <Select value={rowsPerPage} onValueChange={setRowsPerPage}>
+              <SelectTrigger
+                className={cn(
+                  "hidden sm:flex",
+                  isOnlyPage && "text-neutral-200"
+                )}
+                disabled={isOnlyPage}
+              >
+                <div className="space-x-3">
+                  <label htmlFor="rows">Rows per page:</label>
+                  <span>
+                    [<SelectValue />]
+                  </span>
+                </div>
+              </SelectTrigger>
+              <SelectContent id="rows" className="text-sm">
+                <SelectItem value="20">20</SelectItem>
+                <SelectItem value="30">30</SelectItem>
+                <SelectItem value="50">50</SelectItem>
+              </SelectContent>
+            </Select>
+            <div className="font-['Aeonik_Mono'] tracking-tight">
+              {/* {page * limit + 1}-
                 {isLastPage ? data.total : (page + 1) * limit} of {data.total} */}
-              </div>
-              {/* Pagination */}
-              <div className="grid grid-cols-2">
-                {page > 0 ? (
-                  <motion.button
-                    className="self-center rounded-[50%] bg-transparent p-1.5 text-neutral-500 transition-colors hover:bg-neutral-0"
-                    whileTap={{
-                      scale: 0.8,
-                    }}
-                    onClick={() => updatePage(-1)}
-                    title="Previous page"
-                  >
-                    <ChevronLeftIcon className="h-4 w-4" />
-                  </motion.button>
-                ) : (
-                  <button
-                    className="cursor-default self-center rounded-[50%] p-1.5 text-neutral-200"
-                    disabled={true}
-                  >
-                    <ChevronLeftIcon className="h-4 w-4" />
-                  </button>
-                )}
-                {isLastPage ? (
-                  <button
-                    className="cursor-default self-center rounded-[50%] p-1.5 text-neutral-200"
-                    disabled={true}
-                  >
-                    <ChevronRightIcon className="h-4 w-4" />
-                  </button>
-                ) : (
-                  <motion.button
-                    className="self-center rounded-[50%] bg-transparent p-1.5 text-neutral-500 transition-colors hover:bg-neutral-0"
-                    whileTap={{
-                      scale: 0.8,
-                    }}
-                    onClick={() => updatePage(+1)}
-                    title="Next page"
-                  >
-                    <ChevronRightIcon className="h-4 w-4" />
-                  </motion.button>
-                )}
-              </div>
+            </div>
+            {/* Pagination */}
+            <div className="grid grid-cols-2">
+              {page > 0 ? (
+                <motion.button
+                  className="self-center rounded-[50%] bg-transparent p-1.5 text-neutral-500 transition-colors hover:bg-neutral-0"
+                  whileTap={{
+                    scale: 0.8,
+                  }}
+                  onClick={() => updatePage(-1)}
+                  title="Previous page"
+                >
+                  <ChevronLeftIcon className="h-4 w-4" />
+                </motion.button>
+              ) : (
+                <button
+                  className="cursor-default self-center rounded-[50%] p-1.5 text-neutral-200"
+                  disabled={true}
+                >
+                  <ChevronLeftIcon className="h-4 w-4" />
+                </button>
+              )}
+              {isLastPage ? (
+                <button
+                  className="cursor-default self-center rounded-[50%] p-1.5 text-neutral-200"
+                  disabled={true}
+                >
+                  <ChevronRightIcon className="h-4 w-4" />
+                </button>
+              ) : (
+                <motion.button
+                  className="self-center rounded-[50%] bg-transparent p-1.5 text-neutral-500 transition-colors hover:bg-neutral-0"
+                  whileTap={{
+                    scale: 0.8,
+                  }}
+                  onClick={() => updatePage(+1)}
+                  title="Next page"
+                >
+                  <ChevronRightIcon className="h-4 w-4" />
+                </motion.button>
+              )}
             </div>
           </div>
         </div>
-      </main>
-      <Footer />
+      </div>
     </>
   );
 };
@@ -491,12 +502,12 @@ const Brc20TokenRow = ({ token }: { token: EXAMPLE_ROW_TYPE }) => {
   return (
     <tr className="bg-white text-end font-['Aeonik_Mono'] text-neutral-500 transition-colors hover:bg-neutral-0 hover:text-black">
       <td className="border-b border-neutral-100 text-start text-black">
-        <Link
-          className="flex px-3 py-1.5 ps-[38px]"
-          href={`/protocols/brc20/${token.ticker}`}
-        >
-          {token.ticker}
-        </Link>
+        <div className="flex flex-col px-3 py-1.5 ps-[38px]">
+          <Link className="text-lg" href={`/protocols/brc-20/${token.ticker}`}>
+            {token.ticker}
+          </Link>
+          <div className="pb-1 text-neutral-400">{token.tx_count} txs</div>
+        </div>
       </td>
       <td className="border-b border-neutral-100 px-3 py-1.5 text-end">
         {token.max_supply}
@@ -539,4 +550,4 @@ const Brc20TokenRow = ({ token }: { token: EXAMPLE_ROW_TYPE }) => {
   );
 };
 
-export default Page;
+export default Brc20Homepage;

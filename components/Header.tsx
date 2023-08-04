@@ -19,7 +19,7 @@ const Header = ({ children }: { children?: React.ReactNode }) => {
           Inscriptions
         </Link>
         <Link
-          href="/protocols/brc20"
+          href="/protocols/brc-20"
           className="rounded-md px-3.5 py-2.5 transition-colors hover:bg-neutral-0"
         >
           BRC-20

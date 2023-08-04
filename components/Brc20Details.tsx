@@ -47,7 +47,7 @@ const BrcDetails = (params: { ticker: string }) => {
         {/* todo: uppercase ticker? */}
         <span className="">{params.ticker}</span>
         <span className="rounded-md border border-neutral-200 bg-neutral-0 px-1 text-xl text-neutral-400">
-          BRC-20
+          BRC20
         </span>
       </h1>
 
