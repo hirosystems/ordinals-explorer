@@ -72,3 +72,25 @@ export function formatDateTime(timestamp: number) {
     timeStyle: "medium",
   }).format(new Date(timestamp));
 }
+
+const suffixes = {
+  thousand: "K",
+  million: "M",
+  billion: "B",
+};
+
+function getSuffixAndDivisor(number: number) {
+  if (number >= 1e9) return { suffix: suffixes.billion, divisor: 1e9 };
+  if (number >= 1e6) return { suffix: suffixes.million, divisor: 1e6 };
+  if (number >= 1e3) return { suffix: suffixes.thousand, divisor: 1e3 };
+  return { suffix: "", divisor: 1 };
+}
+
+export function humanReadableCount(number: number, precision: number): string {
+  const { suffix, divisor } = getSuffixAndDivisor(Math.abs(number));
+  let value = (number / divisor).toFixed(precision);
+  value = parseFloat(value).toString(); // Remove trailing zeros
+  return Number(value) * divisor === number
+    ? `${value}${suffix}`
+    : `~${value}${suffix}`;
+}

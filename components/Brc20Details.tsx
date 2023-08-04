@@ -1,17 +1,14 @@
 "use client";
 
 import useSWR from "swr";
-
 import { fetcher, formatDateTime } from "../lib/utils";
-import Loading from "./Loading";
-import RarityTag from "./RarityTag";
+import { TimeAgo } from "./TimeAgo";
 import {
   Tooltip,
   TooltipContent,
   TooltipProvider,
   TooltipTrigger,
 } from "./Tooltip";
-import ReactTimeAgo from "react-time-ago";
 
 const EXAMPLE_DATA = {
   data: {
@@ -45,8 +42,8 @@ const BrcDetails = (params: { ticker: string }) => {
     <div className="flex flex-col items-center justify-between rounded-lg border px-4 py-12">
       <h1 className="flex items-center justify-center space-x-3 text-3xl">
         {/* todo: uppercase ticker? */}
-        <span className="">{params.ticker}</span>
-        <span className="rounded-md border border-neutral-200 bg-neutral-0 px-1 text-xl text-neutral-400">
+        <span className="underline">{params.ticker}</span>
+        <span className="rounded-md border-2 border-neutral-100 bg-neutral-0 px-1 text-xl text-neutral-300">
           BRC20
         </span>
       </h1>
@@ -55,15 +52,15 @@ const BrcDetails = (params: { ticker: string }) => {
 
       <table className="border-collapse text-sm">
         <tbody>
-          <tr className="flex flex-col space-y-0.5 border-b py-4 md:table-row">
-            <td className="whitespace-nowrap px-2 pr-20 uppercase underline md:py-3 md:no-underline">
+          <tr className="border-b py-8">
+            <td className="whitespace-nowrap px-2 py-3 pr-20 uppercase">
               Deployment Date
             </td>
-            <td className="break-all px-2 text-right md:py-2">
+            <td className="break-all px-2 py-2 text-right">
               <TooltipProvider delayDuration={150}>
                 <Tooltip>
                   <TooltipTrigger>
-                    <ReactTimeAgo
+                    <TimeAgo
                       className="tracking-tight"
                       date={deploymentDate}
                       tooltip={false}
@@ -77,57 +74,57 @@ const BrcDetails = (params: { ticker: string }) => {
             </td>
           </tr>
 
-          <tr className="flex flex-col space-y-0.5 border-b py-4 md:table-row">
-            <td className="whitespace-nowrap px-2 pr-20 uppercase underline md:py-3 md:no-underline">
+          <tr className="border-b py-8">
+            <td className="whitespace-nowrap px-2 py-3 pr-20 uppercase">
               Mint Progress
             </td>
-            <td className="break-all px-2 text-right md:py-2">
+            <td className="break-all px-2 py-2 text-right">
               {EXAMPLE_DATA.data.mint_progress}%
             </td>
           </tr>
 
-          <tr className="flex flex-col space-y-0.5 border-b py-4 md:table-row">
+          <tr className="border-b py-8">
             <td className="whitespace-nowrap pl-8 pr-20 uppercase text-neutral-500 underline md:py-1 md:no-underline">
               {/* todo: move prefixed dash into a css :before rule for more semantic html tables */}
               - Max Supply
             </td>
-            <td className="break-all px-2 text-right text-neutral-500 md:py-2">
+            <td className="break-all px-2 py-2 text-right text-neutral-500">
               {EXAMPLE_DATA.data.max_supply}
             </td>
           </tr>
 
-          <tr className="flex flex-col space-y-0.5 border-b py-4 md:table-row">
+          <tr className="border-b py-8">
             <td className="whitespace-nowrap pl-8 pr-20 uppercase text-neutral-500 underline md:py-1 md:no-underline">
               - Minted Supply
             </td>
-            <td className="break-all px-2 text-right text-neutral-500 md:py-2">
+            <td className="break-all px-2 py-2 text-right text-neutral-500">
               {EXAMPLE_DATA.data.minted_supply}
             </td>
           </tr>
 
-          <tr className="flex flex-col space-y-0.5 border-b py-4 md:table-row">
+          <tr className="border-b py-8">
             <td className="whitespace-nowrap pl-8 pr-20 uppercase text-neutral-500 underline md:py-1 md:no-underline">
               - Limit Per Mint
             </td>
-            <td className="break-all px-2 text-right text-neutral-500 md:py-2">
+            <td className="break-all px-2 py-2 text-right text-neutral-500">
               {EXAMPLE_DATA.data.limit_per_mint}
             </td>
           </tr>
 
-          <tr className="flex flex-col space-y-0.5 border-b py-4 md:table-row">
-            <td className="whitespace-nowrap px-2 pr-20 uppercase underline md:py-3 md:no-underline">
+          <tr className="border-b py-8">
+            <td className="whitespace-nowrap px-2 py-3 pr-20 uppercase">
               Holder Count
             </td>
-            <td className="break-all px-2 text-right md:py-2">
+            <td className="break-all px-2 py-2 text-right">
               {EXAMPLE_DATA.data.holder_count}
             </td>
           </tr>
 
-          <tr className="flex flex-col space-y-0.5 border-b py-4 md:table-row">
-            <td className="whitespace-nowrap px-2 pr-20 uppercase underline md:py-3 md:no-underline">
+          <tr className="border-b py-8">
+            <td className="whitespace-nowrap px-2 py-3 pr-20 uppercase">
               Transaction Count
             </td>
-            <td className="break-all px-2 text-right md:py-2">
+            <td className="break-all px-2 py-2 text-right">
               {EXAMPLE_DATA.data.tx_count}
             </td>
           </tr>

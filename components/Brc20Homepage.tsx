@@ -2,18 +2,16 @@
 
 import { ChevronLeftIcon, ChevronRightIcon } from "@radix-ui/react-icons";
 import { motion } from "framer-motion";
-import TimeAgo from "javascript-time-ago";
-import en from "javascript-time-ago/locale/en.json";
+
 import { SearchIcon } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
-import ReactTimeAgo from "react-time-ago";
 import { useUpdate } from "react-use";
 import useSWR from "swr";
 
 import { useHasMounted } from "../lib/hooks";
-import { cn, fetcher, formatDateTime } from "../lib/utils";
+import { cn, fetcher, formatDateTime, humanReadableCount } from "../lib/utils";
 import {
   Select,
   SelectContent,
@@ -22,6 +20,7 @@ import {
   SelectValue,
 } from "./Select";
 import { inscriptionSortOptions } from "./Sort";
+import { TimeAgo } from "./TimeAgo";
 import {
   Tooltip,
   TooltipContent,
@@ -36,7 +35,6 @@ import {
 // t: ticker (search)
 
 // todo: move to global first file
-TimeAgo.addDefaultLocale(en);
 
 const EXAMPLE_DATA = [
   {
@@ -359,9 +357,10 @@ const Brc20Homepage = () => {
   const isOnlyPage = page === 0 && isLastPage;
 
   return (
-    <>
+    <TooltipProvider delayDuration={150}>
       <h1 className="text-2xl">BRC-20 Tokens</h1>
       <div className="grid grid-cols-3 rounded-lg border border-neutral-0">
+        {/* todo: stats? */}
         <div className="border-r border-neutral-0 p-3">x</div>
         <div className="border-r border-neutral-0 p-3">y</div>
         <div className="p-3 ">z</div>
@@ -389,37 +388,42 @@ const Brc20Homepage = () => {
         nostrud occaecat consectetur duis velit pariatur.
       </p>
 
-      <div className="flex-1">
-        <table className="w-full text-sm ">
-          <thead className="my-2 bg-neutral-100">
-            <tr className="p-0.5">
-              <th className="rounded-l-md font-normal">
-                <div className="group relative flex text-neutral-200 focus-within:text-neutral-300">
-                  <span className="sr-only">Token name / Ticker</span>
-                  <input
-                    className="m-1 rounded-[3px] px-2 py-1.5 ps-8 text-neutral-600"
-                    type="text"
-                    placeholder="Ticker search"
-                    title="Search for BRC-20 token by ticker"
-                    maxLength={4}
-                  />
-                  <div className="absolute left-2.5 flex h-full items-center">
-                    <SearchIcon className="h-5 w-5 " fontSize={32} />
-                  </div>
+      {/* todo: switch to react table and allow sorting filters column removal etc. */}
+      {/* todo: shadcn/ui */}
+      <div className="flex-1 ">
+        <div className="w-full overflow-scroll">
+          <div className="w-full min-w-[640px]">
+            <div className="my-2 flex items-center rounded-md bg-neutral-100 p-0 text-sm">
+              <div className="group relative flex w-3/12 text-neutral-200 focus-within:text-neutral-300 lg:w-4/12">
+                <span className="sr-only">Token name / Ticker</span>
+                <input
+                  className="m-1 w-full rounded-[3px] px-2 py-1.5 ps-8 text-sm text-neutral-600"
+                  type="text"
+                  placeholder="Ticker search"
+                  title="Search for BRC-20 token by ticker"
+                  maxLength={4}
+                />
+                <div className="absolute left-2.5 flex h-full items-center">
+                  <SearchIcon className="h-5 w-5 " fontSize={32} />
                 </div>
-              </th>
-              <th className="font-normal">Max Supply</th>
-              <th className="font-normal">Mint Progress</th>
-              <th className="font-normal">Holders</th>
-              <th className="font-normal">Txs</th>
-              <th className="rounded-r-md font-normal">Deployed</th>
-            </tr>
-          </thead>
-
-          {EXAMPLE_DATA.map((i, index) => (
-            <Brc20TokenRow key={i?.ticker ?? index} token={i as any} />
-          ))}
-        </table>
+              </div>
+              <div className="w-2/12 text-center uppercase">Max Supply</div>
+              <div className="w-2/12 text-center uppercase">Mint Progress</div>
+              <div className="w-2/12 text-center uppercase lg:w-1/12">
+                Holders
+              </div>
+              <div className="hidden w-1/12 text-center uppercase lg:block">
+                Txs
+              </div>
+              <div className="w-3/12 text-center uppercase lg:w-2/12">
+                Deployed
+              </div>
+            </div>
+            {EXAMPLE_DATA.map((i, index) => (
+              <Brc20TokenRow key={i?.ticker ?? index} token={i as any} />
+            ))}
+          </div>
+        </div>
         <div className="flex flex-row-reverse py-0.5 pl-3 pr-2 text-sm">
           <div className="flex items-center space-x-6">
             {/* Page size selector */}
@@ -492,7 +496,7 @@ const Brc20Homepage = () => {
           </div>
         </div>
       </div>
-    </>
+    </TooltipProvider>
   );
 };
 
@@ -500,19 +504,27 @@ const Brc20TokenRow = ({ token }: { token: EXAMPLE_ROW_TYPE }) => {
   const progress = Math.round((token.minted_supply / token.max_supply) * 100);
   const deployedTime = Date.parse(token.deploy_ts);
   return (
-    <tr className="bg-white text-end font-['Aeonik_Mono'] text-neutral-500 transition-colors hover:bg-neutral-0 hover:text-black">
-      <td className="border-b border-neutral-100 text-start text-black">
+    <Link
+      className="group flex items-center border-b bg-white text-end font-['Aeonik_Mono'] text-sm text-neutral-500 transition-colors hover:bg-neutral-0 hover:text-black"
+      href={`/protocols/brc-20/${token.ticker}`}
+    >
+      <div className="w-3/12 border-neutral-100 text-start text-black lg:w-4/12">
         <div className="flex flex-col px-3 py-1.5 ps-[38px]">
-          <Link className="text-lg" href={`/protocols/brc-20/${token.ticker}`}>
-            {token.ticker}
-          </Link>
-          <div className="pb-1 text-neutral-400">{token.tx_count} txs</div>
+          <span className="text-lg">{token.ticker}</span>
+          <div className="pb-1 text-neutral-300 transition-colors group-hover:text-neutral-400">
+            {token.tx_count} txs
+          </div>
         </div>
-      </td>
-      <td className="border-b border-neutral-100 px-3 py-1.5 text-end">
-        {token.max_supply}
-      </td>
-      <td className="border-b border-neutral-100 px-3 py-1.5 text-center">
+      </div>
+      <div className="w-2/12 border-neutral-100 px-3 py-1.5 text-end">
+        <Tooltip>
+          <TooltipTrigger>
+            {humanReadableCount(token.max_supply, 1)}
+          </TooltipTrigger>
+          <TooltipContent variant="light">{token.max_supply}</TooltipContent>
+        </Tooltip>
+      </div>
+      <div className="w-2/12 border-neutral-100 px-3 py-1.5 text-center">
         <span>{progress}%</span>
         <div className="flex justify-center">
           <progress max="100" value={progress} className="sr-only" />
@@ -523,30 +535,28 @@ const Brc20TokenRow = ({ token }: { token: EXAMPLE_ROW_TYPE }) => {
             />
           </div>
         </div>
-      </td>
-      <td className="border-b border-neutral-100 px-3 py-1.5">
+      </div>
+      <div className="w-2/12 border-neutral-100 px-3 py-1.5 lg:w-1/12">
         {token.holder_count}
-      </td>
-      <td className="border-b border-neutral-100 px-3 py-1.5">
+      </div>
+      <div className="hidden border-neutral-100 px-3 py-1.5 lg:block ">
         {token.tx_count}
-      </td>
-      <td className="border-b border-neutral-100 px-3 py-1.5">
-        <TooltipProvider delayDuration={150}>
-          <Tooltip>
-            <TooltipTrigger>
-              <ReactTimeAgo
-                className="tracking-tight"
-                date={deployedTime}
-                tooltip={false}
-              />
-            </TooltipTrigger>
-            <TooltipContent variant="light">
-              {formatDateTime(deployedTime)}
-            </TooltipContent>
-          </Tooltip>
-        </TooltipProvider>
-      </td>
-    </tr>
+      </div>
+      <div className="w-3/12 border-neutral-100 px-3 py-1.5 lg:w-2/12">
+        <Tooltip>
+          <TooltipTrigger>
+            <TimeAgo
+              className="tracking-tight"
+              date={deployedTime}
+              tooltip={false}
+            />
+          </TooltipTrigger>
+          <TooltipContent variant="light">
+            {formatDateTime(deployedTime)}
+          </TooltipContent>
+        </Tooltip>
+      </div>
+    </Link>
   );
 };
 

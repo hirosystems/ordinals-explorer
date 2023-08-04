@@ -1,7 +1,7 @@
 import "./globals.css";
 
-import { Toaster } from "react-hot-toast";
 import Script from "next/script";
+import { Toaster } from "react-hot-toast";
 
 export async function generateMetadata() {
   return {
