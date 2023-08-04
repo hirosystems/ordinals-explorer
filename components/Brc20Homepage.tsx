@@ -398,7 +398,6 @@ const Brc20Homepage = () => {
                 type="text"
                 placeholder="Address search"
                 title="Search for BRC-20 balance by address"
-                maxLength={4}
               />
               <div className="absolute bottom-0 left-2.5 top-0 flex items-center">
                 <SearchIcon className="h-5 w-5 " fontSize={32} />
@@ -418,9 +417,9 @@ const Brc20Homepage = () => {
 
         {/* todo: filter row */}
         <div className="ps-[67px]">
-          <div className="group relative inline-block text-neutral-300 focus-within:text-neutral-600">
+          <div className="group relative inline-block text-neutral-200 focus-within:text-neutral-400">
             <input
-              className="rounded-[3px] bg-neutral-0 px-2 py-1.5 ps-[38px] text-sm text-neutral-600 placeholder-neutral-300"
+              className="rounded border-2 border-neutral-0 px-2 py-1.5 ps-[38px] text-sm text-neutral-500 placeholder-neutral-300"
               type="text"
               placeholder="Ticker search"
               title="Search for BRC-20 token by ticker"

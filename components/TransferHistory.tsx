@@ -2,7 +2,6 @@
 
 import { ChevronLeftIcon, ChevronRightIcon } from "@radix-ui/react-icons";
 import { motion } from "framer-motion";
-import TimeAgo from "javascript-time-ago";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
@@ -29,6 +28,7 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "./Tooltip";
+import { TimeAgo } from "./TimeAgo";
 
 const TransferHistory = (props: { inscription: InscriptionResponse }) => {
   const update = useUpdate();
