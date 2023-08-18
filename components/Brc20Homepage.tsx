@@ -36,250 +36,223 @@ import {
 
 // todo: move to global first file
 
-const EXAMPLE_DATA = [
-  {
-    ticker: "oxbt",
-    image_url: null,
-    limit_per_mint: 200000000,
-    max_supply: 200000000,
-    minted_supply: 200000000,
-    remaining_supply: 0,
-    mint_progress: 100,
-    holder_count: 17000,
-    tx_count: 99064,
-    deploy_ts: "2023-05-11T05:15:31.000Z",
-  },
-  {
-    ticker: "ordi",
-    image_url: "https://bis-brc20.fra1.digitaloceanspaces.com/icons/ordi.png",
-    limit_per_mint: 1000,
-    max_supply: 21000000,
-    minted_supply: 21000000,
-    remaining_supply: 0,
-    mint_progress: 100,
-    holder_count: 12667,
-    tx_count: 62506,
-    deploy_ts: "2023-03-08T04:16:31.000Z",
-  },
-  {
-    ticker: "mxrc",
-    image_url: null,
-    limit_per_mint: 100000000,
-    max_supply: 100000000,
-    minted_supply: 100000000,
-    remaining_supply: 0,
-    mint_progress: 100,
-    holder_count: 9157,
-    tx_count: 39143,
-    deploy_ts: "2023-05-26T02:06:43.000Z",
-  },
-  {
-    ticker: "btoc",
-    image_url: null,
-    limit_per_mint: 21000000,
-    max_supply: 21000000,
-    minted_supply: 21000000,
-    remaining_supply: 0,
-    mint_progress: 100,
-    holder_count: 16179,
-    tx_count: 35267,
-    deploy_ts: "2023-05-22T13:42:58.000Z",
-  },
-  {
-    ticker: "zbit",
-    image_url: null,
-    limit_per_mint: 21000000,
-    max_supply: 21000000,
-    minted_supply: 21000000,
-    remaining_supply: 0,
-    mint_progress: 100,
-    holder_count: 8457,
-    tx_count: 35001,
-    deploy_ts: "2023-05-07T15:32:12.000Z",
-  },
-  {
-    ticker: "vmpx",
-    image_url: "https://bis-brc20.fra1.digitaloceanspaces.com/icons/vmpx.jpg",
-    limit_per_mint: 420,
-    max_supply: 108624000,
-    minted_supply: 108624000,
-    remaining_supply: 0,
-    mint_progress: 100,
-    holder_count: 8260,
-    tx_count: 27895,
-    deploy_ts: "2023-05-07T19:05:28.000Z",
-  },
-  {
-    ticker: "lger",
-    image_url: "https://bis-brc20.fra1.digitaloceanspaces.com/icons/lger.png",
-    limit_per_mint: 21000000,
-    max_supply: 21000000,
-    minted_supply: 21000000,
-    remaining_supply: 0,
-    mint_progress: 100,
-    holder_count: 3145,
-    tx_count: 13813,
-    deploy_ts: "2023-06-05T07:39:43.000Z",
-  },
-  {
-    ticker: "nals",
-    image_url: null,
-    limit_per_mint: 1000,
-    max_supply: 21000000,
-    minted_supply: 21000000,
-    remaining_supply: 0,
-    mint_progress: 100,
-    holder_count: 2233,
-    tx_count: 12822,
-    deploy_ts: "2023-03-09T18:03:55.000Z",
-  },
-  {
-    ticker: "pepe",
-    image_url: "https://bis-brc20.fra1.digitaloceanspaces.com/icons/pepe.jpg",
-    limit_per_mint: 1000,
-    max_supply: 42069000,
-    minted_supply: 42069000,
-    remaining_supply: 0,
-    mint_progress: 100,
-    holder_count: 4455,
-    tx_count: 12348,
-    deploy_ts: "2023-03-09T05:00:23.000Z",
-  },
-  {
-    ticker: "whee",
-    image_url: null,
-    limit_per_mint: 1000,
-    max_supply: 21000000,
-    minted_supply: 21000000,
-    remaining_supply: 0,
-    mint_progress: 100,
-    holder_count: 4064,
-    tx_count: 12085,
-    deploy_ts: "2023-05-10T05:06:18.000Z",
-  },
-  {
-    ticker: "sats",
-    image_url: null,
-    limit_per_mint: 100000000,
-    max_supply: 2100000000000000,
-    minted_supply: 625916906176782.1,
-    remaining_supply: 1474083093823218,
-    mint_progress: 29.80556696079915,
-    holder_count: 23767,
-    tx_count: 11495,
-    deploy_ts: "2023-03-09T05:32:14.000Z",
-  },
-  {
-    ticker: "$ore",
-    image_url: null,
-    limit_per_mint: 21000000,
-    max_supply: 21000000,
-    minted_supply: 21000000,
-    remaining_supply: 0,
-    mint_progress: 100,
-    holder_count: 3762,
-    tx_count: 9617,
-    deploy_ts: "2023-05-16T05:43:54.000Z",
-  },
-  {
-    ticker: "drac",
-    image_url: null,
-    limit_per_mint: 1260,
-    max_supply: 106824000,
-    minted_supply: 106824000,
-    remaining_supply: 0,
-    mint_progress: 100,
-    holder_count: 2924,
-    tx_count: 8692,
-    deploy_ts: "2023-05-06T23:34:51.000Z",
-  },
-  {
-    ticker: "psat",
-    image_url: null,
-    limit_per_mint: 10000000,
-    max_supply: 10000000,
-    minted_supply: 10000000,
-    remaining_supply: 0,
-    mint_progress: 100,
-    holder_count: 2012,
-    tx_count: 8558,
-    deploy_ts: "2023-05-10T11:21:14.000Z",
-  },
-  {
-    ticker: "frvr",
-    image_url: null,
-    limit_per_mint: 10000000,
-    max_supply: 10000000,
-    minted_supply: 10000000,
-    remaining_supply: 0,
-    mint_progress: 100,
-    holder_count: 1930,
-    tx_count: 7935,
-    deploy_ts: "2023-04-04T14:23:41.000Z",
-  },
-  {
-    ticker: "$og$",
-    image_url: null,
-    limit_per_mint: 21000000,
-    max_supply: 21000000,
-    minted_supply: 21000000,
-    remaining_supply: 0,
-    mint_progress: 100,
-    holder_count: 3003,
-    tx_count: 7825,
-    deploy_ts: "2023-03-15T03:18:02.000Z",
-  },
-  {
-    ticker: "moon",
-    image_url: "https://bis-brc20.fra1.digitaloceanspaces.com/icons/moon.jpg",
-    limit_per_mint: 1000,
-    max_supply: 100000000,
-    minted_supply: 100000000,
-    remaining_supply: 0,
-    mint_progress: 100,
-    holder_count: 5006,
-    tx_count: 7745,
-    deploy_ts: "2023-03-10T00:43:33.000Z",
-  },
-  {
-    ticker: "meme",
-    image_url: "https://bis-brc20.fra1.digitaloceanspaces.com/icons/meme.jpg",
-    limit_per_mint: 1,
-    max_supply: 99999,
-    minted_supply: 99999,
-    remaining_supply: 0,
-    mint_progress: 100,
-    holder_count: 4883,
-    tx_count: 7449,
-    deploy_ts: "2023-03-08T12:44:22.000Z",
-  },
-  {
-    ticker: "biso",
-    image_url: null,
-    limit_per_mint: 210000000,
-    max_supply: 210000000,
-    minted_supply: 210000000,
-    remaining_supply: 0,
-    mint_progress: 100,
-    holder_count: 1580,
-    tx_count: 6914,
-    deploy_ts: "2023-05-09T12:51:36.000Z",
-  },
-  {
-    ticker: "piza",
-    image_url: "https://bis-brc20.fra1.digitaloceanspaces.com/icons/piza.jpg",
-    limit_per_mint: 1000,
-    max_supply: 21000000,
-    minted_supply: 21000000,
-    remaining_supply: 0,
-    mint_progress: 100,
-    holder_count: 1459,
-    tx_count: 6532,
-    deploy_ts: "2023-03-15T16:49:41.000Z",
-  },
-] as const;
+const EXAMPLE_DATA = {
+  limit: 20,
+  offset: 0,
+  total: 4,
+  results: [
+    {
+      id: "38c46a8bf7ec90bc7f6b797e7dc84baa97f4e5fd4286b92fe1b50176d03b18dci0",
+      number: 5,
+      block_height: 775618,
+      tx_id: "b6570e04c13e1efb9c2564bd19798aca7f5e4b66c80a9aaa18bc58b01c56d505",
+      address: "bc1p3cyx5e2hgh53w7kpxcvm8s4kkega9gv5wfw7c4qxsvxl0u8x834qf0u2td",
+      ticker: "PEER",
+      max_supply: "21000000",
+      mint_limit: null,
+      decimals: 18,
+      deploy_timestamp: 1677803510000,
+      minted_supply: "13000000",
+    },
+    {
+      id: "38c46a8bf7ec90bc7f6b797e7dc84baa97f4e5fd4286b92fe1b50176d03b18dci0",
+      number: 5,
+      block_height: 775619,
+      tx_id: "7ebebbfdd6bfa6e575e825356786b938a854b6477bb245a7d2dc0be9439d80fb",
+      address: "bc1p3cyx5e2hgh53w7kpxcvm8s4kkega9gv5wfw7c4qxsvxl0u8x834qf0u2td",
+      ticker: "DCBA",
+      max_supply: "21000000",
+      mint_limit: null,
+      decimals: 18,
+      deploy_timestamp: 1677803510000,
+      minted_supply: "21000000",
+    },
+    {
+      id: "38c46a8bf7ec90bc7f6b797e7dc84baa97f4e5fd4286b92fe1b50176d03b18dci0",
+      number: 5,
+      block_height: 775617,
+      tx_id: "a1bc53e584445bf4fd5b8c99f6d01d2a7bd78a835c5842f7410f6920ac506393",
+      address: "bc1p3cyx5e2hgh53w7kpxcvm8s4kkega9gv5wfw7c4qxsvxl0u8x834qf0u2td",
+      ticker: "PEPE",
+      max_supply: "21000000",
+      mint_limit: null,
+      decimals: 18,
+      deploy_timestamp: 1677803510000,
+      minted_supply: "0",
+    },
+    {
+      id: "38c46a8bf7ec90bc7f6b797e7dc84baa97f4e5fd4286b92fe1b50176d03b18dci0",
+      number: 5,
+      block_height: 775619,
+      tx_id: "ac2a5cab6512813983012406381a81e07bc40cb2d18fdb41f68f15592ce36d99",
+      address: "bc1p3cyx5e2hgh53w7kpxcvm8s4kkega9gv5wfw7c4qxsvxl0u8x834qf0u2td",
+      ticker: "ABCD",
+      max_supply: "21000000",
+      mint_limit: null,
+      decimals: 18,
+      deploy_timestamp: 1677803510000,
+      minted_supply: "0",
+    },
+    {
+      id: "38c46a8bf7ec90bc7f6b797e7dc84baa97f4e5fd4286b92fe1b50176d03b18dci0",
+      number: 5,
+      block_height: 775619,
+      tx_id: "ac2a5cab6512813983012406381a81e07bc40cb2d18fdb41f68f15592ce36d99",
+      address: "bc1p3cyx5e2hgh53w7kpxcvm8s4kkega9gv5wfw7c4qxsvxl0u8x834qf0u2td",
+      ticker: "ABCD",
+      max_supply: "21000000",
+      mint_limit: null,
+      decimals: 18,
+      deploy_timestamp: 1677803510000,
+      minted_supply: "0",
+    },
+    {
+      id: "38c46a8bf7ec90bc7f6b797e7dc84baa97f4e5fd4286b92fe1b50176d03b18dci0",
+      number: 5,
+      block_height: 775619,
+      tx_id: "ac2a5cab6512813983012406381a81e07bc40cb2d18fdb41f68f15592ce36d99",
+      address: "bc1p3cyx5e2hgh53w7kpxcvm8s4kkega9gv5wfw7c4qxsvxl0u8x834qf0u2td",
+      ticker: "ABCD",
+      max_supply: "21000000",
+      mint_limit: null,
+      decimals: 18,
+      deploy_timestamp: 1677803510000,
+      minted_supply: "0",
+    },
+    {
+      id: "38c46a8bf7ec90bc7f6b797e7dc84baa97f4e5fd4286b92fe1b50176d03b18dci0",
+      number: 5,
+      block_height: 775619,
+      tx_id: "ac2a5cab6512813983012406381a81e07bc40cb2d18fdb41f68f15592ce36d99",
+      address: "bc1p3cyx5e2hgh53w7kpxcvm8s4kkega9gv5wfw7c4qxsvxl0u8x834qf0u2td",
+      ticker: "ABCD",
+      max_supply: "21000000",
+      mint_limit: null,
+      decimals: 18,
+      deploy_timestamp: 1677803510000,
+      minted_supply: "0",
+    },
+    {
+      id: "38c46a8bf7ec90bc7f6b797e7dc84baa97f4e5fd4286b92fe1b50176d03b18dci0",
+      number: 5,
+      block_height: 775619,
+      tx_id: "ac2a5cab6512813983012406381a81e07bc40cb2d18fdb41f68f15592ce36d99",
+      address: "bc1p3cyx5e2hgh53w7kpxcvm8s4kkega9gv5wfw7c4qxsvxl0u8x834qf0u2td",
+      ticker: "ABCD",
+      max_supply: "21000000",
+      mint_limit: null,
+      decimals: 18,
+      deploy_timestamp: 1677803510000,
+      minted_supply: "0",
+    },
+    {
+      id: "38c46a8bf7ec90bc7f6b797e7dc84baa97f4e5fd4286b92fe1b50176d03b18dci0",
+      number: 5,
+      block_height: 775619,
+      tx_id: "ac2a5cab6512813983012406381a81e07bc40cb2d18fdb41f68f15592ce36d99",
+      address: "bc1p3cyx5e2hgh53w7kpxcvm8s4kkega9gv5wfw7c4qxsvxl0u8x834qf0u2td",
+      ticker: "ABCD",
+      max_supply: "21000000",
+      mint_limit: null,
+      decimals: 18,
+      deploy_timestamp: 1677803510000,
+      minted_supply: "0",
+    },
+    {
+      id: "38c46a8bf7ec90bc7f6b797e7dc84baa97f4e5fd4286b92fe1b50176d03b18dci0",
+      number: 5,
+      block_height: 775619,
+      tx_id: "ac2a5cab6512813983012406381a81e07bc40cb2d18fdb41f68f15592ce36d99",
+      address: "bc1p3cyx5e2hgh53w7kpxcvm8s4kkega9gv5wfw7c4qxsvxl0u8x834qf0u2td",
+      ticker: "ABCD",
+      max_supply: "21000000",
+      mint_limit: null,
+      decimals: 18,
+      deploy_timestamp: 1677803510000,
+      minted_supply: "0",
+    },
+    {
+      id: "38c46a8bf7ec90bc7f6b797e7dc84baa97f4e5fd4286b92fe1b50176d03b18dci0",
+      number: 5,
+      block_height: 775619,
+      tx_id: "ac2a5cab6512813983012406381a81e07bc40cb2d18fdb41f68f15592ce36d99",
+      address: "bc1p3cyx5e2hgh53w7kpxcvm8s4kkega9gv5wfw7c4qxsvxl0u8x834qf0u2td",
+      ticker: "ABCD",
+      max_supply: "21000000",
+      mint_limit: null,
+      decimals: 18,
+      deploy_timestamp: 1677803510000,
+      minted_supply: "0",
+    },
+    {
+      id: "38c46a8bf7ec90bc7f6b797e7dc84baa97f4e5fd4286b92fe1b50176d03b18dci0",
+      number: 5,
+      block_height: 775619,
+      tx_id: "ac2a5cab6512813983012406381a81e07bc40cb2d18fdb41f68f15592ce36d99",
+      address: "bc1p3cyx5e2hgh53w7kpxcvm8s4kkega9gv5wfw7c4qxsvxl0u8x834qf0u2td",
+      ticker: "ABCD",
+      max_supply: "21000000",
+      mint_limit: null,
+      decimals: 18,
+      deploy_timestamp: 1677803510000,
+      minted_supply: "0",
+    },
+    {
+      id: "38c46a8bf7ec90bc7f6b797e7dc84baa97f4e5fd4286b92fe1b50176d03b18dci0",
+      number: 5,
+      block_height: 775619,
+      tx_id: "ac2a5cab6512813983012406381a81e07bc40cb2d18fdb41f68f15592ce36d99",
+      address: "bc1p3cyx5e2hgh53w7kpxcvm8s4kkega9gv5wfw7c4qxsvxl0u8x834qf0u2td",
+      ticker: "ABCD",
+      max_supply: "21000000",
+      mint_limit: null,
+      decimals: 18,
+      deploy_timestamp: 1677803510000,
+      minted_supply: "0",
+    },
+    {
+      id: "38c46a8bf7ec90bc7f6b797e7dc84baa97f4e5fd4286b92fe1b50176d03b18dci0",
+      number: 5,
+      block_height: 775619,
+      tx_id: "ac2a5cab6512813983012406381a81e07bc40cb2d18fdb41f68f15592ce36d99",
+      address: "bc1p3cyx5e2hgh53w7kpxcvm8s4kkega9gv5wfw7c4qxsvxl0u8x834qf0u2td",
+      ticker: "ABCD",
+      max_supply: "21000000",
+      mint_limit: null,
+      decimals: 18,
+      deploy_timestamp: 1677803510000,
+      minted_supply: "0",
+    },
+    {
+      id: "38c46a8bf7ec90bc7f6b797e7dc84baa97f4e5fd4286b92fe1b50176d03b18dci0",
+      number: 5,
+      block_height: 775619,
+      tx_id: "ac2a5cab6512813983012406381a81e07bc40cb2d18fdb41f68f15592ce36d99",
+      address: "bc1p3cyx5e2hgh53w7kpxcvm8s4kkega9gv5wfw7c4qxsvxl0u8x834qf0u2td",
+      ticker: "ABCD",
+      max_supply: "21000000",
+      mint_limit: null,
+      decimals: 18,
+      deploy_timestamp: 1677803510000,
+      minted_supply: "0",
+    },
+    {
+      id: "38c46a8bf7ec90bc7f6b797e7dc84baa97f4e5fd4286b92fe1b50176d03b18dci0",
+      number: 5,
+      block_height: 775619,
+      tx_id: "ac2a5cab6512813983012406381a81e07bc40cb2d18fdb41f68f15592ce36d99",
+      address: "bc1p3cyx5e2hgh53w7kpxcvm8s4kkega9gv5wfw7c4qxsvxl0u8x834qf0u2td",
+      ticker: "ABCD",
+      max_supply: "21000000",
+      mint_limit: null,
+      decimals: 18,
+      deploy_timestamp: 1677803510000,
+      minted_supply: "0",
+    },
+  ],
+} as const;
 
-type EXAMPLE_ROW_TYPE = (typeof EXAMPLE_DATA)[0];
+type EXAMPLE_ROW_TYPE = (typeof EXAMPLE_DATA.results)[0];
 
 const Brc20Homepage = () => {
   const hasMounted = useHasMounted();
@@ -358,25 +331,27 @@ const Brc20Homepage = () => {
 
   return (
     <TooltipProvider delayDuration={150}>
-      <h1 className="text-2xl">BRC-20 Tokens</h1>
-      <div className="grid grid-cols-3 rounded-lg border border-neutral-0">
-        {/* todo: stats? */}
+      {/* todo: stats? */}
+      {/* <div className="grid grid-cols-3 rounded-lg border border-neutral-0">
         <div className="border-r border-neutral-0 p-3">x</div>
         <div className="border-r border-neutral-0 p-3">y</div>
         <div className="p-3 ">z</div>
-      </div>
+      </div> */}
 
-      <div className="grid gap-4 lg:grid-cols-2">
-        <div className="rounded-lg border border-neutral-0 p-7 pt-6">
-          BRC-20 &mdash; an{" "}
+      <div className="space-y-2 rounded-lg border border-neutral-0 p-7 pt-6">
+        <h2 className="text-2xl">What is BRC-20?</h2>
+        <p className="text-neutral-600">
+          BRC-20 is a new token standard (
           <Link
             className="text-neutral-400 underline"
             href="https://twitter.com/domodata/status/1633658974686855168"
             target="_blank"
           >
-            experiment by @domodata
-          </Link>{" "}
-          &mdash; is a{" "}
+            and experiment by @domodata
+          </Link>
+          ) on the Ordinals and the Bitcoin network. It allows users to create,
+          mint, and transfer fungibe tokens &mdash; similar to ERC-20 on
+          Ethereum. The{" "}
           <Link
             className="text-neutral-400 underline"
             href="https://domo-2.gitbook.io/brc-20-experiment/"
@@ -384,11 +359,19 @@ const Brc20Homepage = () => {
           >
             protocol
           </Link>{" "}
-          on top of Ordinal inscriptions. Et labore aute ipsum incididunt do
-          occaecat duis cillum velit. Sint in pariatur sint. Nisi et tempor
-          consequat labore nisi proident sit. Voluptate qui eu eiusmod do ad
-          nostrud occaecat consectetur duis velit pariatur.
-        </div>
+          is built on top of Ordinals.
+        </p>
+        <Link
+          className="block text-center text-neutral-300 underline"
+          href="https://www.hiro.so/books/a-developers-guide-to-bitcoin-ordinals"
+          target="_blank"
+        >
+          Read more
+        </Link>
+      </div>
+
+      {/* todo: add balance lookup */}
+      {/* <div className="grid gap-4 lg:grid-cols-2">
         <div className="space-y-4 rounded-lg border border-neutral-0 p-7 pt-6">
           <h2 className="text-xl">BRC-20 Balance Lookup</h2>
           <div className="flex space-x-1.5">
@@ -408,15 +391,20 @@ const Brc20Homepage = () => {
             </button>
           </div>
         </div>
-      </div>
+      </div> */}
 
       {/* todo: ? switch to react table and allow sorting filters column removal etc. -- shadcn/ui */}
-      <div className="flex-1">
-        <h2 className="my-5 text-center text-xl">All Deployed BRC-20 Tokens</h2>
-        <div className="mx-auto mt-3 h-12 w-0 border border-dashed border-l-black" />
+      <div className="flex-1 rounded-lg border border-neutral-0">
+        <div className="mb-3 space-y-2 p-4">
+          <h2 className="text-2xl">Popular BRC-20 Tokens</h2>
+          <p className="text-neutral-300">
+            Displaying the most used BRC-20 tokens that have been minted, and
+            transferred frequently
+          </p>
+        </div>
 
         {/* todo: filter row */}
-        <div className="ps-[67px]">
+        {/* <div className="ps-[67px]">
           <div className="group relative inline-block text-neutral-200 focus-within:text-neutral-400">
             <input
               className="rounded border-2 border-neutral-0 px-2 py-1.5 ps-[38px] text-sm text-neutral-500 placeholder-neutral-300"
@@ -429,14 +417,39 @@ const Brc20Homepage = () => {
               <SearchIcon className="h-5 w-5 " fontSize={32} />
             </div>
           </div>
-        </div>
-
-        <hr className="my-2 border-dashed border-neutral-300" />
+        </div> */}
 
         <div className="w-full overflow-scroll">
           <table className="w-full min-w-[640px]">
+            <thead>
+              <tr className="border-b border-neutral-0 text-sm text-neutral-300">
+                <th className="w-1/4 px-4 py-2 text-start font-normal">
+                  token
+                </th>
+                <th className="w-1/4 px-4 py-2 text-start font-normal">
+                  % minted
+                </th>
+                {/* todo: use holders count instead */}
+                <th className="w-1/4 px-4 py-2 text-start font-normal">
+                  supply minted
+                </th>
+                {/* todo: use tx count instead */}
+                <th className="w-1/4 px-4 py-2 text-start font-normal">
+                  supply remaining
+                </th>
+                {/* <th className="w-1/4 px-4 py-2 text-start font-normal">
+                  # holders
+                </th> */}
+                {/* <th className="w-1/4 px-4 py-2 text-start font-normal">
+                  # transactions
+                </th> */}
+                <th className="width-[1px] whitespace-nowrap  px-4 py-2 text-start font-normal">
+                  date deployed
+                </th>
+              </tr>
+            </thead>
             <tbody>
-              {EXAMPLE_DATA.map((i, index) => (
+              {EXAMPLE_DATA.results.map((i, index) => (
                 <Brc20TokenRow key={i?.ticker ?? index} token={i as any} />
               ))}
             </tbody>
@@ -519,8 +532,12 @@ const Brc20Homepage = () => {
 };
 
 const Brc20TokenRow = ({ token }: { token: EXAMPLE_ROW_TYPE }) => {
-  const progress = Math.round((token.minted_supply / token.max_supply) * 100);
-  const deployedTime = Date.parse(token.deploy_ts);
+  const progress = Math.round(
+    (Number(token.minted_supply) / Number(token.max_supply)) * 100
+  );
+  const deployedTime = new Date(token.deploy_timestamp);
+  const remainingSupply =
+    Number(token.max_supply) - Number(token.minted_supply);
 
   return (
     <tr className="group border-b border-neutral-0 bg-white font-['Aeonik_Mono'] text-sm text-neutral-500 transition-colors hover:bg-neutral-0 hover:text-black">
@@ -535,54 +552,74 @@ const Brc20TokenRow = ({ token }: { token: EXAMPLE_ROW_TYPE }) => {
           </div>
           <div className="flex flex-col px-2">
             <span className="text-lg">{token.ticker}</span>
-            <div className="pb-1 text-neutral-300 transition-colors group-hover:text-neutral-400">
+            {/* todo: maybe add seconds row for nicer design */}
+            {/* <div className="pb-1 text-neutral-300 transition-colors group-hover:text-neutral-400">
               {token.tx_count} txs
-            </div>
+            </div> */}
           </div>
         </Link>
       </td>
-      <td className="px-3">
-        <div className="flex flex-col items-end">
-          <span>{progress}% Minted</span>
-          <div className="flex justify-center">
-            <progress max="100" value={progress} className="sr-only" />
-            <div className="relative h-1.5 w-28 overflow-hidden rounded-full bg-neutral-0">
-              <div
-                className="absolute h-1.5 bg-sky"
-                style={{ width: `${progress}%` }}
-              />
+      <td className="px-3 text-start">
+        <div className="inline-block">
+          <div className="flex shrink flex-col items-end">
+            <span>{progress}% Minted</span>
+            <div className="flex justify-center">
+              <progress max="100" value={progress} className="sr-only" />
+              <div className="relative h-1.5 w-32 overflow-hidden rounded-full bg-neutral-0">
+                <div
+                  className="absolute h-1.5 bg-mint"
+                  style={{ width: `${progress}%` }}
+                />
+              </div>
             </div>
-          </div>
-          <div className="text-neutral-400">
-            {progress < 100 && (
-              <>
-                <Tooltip>
-                  <TooltipTrigger>
-                    {humanReadableCount(token.minted_supply, 1)}
-                  </TooltipTrigger>
-                  <TooltipContent variant="light">
-                    {token.minted_supply}
-                  </TooltipContent>
-                </Tooltip>
-                /
-              </>
-            )}
-            <Tooltip>
-              <TooltipTrigger>
-                {humanReadableCount(token.max_supply, 1)}
-              </TooltipTrigger>
-              <TooltipContent variant="light">
-                {token.max_supply}
-              </TooltipContent>
-            </Tooltip>
+            <div className="text-neutral-400">
+              {/* todo: add minted supply again */}
+              {/* {progress < 100 && (
+                <>
+                  <Tooltip>
+                    <TooltipTrigger>
+                      {humanReadableCount(Number(token.minted_supply), 1)}
+                    </TooltipTrigger>
+                    <TooltipContent variant="light">
+                      {token.minted_supply}
+                    </TooltipContent>
+                  </Tooltip>
+                  /
+                </>
+              )} */}
+              <Tooltip>
+                <TooltipTrigger>
+                  <span className="text-neutral-300">
+                    {humanReadableCount(Number(token.max_supply), 1)}
+                  </span>
+                </TooltipTrigger>
+                <TooltipContent variant="light">
+                  {token.max_supply}
+                </TooltipContent>
+              </Tooltip>
+            </div>
           </div>
         </div>
       </td>
-      <td className=" px-3 text-right">{token.holder_count} holders</td>
-      <td className="hidden px-3 text-right lg:table-cell">
-        {token.tx_count} txs
+      <td className=" px-3 text-start">
+        {Number(token.minted_supply) > 0 ? (
+          token.minted_supply
+        ) : (
+          <span className="text-neutral-100">&mdash;</span>
+        )}
       </td>
-      <td className="  px-3">
+      <td className=" px-3 text-start">
+        {remainingSupply > 0 ? (
+          remainingSupply
+        ) : (
+          <span className="text-neutral-100">&mdash;</span>
+        )}
+      </td>
+      {/* todo: add tx count and holders count */}
+      {/* <td className="hidden px-3 text-right lg:table-cell">
+        {token.tx_count} txs
+      </td> */}
+      <td className="width-[1px] whitespace-nowrap px-3">
         <div className="flex flex-col items-end">
           Deployed
           <Tooltip>
@@ -594,7 +631,7 @@ const Brc20TokenRow = ({ token }: { token: EXAMPLE_ROW_TYPE }) => {
               />
             </TooltipTrigger>
             <TooltipContent variant="light">
-              {formatDateTime(deployedTime)}
+              {formatDateTime(token.deploy_timestamp)}
             </TooltipContent>
           </Tooltip>
         </div>

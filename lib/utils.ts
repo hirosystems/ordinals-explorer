@@ -73,6 +73,12 @@ export function formatDateTime(timestamp: number) {
   }).format(new Date(timestamp));
 }
 
+export function formatDate(timestamp: number) {
+  return new Intl.DateTimeFormat("default", {
+    dateStyle: "long",
+  }).format(new Date(timestamp));
+}
+
 const suffixes = {
   thousand: "K",
   million: "M",
