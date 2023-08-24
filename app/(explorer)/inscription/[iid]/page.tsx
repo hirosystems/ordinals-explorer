@@ -1,7 +1,4 @@
-import Footer from "../../../../components/Footer";
-import Header from "../../../../components/Header";
 import InscriptionDetails from "../../../../components/inscriptions/InscriptionDetails";
-
 import { API_URL } from "../../../../lib/constants";
 import { InscriptionResponse } from "../../../../lib/types";
 
@@ -11,25 +8,20 @@ export async function generateMetadata({
   params: { iid: string };
 }) {
   const inscription = await getInscription(params.iid);
-
-  const title = `Inscription #${inscription.number} | ordinals.hiro.so`;
-  const description = "Explore Ordinals inscriptions.";
+  const titleAbsolute = `Inscription #${inscription.number} | Hiro Ordinals Explorer`;
 
   return {
-    title,
-    description,
+    title: { absolute: titleAbsolute },
     twitter: {
       card: "summary_large_image",
       creator: "@hirosystems",
-      title,
-      description,
+      title: titleAbsolute,
       images: [
         `https://ordinals-ogimage.vercel.app/api/ogimage/${params.iid}?h=600`,
       ],
     },
     openGraph: {
-      title,
-      description,
+      title: titleAbsolute,
       images: [
         {
           url: `https://ordinals-ogimage.vercel.app/api/ogimage/${params.iid}`,
@@ -43,13 +35,9 @@ export async function generateMetadata({
 
 const InscriptionById = ({ params }: { params: { iid: string } }) => {
   return (
-    <>
-      <Header />
-      <main className="mx-auto w-full max-w-7xl flex-grow p-8">
-        <InscriptionDetails iid={params.iid} />
-      </main>
-      <Footer />
-    </>
+    <main className="mx-auto w-full max-w-7xl flex-grow p-8">
+      <InscriptionDetails iid={params.iid} />
+    </main>
   );
 };
 

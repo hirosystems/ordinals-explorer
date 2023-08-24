@@ -6,9 +6,9 @@ import Link from "next/link";
 const Header = ({ children }: { children?: React.ReactNode }) => {
   return (
     <header className="relative mx-auto flex w-full max-w-[88rem] justify-between px-6 py-8 md:px-10">
-      <a href="/">
+      <Link href="/" className="cursor-pointer">
         <img src="/logo.svg" alt="Hiro Ordinals Beta" />
-      </a>
+      </Link>
       {children}
       {/* todo: explore button, stats, hiro.so */}
       <div className="hidden sm:block">

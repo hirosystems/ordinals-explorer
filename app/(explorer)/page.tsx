@@ -1,23 +1,13 @@
 import Link from "next/link";
 
 import CtaLink from "../../components/CtaLink";
-import Footer from "../../components/Footer";
 import GalleryPreview from "../../components/GalleryPreview";
-import Header from "../../components/Header";
 import Intro from "../../components/Intro";
 import SearchBar from "../../components/SearchBar";
-import { Metadata } from "next";
-
-export const metadata: Metadata = {
-  title: "Hiro Ordinals Explorer | ordinals.hiro.so",
-  description:
-    "Discover the world of Ordinal Inscriptions with the Hiro Ordinals Explorer. Dive deep into this unique universe of digital assets inscribed on satoshis, the smallest unit of Bitcoin. Search, filter, and sort Ordinals by address, ID, sat number, or block. The explorer uses the open-source Hiro Ordinals API powered by Chainhooks.",
-};
 
 export default function Home() {
   return (
     <>
-      <Header />
       <main className="mx-auto flex min-h-screen max-w-5xl flex-col items-center justify-between space-y-6 p-6">
         {/* Intro Section */}
         <div className="mx-auto max-w-2xl space-y-10">
@@ -100,7 +90,6 @@ export default function Home() {
           </div>
         </div>
       </main>
-      <Footer />
     </>
   );
 }

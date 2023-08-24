@@ -5,11 +5,9 @@ import { useUpdate } from "react-use";
 
 import DateFilter from "../../../components/DateFilter";
 import Filter from "../../../components/Filter";
-import Footer from "../../../components/Footer";
 import GalleryFull, {
   V1InscriptionsOptions,
 } from "../../../components/GalleryFull";
-import Header from "../../../components/Header";
 import RangeFilter from "../../../components/RangeFilter";
 import Sort, { inscriptionSortOptions } from "../../../components/Sort";
 import TextFilter from "../../../components/TextFilter";
@@ -193,131 +191,127 @@ const Page = () => {
   } as V1InscriptionsOptions;
 
   return (
-    <>
-      <Header />
-      <main className="mx-auto w-full max-w-[104rem] flex-grow">
-        <div className="flex">
-          {/* FILTERS */}
-          <div className="ml-6 hidden min-w-[210px] whitespace-nowrap text-xs md:block">
+    <main className="mx-auto w-full max-w-[104rem] flex-grow">
+      <div className="flex">
+        {/* FILTERS */}
+        <div className="ml-6 hidden min-w-[210px] whitespace-nowrap text-xs md:block">
+          <div className="space-y-2">
+            <div className="py-1 uppercase">Filter</div>
+            <hr className="border-dashed border-neutral-300" />
+          </div>
+          <div className="mt-5" />
+          <Filter
+            defaultOpen={true}
+            name="File Types"
+            options={fParams}
+            onClick={(t) => toggle("f", t)}
+            selected={fSelected}
+          />
+          <hr className="my-3 border-dashed border-neutral-200" />
+          <TextFilter
+            name="Mime Types"
+            text={mimeTypes}
+            placeholder="Comma-separated types"
+            onApply={(t) => updateParam("m", t)}
+          />
+          <hr className="my-3 border-dashed border-neutral-200" />
+          <Filter
+            name="Rarity"
+            options={rParams}
+            onClick={(t) => toggle("r", t)}
+            selected={rSelected}
+          />
+          <hr className="my-3 border-dashed border-neutral-200" />
+          {/* todo: clear date filters unapplied state when clear is called (e.g. via key prop) */}
+          <DateFilter
+            name="Inscription Date"
+            start={dStart}
+            end={dEnd}
+            onApply={(f, t) => updateRange("d", f, t)}
+          />
+          <hr className="my-3 border-dashed border-neutral-200" />
+          <RangeFilter
+            name="Inscription Number"
+            start={nStart}
+            end={nEnd}
+            onApply={(f, t) => updateRange("n", f, t)}
+          />
+          <hr className="my-3 border-dashed border-neutral-200" />
+          <RangeFilter
+            name="Inscription Height"
+            start={hStart}
+            end={hEnd}
+            onApply={(f, t) => updateRange("h", f, t)}
+          />
+          <hr className="my-3 border-dashed border-neutral-200" />
+          <RangeFilter
+            name="Coinbase Height"
+            start={cStart}
+            end={cEnd}
+            onApply={(f, t) => updateRange("c", f, t)}
+          />
+          {/* todo: period filter */}
+
+          <hr className="my-3 border-dashed border-neutral-200" />
+          <div className="my-6" />
+          <button
+            className="block w-full rounded-[4px] border px-4 py-2 uppercase text-neutral-600"
+            onClick={clear}
+          >
+            {/* todo: clear button color state, hover, etc. */}
+            Clear Filters {filterCount > 0 && `(${filterCount})`}
+          </button>
+        </div>
+        <div className="mx-6 flex flex-grow flex-col space-y-5">
+          <div className="w-full text-xs uppercase">
             <div className="space-y-2">
-              <div className="py-1 uppercase">Filter</div>
+              <div className="flex justify-between">
+                <div className="py-1 uppercase opacity-0">Show todo</div>
+                <Sort sortKey={sortKey} updateSort={updateSort} />
+              </div>
               <hr className="border-dashed border-neutral-300" />
             </div>
-            <div className="mt-5" />
-            <Filter
-              defaultOpen={true}
-              name="File Types"
-              options={fParams}
-              onClick={(t) => toggle("f", t)}
-              selected={fSelected}
-            />
-            <hr className="my-3 border-dashed border-neutral-200" />
-            <TextFilter
-              name="Mime Types"
-              text={mimeTypes}
-              placeholder="Comma-separated types"
-              onApply={(t) => updateParam("m", t)}
-            />
-            <hr className="my-3 border-dashed border-neutral-200" />
-            <Filter
-              name="Rarity"
-              options={rParams}
-              onClick={(t) => toggle("r", t)}
-              selected={rSelected}
-            />
-            <hr className="my-3 border-dashed border-neutral-200" />
-            {/* todo: clear date filters unapplied state when clear is called (e.g. via key prop) */}
-            <DateFilter
-              name="Inscription Date"
-              start={dStart}
-              end={dEnd}
-              onApply={(f, t) => updateRange("d", f, t)}
-            />
-            <hr className="my-3 border-dashed border-neutral-200" />
-            <RangeFilter
-              name="Inscription Number"
-              start={nStart}
-              end={nEnd}
-              onApply={(f, t) => updateRange("n", f, t)}
-            />
-            <hr className="my-3 border-dashed border-neutral-200" />
-            <RangeFilter
-              name="Inscription Height"
-              start={hStart}
-              end={hEnd}
-              onApply={(f, t) => updateRange("h", f, t)}
-            />
-            <hr className="my-3 border-dashed border-neutral-200" />
-            <RangeFilter
-              name="Coinbase Height"
-              start={cStart}
-              end={cEnd}
-              onApply={(f, t) => updateRange("c", f, t)}
-            />
-            {/* todo: period filter */}
-
-            <hr className="my-3 border-dashed border-neutral-200" />
-            <div className="my-6" />
-            <button
-              className="block w-full rounded-[4px] border px-4 py-2 uppercase text-neutral-600"
-              onClick={clear}
-            >
-              {/* todo: clear button color state, hover, etc. */}
-              Clear Filters {filterCount > 0 && `(${filterCount})`}
-            </button>
           </div>
-          <div className="mx-6 flex flex-grow flex-col space-y-5">
-            <div className="w-full text-xs uppercase">
-              <div className="space-y-2">
-                <div className="flex justify-between">
-                  <div className="py-1 uppercase opacity-0">Show todo</div>
-                  <Sort sortKey={sortKey} updateSort={updateSort} />
-                </div>
-                <hr className="border-dashed border-neutral-300" />
-              </div>
-            </div>
-            {/* IMAGES */}
-            <GalleryFull apiOptions={apiOptions} renderEmpty={renderEmpty}>
-              {/* Pagination */}
-              <div className="my-12 flex justify-center">
-                {/* todo: use real links? */}
-                {/* todo: hide on load, or add skeleton */}
-                <div className="grid grid-cols-2 gap-3">
-                  {page > 0 ? (
-                    <button
-                      className="rounded-[4px] bg-black px-3 py-1.5 text-white"
-                      onClick={() => updatePage(-1)}
-                    >
-                      &larr; Previous
-                    </button>
-                  ) : (
-                    <button
-                      className="bg-neutral cursor-default rounded-[4px] px-3 py-1.5 text-neutral-200 transition-colors"
-                      disabled={true}
-                    >
-                      &larr; Previous
-                    </button>
-                  )}
+          {/* IMAGES */}
+          <GalleryFull apiOptions={apiOptions} renderEmpty={renderEmpty}>
+            {/* Pagination */}
+            <div className="my-12 flex justify-center">
+              {/* todo: use real links? */}
+              {/* todo: hide on load, or add skeleton */}
+              <div className="grid grid-cols-2 gap-3">
+                {page > 0 ? (
                   <button
                     className="rounded-[4px] bg-black px-3 py-1.5 text-white"
-                    onClick={() => updatePage(+1)}
+                    onClick={() => updatePage(-1)}
                   >
-                    Next &rarr;
+                    &larr; Previous
                   </button>
-                </div>
+                ) : (
+                  <button
+                    className="bg-neutral cursor-default rounded-[4px] px-3 py-1.5 text-neutral-200 transition-colors"
+                    disabled={true}
+                  >
+                    &larr; Previous
+                  </button>
+                )}
+                <button
+                  className="rounded-[4px] bg-black px-3 py-1.5 text-white"
+                  onClick={() => updatePage(+1)}
+                >
+                  Next &rarr;
+                </button>
               </div>
-            </GalleryFull>
-            {/* preload next page */}
-            <div className="hidden">
-              <GalleryFull
-                apiOptions={{ ...apiOptions, page: apiOptions.page + 1 }}
-              />
             </div>
+          </GalleryFull>
+          {/* preload next page */}
+          <div className="hidden">
+            <GalleryFull
+              apiOptions={{ ...apiOptions, page: apiOptions.page + 1 }}
+            />
           </div>
         </div>
-      </main>
-      <Footer />
-    </>
+      </div>
+    </main>
   );
 };
 
