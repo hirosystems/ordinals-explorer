@@ -1,11 +1,11 @@
 "use client";
 
+import { motion } from "framer-motion";
 import { Search as SearchIcon } from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useCallback, useEffect, useRef, useState } from "react";
 import useSWR from "swr";
-import { motion } from "framer-motion";
 
 import { API_URL } from "@/lib/constants";
 import { cn } from "@/lib/utils";
@@ -17,6 +17,7 @@ enum GoToTypes {
   Inscription = "inscription",
   Block = "block",
   Sat = "sat",
+  Brc20 = "brc20",
 }
 type SearchTypes = {
   type: GoToTypes;
@@ -53,6 +54,10 @@ const searchRegexes: Readonly<{ type: GoToTypes; reg: RegExp }[]> = [
   {
     type: GoToTypes.Block,
     reg: /^\d+$/,
+  },
+  {
+    type: GoToTypes.Brc20,
+    reg: /.{1,4}$/i,
   },
 ] as const;
 
@@ -92,6 +97,21 @@ async function searchFetcher(searches: SearchTypes[]) {
         link: `/block/${search}`,
         text: search,
         secondaryText: null,
+      };
+    }
+    if (type === GoToTypes.Brc20) {
+      const res = await fetch(
+        `https://api.dev.hiro.so/ordinals/brc-20/tokens/${search}`
+      );
+      if (res.status !== 200) return null;
+      const result = await res.json();
+      return {
+        type,
+        id: result.token.id,
+        link: `/protocols/brc-20/${result.token.ticker}`,
+        content_type: result.content_type,
+        text: result.token.ticker,
+        secondaryText: result.token.id,
       };
     }
     return null;
@@ -138,6 +158,15 @@ const SatLink = (props: SearchResult) => {
 
 const BlockLink = (props: SearchResult) => {
   return <p className="text-neutral-800">#{props.text}</p>;
+};
+
+const Brc20Link = (props: SearchResult) => {
+  return (
+    <p className="text-neutral-800">
+      {props.text.toUpperCase()}{" "}
+      <span className="text-sm text-neutral-300">{props.secondaryText}</span>
+    </p>
+  );
 };
 
 const SearchBar = () => {
@@ -215,6 +244,7 @@ const SearchBar = () => {
       [GoToTypes.Inscription]: [],
       [GoToTypes.Sat]: [],
       [GoToTypes.Block]: [],
+      [GoToTypes.Brc20]: [],
     } as GroupedResults
   );
 
@@ -240,7 +270,7 @@ const SearchBar = () => {
               onChange={(ev) => setSearch(ev.target.value.trim().toLowerCase())}
               onFocus={() => setIsFocused(true)}
               onBlur={() => setIsFocused(false)}
-              placeholder="Search by inscription, sat, or block"
+              placeholder="Search by inscription, sat, block, or BRC-20 token"
             />
           </div>
         </div>
@@ -284,6 +314,9 @@ const SearchBar = () => {
                             {type === GoToTypes.Block && (
                               <BlockLink {...result} />
                             )}
+                            {type === GoToTypes.Brc20 && (
+                              <Brc20Link {...result} />
+                            )}
                           </Link>
                         ))}
                       </div>
@@ -293,7 +326,7 @@ const SearchBar = () => {
             </div>
           </div>
           {search.length && searchResults === null ? (
-            <p className="mt-5 uppercase text-neutral-300">
+            <p className="mt-5 px-5 pb-3 uppercase text-neutral-300">
               ¯\_(ツ)_/¯ No results
             </p>
           ) : null}

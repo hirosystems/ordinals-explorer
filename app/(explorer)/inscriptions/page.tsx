@@ -11,12 +11,23 @@ import GalleryFull, {
 } from "../../../components/GalleryFull";
 import Header from "../../../components/Header";
 import RangeFilter from "../../../components/RangeFilter";
-
 import Sort, { inscriptionSortOptions } from "../../../components/Sort";
 import TextFilter from "../../../components/TextFilter";
 import { useHasMounted } from "../../../lib/hooks";
 
-const fParams = ["image", "video", "audio", "text", "binary"];
+const fParams = [
+  [
+    "image",
+    "Filter by image mimetypes: image/apng, image/avif, image/gif, image/jpg, image/jpeg, image/png, image/svg+xml, or image/webp",
+  ],
+  ["video", "Filter by video mimetypes: video/mp4 or video/webm"],
+  ["audio", "Filter by audio mimetypes: audio/midi, audio/mod, or audio/mpeg"],
+  ["text", "Filter by text mimetypes: text/html, text/markdown, or text/plain"],
+  [
+    "binary",
+    "Filter by binary mimetypes: application/epub+zip, application/json, application/pdf, or application/pgp-signature",
+  ],
+];
 const rParams = [
   ["common", "Any sat that is not the first sat of its block"],
   ["uncommon", "The first sat of each block"],

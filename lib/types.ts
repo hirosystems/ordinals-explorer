@@ -41,6 +41,7 @@ export type ListResponse<T> = {
   total: number;
   results: T[];
 };
+
 export type InscriptionTransferResponse = {
   block_height: number;
   block_hash: string;
@@ -62,4 +63,30 @@ export type HomepageResponse = {
   periods: { [key: string]: number };
   graph: [number, number][];
   graphCumulative: [number, number][];
+};
+
+export type Brc20TokenResponse = {
+  id: string;
+  number: number;
+  block_height: number;
+  tx_id: string;
+  address: string;
+  ticker: string;
+  max_supply: string;
+  mint_limit: string;
+  decimals: number;
+};
+
+export type Brc20TokenDetailsResponse = {
+  token: Brc20TokenResponse;
+  supply: {
+    max_supply: string;
+    minted_supply: string;
+    holders: number;
+  };
+};
+
+export type Brc20HolderResponse = {
+  address: string;
+  overall_balance: string;
 };
