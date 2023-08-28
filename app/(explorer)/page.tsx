@@ -17,7 +17,7 @@ export default function Home() {
             <SearchBar />
             <Link
               href="/explore"
-              className="mt-4 flex justify-center text-neutral-300"
+              className="mt-14 flex justify-center text-neutral-300"
             >
               or explore all
             </Link>

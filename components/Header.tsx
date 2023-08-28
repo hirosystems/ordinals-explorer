@@ -2,14 +2,26 @@
 
 import { ArrowUpRight } from "lucide-react";
 import Link from "next/link";
+import SearchBar from "./SearchBar";
+import { usePathname, useRouter } from "next/navigation";
+import { cn } from "../lib/utils";
 
 const Header = ({ children }: { children?: React.ReactNode }) => {
+  const pathname = usePathname();
+  console.log(pathname);
+
   return (
-    <header className="relative mx-auto flex w-full max-w-[88rem] justify-between px-6 py-8 md:px-10">
+    <header className="relative mx-auto flex w-full max-w-[88rem] items-center justify-between px-6 py-4 md:px-10">
       <Link href="/" className="cursor-pointer">
         <img src="/logo.svg" alt="Hiro Ordinals Beta" />
       </Link>
-      {children}
+      <div className={cn("mx-8 h-[42px] flex-1 items-center")}>
+        {pathname !== "/" ? (
+          <SearchBar small />
+        ) : (
+          <div className="bg-red-200"></div>
+        )}
+      </div>
       {/* todo: explore button, stats, hiro.so */}
       <div className="hidden sm:block">
         <Link

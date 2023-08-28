@@ -169,7 +169,7 @@ const Brc20Link = (props: SearchResult) => {
   );
 };
 
-const SearchBar = () => {
+const SearchBar = (props: { className?: string; small?: boolean }) => {
   const router = useRouter();
   const [search, setSearch] = useState("");
   const [isFocused, setIsFocused] = useState(false);
@@ -177,7 +177,7 @@ const SearchBar = () => {
   const [searchResults, setSearchResults] = useState<SearchResult[] | null>([]);
   const searchInputRef = useRef<HTMLInputElement>(null);
 
-  let searches: SearchTypes[] = [];
+  const searches: SearchTypes[] = [];
   for (const { reg, type } of searchRegexes) {
     if (reg.test(search)) {
       searches.push({ type, search });
@@ -253,18 +253,22 @@ const SearchBar = () => {
   return (
     <div
       className={cn(
-        "search-bar-container relative z-20 mb-10 h-12 text-neutral-400 transition-colors",
-        isFocused && "focused"
+        "search-bar-container relative z-20 text-neutral-400 transition-colors",
+        isFocused && "focused",
+        props.small ? "h-[40px]" : "h-[60px]",
+        props.className
       )}
     >
       {/* search bar input */}
-      <div className="absolute w-full p-[1px]">
-        <div className="relative z-40 rounded-[4px] bg-white p-[18px]">
-          <div className="flex gap-4 ">
-            <SearchIcon className="text-neutral-300" />
+      <div className="absolute h-full w-full">
+        <div className="p-[1px]">
+          <div className="relative z-40 flex overflow-hidden rounded-[4px]">
             <input
               ref={searchInputRef}
-              className="w-full font-normal outline-none placeholder:text-neutral-300"
+              className={cn(
+                "flex-1 font-normal outline-none placeholder:text-neutral-300",
+                props.small ? "p-[8px] ps-[40px]" : "p-[18px] ps-[58px]"
+              )}
               type="text"
               value={search}
               onChange={(ev) => setSearch(ev.target.value.trim().toLowerCase())}
@@ -272,6 +276,14 @@ const SearchBar = () => {
               onBlur={() => setIsFocused(false)}
               placeholder="Search by inscription, sat, block, or BRC-20 token"
             />
+            <div
+              className={cn(
+                "absolute flex h-full items-center ps-5 text-neutral-300",
+                props.small ? "ps-3" : "ps-5"
+              )}
+            >
+              <SearchIcon size={props.small ? 20 : 26} />
+            </div>
           </div>
         </div>
       </div>
@@ -279,11 +291,16 @@ const SearchBar = () => {
       <motion.div
         layout
         transition={{ duration: 0.1 }}
-        className="search-bar-box absolute z-30 min-h-[62px] w-full overflow-hidden rounded-[5px] bg-gradient-to-b from-neutral-0 to-neutral-200 p-[1px] transition-[box-shadow]"
+        className={cn(
+          "absolute z-30 w-full overflow-hidden rounded-[5px] bg-gradient-to-b from-neutral-0 to-neutral-200 p-[1px] transition-[box-shadow]",
+          props.small
+            ? "min-h-[42px] shadow-[0px_3px_6px_0px_#f2f0ed]"
+            : "min-h-[62px] shadow-[0px_6px_14px_0px_#f2f0ed]"
+        )}
       >
         {/* search results content */}
         <div className="m-0 w-full overflow-hidden rounded-[4px] bg-white text-neutral-400 transition-colors">
-          <div className="m-5 mt-[54px]">
+          <div className={cn(props.small ? "m-3 mt-[40px]" : "m-5 mt-[54px]")}>
             <div
               className={cn("space-y-1.5", isFocused ? "visible" : "hidden")}
             >
