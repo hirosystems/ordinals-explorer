@@ -1,16 +1,13 @@
 "use client";
 
+import { API_URL } from "@/lib/constants";
+import { cn } from "@/lib/utils";
 import { motion } from "framer-motion";
 import { Search as SearchIcon } from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useCallback, useEffect, useRef, useState } from "react";
 import useSWR from "swr";
-
-import { API_URL } from "@/lib/constants";
-import { cn } from "@/lib/utils";
-
-import "./SearchBar.css";
 import Thumbnail from "./Thumbnail";
 
 enum GoToTypes {
@@ -235,6 +232,18 @@ const SearchBar = (props: { className?: string; small?: boolean }) => {
     return () => window.removeEventListener("keydown", onKeydown);
   }, [onKeydown]);
 
+  // CMD+K to focus search input
+  useEffect(() => {
+    const down = (e: KeyboardEvent) => {
+      if (e.key === "k" && (e.metaKey || e.ctrlKey)) {
+        e.preventDefault();
+        searchInputRef.current?.focus();
+      }
+    };
+    document.addEventListener("keydown", down);
+    return () => document.removeEventListener("keydown", down);
+  }, []);
+
   const groupedResult = searchResults?.reduce(
     (acc, r) => ({
       ...acc,
@@ -253,57 +262,65 @@ const SearchBar = (props: { className?: string; small?: boolean }) => {
   return (
     <div
       className={cn(
-        "search-bar-container relative z-20 text-neutral-400 transition-colors",
+        "search-bar-container group relative z-20 text-neutral-400 transition-[box-shadow,opacity]",
         isFocused && "focused",
+        !isFocused && props.small && "opacity-80",
         props.small ? "h-[40px]" : "h-[60px]",
         props.className
       )}
     >
       {/* search bar input */}
-      <div className="absolute h-full w-full">
-        <div className="p-[1px]">
-          <div className="relative z-40 flex overflow-hidden rounded-[4px]">
-            <input
-              ref={searchInputRef}
-              className={cn(
-                "flex-1 font-normal outline-none placeholder:text-neutral-300",
-                props.small ? "p-[8px] ps-[40px]" : "p-[18px] ps-[58px]"
-              )}
-              type="text"
-              value={search}
-              onChange={(ev) => setSearch(ev.target.value.trim().toLowerCase())}
-              onFocus={() => setIsFocused(true)}
-              onBlur={() => setIsFocused(false)}
-              placeholder="Search by inscription, sat, block, or BRC-20 token"
-            />
-            <div
-              className={cn(
-                "absolute flex h-full items-center ps-5 text-neutral-300",
-                props.small ? "ps-3" : "ps-5"
-              )}
-            >
-              <SearchIcon size={props.small ? 20 : 26} />
-            </div>
+      <div className="absolute z-40 h-full w-full items-center rounded-[4px] p-[1px]">
+        <div className="relative flex items-center overflow-hidden rounded-[3px] bg-white">
+          <input
+            ref={searchInputRef}
+            className={cn(
+              "block h-full w-full font-normal outline-none placeholder:text-neutral-300",
+              props.small ? "p-[9px] ps-[40px] text-sm" : "p-[17px] ps-[58px]"
+            )}
+            type="text"
+            value={search}
+            onChange={(ev) => setSearch(ev.target.value.trim().toLowerCase())}
+            onFocus={() => setIsFocused(true)}
+            onBlur={() => setIsFocused(false)}
+            placeholder="Search by inscription, sat, block, or BRC-20 token"
+          />
+          <div
+            className={cn(
+              "cursor-default whitespace-nowrap rounded border border-neutral-300 bg-gradient-to-b from-neutral-0 to-neutral-100 px-1.5 pb-0.5 font-['Aeonik_Mono'] text-xs text-neutral-950 opacity-40",
+              props.small ? "mx-2" : "mx-5"
+            )}
+          >
+            <span className="relative top-[1px] me-[5px] text-sm">⌘</span>K
+          </div>
+          <div
+            className={cn(
+              "absolute left-0 top-0 flex h-full items-center ps-5 text-neutral-300",
+              props.small ? "ps-3" : "ps-5"
+            )}
+          >
+            <SearchIcon size={props.small ? 20 : 26} />
           </div>
         </div>
       </div>
       {/* 1 px wrapper for gradient border */}
-      <motion.div
-        layout
-        transition={{ duration: 0.1 }}
+      <div
         className={cn(
-          "absolute z-30 w-full overflow-hidden rounded-[5px] bg-gradient-to-b from-neutral-0 to-neutral-200 p-[1px] transition-[box-shadow]",
+          "absolute z-30 w-full overflow-hidden rounded-[5px] bg-gradient-to-b from-neutral-0 to-neutral-200 p-[1px] transition-[box-shadow] group-hover:shadow-[0_6px_14px_0_#8c877d4d]",
           props.small
-            ? "min-h-[42px] shadow-[0px_3px_6px_0px_#f2f0ed]"
-            : "min-h-[62px] shadow-[0px_6px_14px_0px_#f2f0ed]"
+            ? "min-h-[40px] shadow-[0px_3px_6px_0px_#f2f0ed]"
+            : "min-h-[60px] shadow-[0px_6px_14px_0px_#f2f0ed]",
+          isFocused && "shadow-[0_6px_14px_0_#8c877d4d]"
         )}
       >
         {/* search results content */}
-        <div className="m-0 w-full overflow-hidden rounded-[4px] bg-white text-neutral-400 transition-colors">
-          <div className={cn(props.small ? "m-3 mt-[40px]" : "m-5 mt-[54px]")}>
-            <div
-              className={cn("space-y-1.5", isFocused ? "visible" : "hidden")}
-            >
+        <motion.div
+          animate={{ height: isFocused && searchResults?.length ? "auto" : 0 }}
+          // transition={{ duration: 1 }}
+          className="m-0 h-0 w-full rounded-[4px] bg-white text-neutral-400 transition-colors"
+        >
+          <div className={cn(props.small ? "p-3 pt-[40px]" : "p-5 pt-[54px]")}>
+            <div className={cn("space-y-1.5")}>
               {groupedResult
                 ? Object.entries(groupedResult).map(([type, results]) =>
                     results.length ? (
@@ -347,8 +364,8 @@ const SearchBar = (props: { className?: string; small?: boolean }) => {
               ¯\_(ツ)_/¯ No results
             </p>
           ) : null}
-        </div>
-      </motion.div>
+        </motion.div>
+      </div>
     </div>
   );
 };

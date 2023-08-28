@@ -15,11 +15,11 @@ const Header = ({ children }: { children?: React.ReactNode }) => {
       <Link href="/" className="cursor-pointer">
         <img src="/logo.svg" alt="Hiro Ordinals Beta" />
       </Link>
-      <div className={cn("mx-8 h-[42px] flex-1 items-center")}>
+      <div className="me-5 ms-8 hidden h-[40px] flex-1 items-center lg:block">
         {pathname !== "/" ? (
           <SearchBar small />
         ) : (
-          <div className="bg-red-200"></div>
+          <div className="bg-red-200" />
         )}
       </div>
       {/* todo: explore button, stats, hiro.so */}

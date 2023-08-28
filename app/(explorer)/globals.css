@@ -71,10 +71,11 @@ a {
   font-weight: bold;
 }
 
-.block,
+/* todo: reenable page */
+/* .block,
 .sat {
   cursor: pointer;
-}
+} */
 
 .selected {
   fill: gold;
