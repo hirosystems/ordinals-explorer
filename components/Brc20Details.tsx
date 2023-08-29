@@ -1,27 +1,43 @@
 "use client";
 
 import useSWR from "swr";
-import {
-  fetcher,
-  formatDate,
-  formatDateTime,
-  humanReadableCount,
-} from "../lib/utils";
-import { TimeAgo } from "./TimeAgo";
+import { Brc20TokenDetailsResponse } from "../lib/types";
+import { fetcher, formatDate, humanReadableCount } from "../lib/utils";
+import Loading from "./Loading";
 import {
   Tooltip,
   TooltipContent,
   TooltipProvider,
   TooltipTrigger,
 } from "./Tooltip";
-import Loading from "./Loading";
-import { Brc20TokenDetailsResponse } from "../lib/types";
+import Brc20HoldersTable from "./Brc20HoldersTable";
 
 const BrcDetails = (params: { ticker: string }) => {
-  const { data, error, isLoading } = useSWR<Brc20TokenDetailsResponse>(
+  const {
+    data: unused,
+    error,
+    isLoading,
+  } = useSWR<Brc20TokenDetailsResponse>(
     `https://api.dev.hiro.so/ordinals/brc-20/tokens/${params.ticker}`,
     fetcher
   );
+
+  const data = {
+    token: {
+      id: "38c46a8bf7ec90bc7f6b797e7dc84baa97f4e5fd4286b92fe1b50176d03b18dci0",
+      number: 5,
+      block_height: 775617,
+      tx_id: "1095cf209e372bcd7a9205ccbe0a6036faf56a3efacf50a97cdf35b02ba2c739",
+      address: "bc1p3cyx5e2hgh53w7kpxcvm8s4kkega9gv5wfw7c4qxsvxl0u8x834qf0u2td",
+      ticker: "PEPE",
+      max_supply: "21000000",
+      mint_limit: null,
+      decimals: 18,
+      deploy_timestamp: 1677803510000,
+      minted_supply: "0",
+    },
+    supply: { max_supply: "21000000", minted_supply: "0", holders: 0 },
+  };
 
   if (error) return <span>Something went wrong ʕ•̠͡•ʔ</span>;
   if (!params.ticker) return <div>404</div>;
@@ -29,13 +45,11 @@ const BrcDetails = (params: { ticker: string }) => {
 
   // todo: add pagination to allow viewing all inscriptions? or link to explore page
 
-  // todo: renable progress bar
-  // const progress = Math.round(
-  //   (Number(data.token.minted_supply) / Number(data.token.max_supply)) * 100
-  // );
+  const progress = Math.round(
+    (Number(data.token.minted_supply) / Number(data.token.max_supply)) * 100
+  );
 
-  // todo: reenable date
-  // const deploymentDate = new Date(data.token.deploy_timestamp);
+  const deploymentDate = new Date(data.token.deploy_timestamp);
 
   return (
     <TooltipProvider delayDuration={150}>
@@ -52,8 +66,7 @@ const BrcDetails = (params: { ticker: string }) => {
             </div>
             <div className="flex w-full max-w-[320px] flex-col pb-10 pt-4 text-sm sm:self-auto sm:p-0">
               {/* todo: componetize progress, with classname for width */}
-              {/* todo: renable progress bar */}
-              {/* <span className="text-neutral-400">{progress}% Minted</span>
+              <span className="text-neutral-400">{progress}% Minted</span>
               <div className="flex justify-center">
                 <progress max="100" value={progress} className="sr-only" />
                 <div className="relative h-1.5 w-full overflow-hidden rounded-full bg-neutral-0">
@@ -62,22 +75,24 @@ const BrcDetails = (params: { ticker: string }) => {
                     style={{ width: `${progress}%` }}
                   />
                 </div>
-              </div> */}
+              </div>
               <div className="self-end text-neutral-400">
-                {/* todo: add minted supply again */}
-                {/* {progress < 100 && (
+                {progress < 100 && (
                   <>
                     <Tooltip>
                       <TooltipTrigger>
-                        {humanReadableCount(Number(token.minted_supply), 1)}
+                        {humanReadableCount(
+                          Number(data.token.minted_supply),
+                          1
+                        )}
                       </TooltipTrigger>
                       <TooltipContent variant="light">
-                        {token.minted_supply}
+                        {data.token.minted_supply}
                       </TooltipContent>
                     </Tooltip>
                     /
                   </>
-                )} */}
+                )}
                 <Tooltip>
                   <TooltipTrigger>
                     <span className="text-neutral-300">
@@ -95,14 +110,11 @@ const BrcDetails = (params: { ticker: string }) => {
             <div className="space-y-6">
               <div className="flex flex-col">
                 <div className="text-neutral-300">deployment date</div>
-                <span className="text-neutral-200">-</span>
-                {/* todo: add tooltip */}
-                {/* todo: reenable date */}
-                {/* <time
+                <time
                   dateTime={new Date(data.token.deploy_timestamp).toISOString()}
                 >
                   {formatDate(data.token.deploy_timestamp)}
-                </time> */}
+                </time>
               </div>
               <div className="flex flex-col">
                 <div className="text-neutral-300">limit per mint</div>
@@ -114,7 +126,7 @@ const BrcDetails = (params: { ticker: string }) => {
                   )}
                 </div>
               </div>
-              {/* todo: add holders */}
+              {/* todo: add holders count & add tx count */}
               {/* <div className="flex flex-col">
                 <div className="text-neutral-300">deployment date</div>
                 <div>{data.token.deploy_timestamp}</div>
@@ -140,12 +152,7 @@ const BrcDetails = (params: { ticker: string }) => {
           </div>
         </div>
         <div className="mt-6" />
-        <div className="flex space-x-9 rounded-lg border border-neutral-0 p-7">
-          <div className="todo-mb-3 space-y-2">
-            <h2 className="text-2xl">Holders</h2>
-            <p className="italic text-neutral-300">coming soon...</p>
-          </div>
-        </div>
+        <Brc20HoldersTable ticker={params.ticker} />
       </div>
     </TooltipProvider>
   );

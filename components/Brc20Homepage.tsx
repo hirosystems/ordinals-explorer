@@ -26,7 +26,6 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "./Tooltip";
-import { spanLeft } from "fp-ts/lib/Array";
 
 // SEARCH PARAMS MAP
 // s: sort
