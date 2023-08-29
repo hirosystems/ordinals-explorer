@@ -1,27 +1,35 @@
 "use client";
 
+import { AnimatePresence, motion } from "framer-motion";
 import { ArrowUpRight } from "lucide-react";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import SearchBar from "./SearchBar";
-import { usePathname, useRouter } from "next/navigation";
-import { cn } from "../lib/utils";
 
 const Header = ({ children }: { children?: React.ReactNode }) => {
   const pathname = usePathname();
-  console.log(pathname);
 
   return (
     <header className="relative mx-auto flex w-full max-w-[88rem] items-center justify-between px-6 py-4 md:px-10">
       <Link href="/" className="cursor-pointer">
         <img src="/logo.svg" alt="Hiro Ordinals Beta" />
       </Link>
-      <div className="me-5 ms-8 hidden h-[40px] flex-1 items-center lg:block">
+      <AnimatePresence>
         {pathname !== "/" ? (
-          <SearchBar small />
+          <motion.div
+            className="me-5 ms-8 hidden flex-1 lg:block"
+            key="search-bar-wrapper"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.2 }}
+          >
+            <SearchBar small />
+          </motion.div>
         ) : (
-          <div className="bg-red-200" />
+          <div className="h-10" />
         )}
-      </div>
+      </AnimatePresence>
       {/* todo: explore button, stats, hiro.so */}
       <div className="hidden sm:block">
         <Link
