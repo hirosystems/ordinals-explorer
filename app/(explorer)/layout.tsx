@@ -8,6 +8,7 @@ import Footer from "../../components/Footer";
 import Header from "../../components/Header";
 
 export const metadata: Metadata = {
+  metadataBase: new URL('https://ordinals.hiro.so'),
   title: {
     template: "%s | Hiro Ordinals Explorer",
     default: "Hiro Ordinals Explorer",

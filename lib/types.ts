@@ -75,6 +75,8 @@ export type Brc20TokenResponse = {
   max_supply: string;
   mint_limit: string;
   decimals: number;
+  minted_supply: string;
+  deploy_timestamp: number;
 };
 
 export type Brc20TokenDetailsResponse = {
