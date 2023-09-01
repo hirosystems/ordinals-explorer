@@ -3,11 +3,11 @@
 import { ChevronLeftIcon, ChevronRightIcon } from "@radix-ui/react-icons";
 import { motion } from "framer-motion";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
 import { useState } from "react";
-import { useUpdate } from "react-use";
 import useSWR from "swr";
 
+import { SearchIcon } from "lucide-react";
+import Image from "next/image";
 import { useHasMounted } from "../lib/hooks";
 import { Brc20TokenResponse, ListResponse } from "../lib/types";
 import { cn, fetcher, formatDateTime, humanReadableCount } from "../lib/utils";
@@ -18,7 +18,6 @@ import {
   SelectTrigger,
   SelectValue,
 } from "./Select";
-import { inscriptionSortOptions } from "./Sort";
 import { TimeAgo } from "./TimeAgo";
 import {
   Tooltip,
@@ -27,65 +26,30 @@ import {
   TooltipTrigger,
 } from "./Tooltip";
 
-// SEARCH PARAMS MAP
-// s: sort
-// o: order
-// p: page
-// t: ticker (search)
-
-// todo: move to global first file
+const TOKEN_THUMBNAIL_MAP = {
+  ordi: "/brc20/ordi.png",
+} as Record<string, string>;
 
 const Brc20Homepage = () => {
   const hasMounted = useHasMounted();
-  const update = useUpdate();
-  const pathname = usePathname();
 
-  const [ticker, setTicker] = useState<string | null>(null);
+  const [page, setPage] = useState(0);
+  const [ticker, setTicker] = useState<string>("");
 
   const [rowsPerPage, setRowsPerPage] = useState("20");
   const limit = parseInt(rowsPerPage);
 
-  const url = new URL(window.location.href);
-  const searchParams = new URLSearchParams(url.search); // useSearchParams() doesn't work here when manually useUpdating
-
-  // basic parameters
-  const sort = searchParams.get("s") ?? "genesis_block_height"; // genesis_block_height, rarity
-  const order = searchParams.get("o") ?? "desc"; // asc, desc
-  const sortKey = `${sort}-${order}` as keyof typeof inscriptionSortOptions;
-  const page = parseInt(searchParams.get("p") ?? "0");
-
   const offset = page * limit;
 
-  function updateSort(value: string) {
-    const [s, o] = value.split("-");
-    searchParams.set("s", s);
-    searchParams.set("o", o);
-    window.history.pushState({}, "", `${pathname}?${searchParams.toString()}`);
-    update(); // force re-render
-  }
-
-  function updateParam(key: string, value: string | null) {
-    searchParams.delete(key);
-    if (value) searchParams.set(key, value);
-    window.history.pushState({}, "", `${pathname}?${searchParams.toString()}`);
-    update(); // force re-render
-  }
-
-  function updatePage(offset: number) {
-    searchParams.set("p", `${page + offset}`);
-    window.history.pushState({}, "", `${pathname}?${searchParams.toString()}`);
-    update(); // force re-render
-  }
-
   const params = new URLSearchParams({
-    // sort_by: "tx_count",
-    // order: "desc",
-    count: rowsPerPage,
+    ticker,
+    limit: rowsPerPage,
     offset: offset.toString(),
   });
+  if (!ticker) params.delete("ticker");
 
   const { data, error, isLoading } = useSWR<ListResponse<Brc20TokenResponse>>(
-    `https://api.dev.hiro.so/ordinals/brc-20/tokens?${params.toString()}`,
+    `https://api.beta.hiro.so/ordinals/brc-20/tokens?${params.toString()}`,
     fetcher,
     {
       keepPreviousData: true,
@@ -106,8 +70,7 @@ const Brc20Homepage = () => {
       </span>
     );
 
-  const isLastPage = (page + 1) * limit >= 100; // todo: fix!!!!
-  // const isLastPage = (page + 1) * limit >= data.total;
+  const isLastPage = (page + 1) * limit >= data.total;
   const isOnlyPage = page === 0 && isLastPage;
 
   return (
@@ -119,8 +82,8 @@ const Brc20Homepage = () => {
         <div className="p-3 ">z</div>
       </div> */}
 
-      <div className="space-y-2 rounded-lg border border-neutral-0 p-7 pt-6">
-        <h2 className="text-2xl">What is BRC-20?</h2>
+      <div className="space-y-5 rounded-lg border border-neutral-0 p-7 pt-6 text-center">
+        <h2 className="text-3xl">What is BRC-20?</h2>
         <p className="text-neutral-600">
           BRC-20 is a new token standard (
           <Link
@@ -140,7 +103,8 @@ const Brc20Homepage = () => {
           >
             protocol
           </Link>{" "}
-          is built on top of Ordinals.
+          is built on top of Ordinals and uses the JSON content of inscriptions
+          to store interaction information.
         </p>
         <Link
           className="block text-center text-neutral-300 underline"
@@ -185,23 +149,24 @@ const Brc20Homepage = () => {
         </div>
 
         {/* todo: filter row */}
-        {/* <div className="ps-[67px]">
-          <div className="group relative inline-block text-neutral-200 focus-within:text-neutral-400">
-            <input
-              className="rounded border-2 border-neutral-0 px-2 py-1.5 ps-[38px] text-sm text-neutral-500 placeholder-neutral-300"
-              type="text"
-              placeholder="Ticker search"
-              title="Search for BRC-20 token by ticker"
-              maxLength={4}
-            />
-            <div className="absolute bottom-0 left-2.5 top-0 flex items-center">
-              <SearchIcon className="h-5 w-5 " fontSize={32} />
-            </div>
+        <div className="group relative ms-3 inline-block text-neutral-200 focus-within:text-neutral-400">
+          <input
+            className="w-44 rounded bg-neutral-0 px-2 py-1.5 ps-[38px] text-sm text-neutral-500 placeholder-neutral-300"
+            type="text"
+            placeholder="Ticker search"
+            title="Search for BRC-20 token by ticker"
+            maxLength={4}
+            onChange={(e) => setTicker(e.target.value)}
+          />
+          <div className="absolute bottom-0 left-2.5 top-0 flex items-center">
+            <SearchIcon className="h-5 w-5 text-neutral-200" fontSize={32} />
           </div>
-        </div> */}
+        </div>
 
         <div className="w-full overflow-scroll">
-          <table className="w-full min-w-[640px]">
+          <table
+            className={cn("w-full min-w-[640px]", isLoading && "opacity-50")}
+          >
             <thead>
               <tr className="border-b border-neutral-0 text-sm text-neutral-300">
                 <th className="w-1/4 px-4 py-2 text-start font-normal">
@@ -274,7 +239,7 @@ const Brc20Homepage = () => {
                     whileTap={{
                       scale: 0.8,
                     }}
-                    onClick={() => updatePage(-1)}
+                    onClick={() => setPage((p) => p - 1)}
                     title="Previous page"
                   >
                     <ChevronLeftIcon className="h-4 w-4" />
@@ -300,7 +265,7 @@ const Brc20Homepage = () => {
                     whileTap={{
                       scale: 0.8,
                     }}
-                    onClick={() => updatePage(+1)}
+                    onClick={() => setPage((p) => p + 1)}
                     title="Next page"
                   >
                     <ChevronRightIcon className="h-4 w-4" />
@@ -310,9 +275,9 @@ const Brc20Homepage = () => {
             </div>
           </div>
         ) : (
-          <div className="cursor-default pt-10 text-center text-neutral-300">
+          <div className="cursor-default pb-12 pt-10 text-center text-neutral-300">
             <span className="rounded-md bg-neutral-0 px-1 py-0.5">
-              No results
+              No tokens
             </span>
           </div>
         )}
@@ -329,6 +294,10 @@ const Brc20TokenRow = ({ token }: { token: Brc20TokenResponse }) => {
   const remainingSupply =
     Number(token.max_supply) - Number(token.minted_supply);
 
+  console.log("Number(token.minted_supply)", Number(token.minted_supply));
+
+  const thumbnail: string | undefined = TOKEN_THUMBNAIL_MAP[token.ticker];
+
   return (
     <tr className="group border-b border-neutral-0 bg-white font-['Aeonik_Mono'] text-sm text-neutral-500 transition-colors hover:bg-neutral-0 hover:text-black">
       <td className="px-3 py-2.5 text-black">
@@ -336,9 +305,20 @@ const Brc20TokenRow = ({ token }: { token: Brc20TokenResponse }) => {
           className="flex items-center"
           href={`/protocols/brc-20/${token.ticker}`}
         >
-          <div className="flex h-12 w-12 flex-col items-center justify-center rounded-full bg-neutral-50 text-neutral-200">
-            <div className="leading-none">BRC</div>
-            <div className="text-lg leading-none">20</div>
+          <div className="flex h-12 w-12 flex-col items-center justify-center overflow-hidden rounded-full bg-neutral-50 text-neutral-200">
+            {thumbnail ? (
+              <Image
+                width={48}
+                height={48}
+                src={thumbnail}
+                alt={`${token.ticker} thumbnail`}
+              />
+            ) : (
+              <>
+                <div className="leading-none">BRC</div>
+                <div className="text-lg leading-none">20</div>
+              </>
+            )}
           </div>
           <div className="flex flex-col px-2">
             <span className="text-lg">{token.ticker}</span>

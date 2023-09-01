@@ -13,43 +13,18 @@ import {
 import Brc20HoldersTable from "./Brc20HoldersTable";
 
 const BrcDetails = (params: { ticker: string }) => {
-  const {
-    data: unused,
-    error,
-    isLoading,
-  } = useSWR<Brc20TokenDetailsResponse>(
-    `https://api.dev.hiro.so/ordinals/brc-20/tokens/${params.ticker}`,
+  const { data, error, isLoading } = useSWR<Brc20TokenDetailsResponse>(
+    `https://api.beta.hiro.so/ordinals/brc-20/tokens/${params.ticker}`,
     fetcher
   );
-
-  const data = {
-    token: {
-      id: "38c46a8bf7ec90bc7f6b797e7dc84baa97f4e5fd4286b92fe1b50176d03b18dci0",
-      number: 5,
-      block_height: 775617,
-      tx_id: "1095cf209e372bcd7a9205ccbe0a6036faf56a3efacf50a97cdf35b02ba2c739",
-      address: "bc1p3cyx5e2hgh53w7kpxcvm8s4kkega9gv5wfw7c4qxsvxl0u8x834qf0u2td",
-      ticker: "PEPE",
-      max_supply: "21000000",
-      mint_limit: null,
-      decimals: 18,
-      deploy_timestamp: 1677803510000,
-      minted_supply: "0",
-    },
-    supply: { max_supply: "21000000", minted_supply: "0", holders: 0 },
-  };
 
   if (error) return <span>Something went wrong ʕ•̠͡•ʔ</span>;
   if (!params.ticker) return <div>404</div>;
   if (!data) return <Loading />;
 
-  // todo: add pagination to allow viewing all inscriptions? or link to explore page
-
   const progress = Math.round(
     (Number(data.token.minted_supply) / Number(data.token.max_supply)) * 100
   );
-
-  const deploymentDate = new Date(data.token.deploy_timestamp);
 
   return (
     <TooltipProvider delayDuration={150}>
@@ -57,9 +32,7 @@ const BrcDetails = (params: { ticker: string }) => {
         <div className="flex flex-col rounded-lg border border-neutral-0 p-7 sm:flex-row sm:space-x-9">
           <div className="flex basis-2/5 flex-col items-center space-y-6 sm:items-start">
             <div className="flex items-end space-x-3 ">
-              <h1 className=" text-5xl uppercase leading-[75%]">
-                {params.ticker}
-              </h1>
+              <h1 className=" text-5xl leading-[75%]">{params.ticker}</h1>
               <div className="b-3 rounded-md border-2 border-sky-400 bg-sky-100 px-1 text-base leading-tight text-sky-600">
                 BRC-20
               </div>

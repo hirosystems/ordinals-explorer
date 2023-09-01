@@ -92,3 +92,10 @@ export type Brc20HolderResponse = {
   address: string;
   overall_balance: string;
 };
+
+export type Brc20BalanceResponse = {
+  ticker: string;
+  available_balance: string;
+  transferrable_balance: string;
+  overall_balance: string;
+};

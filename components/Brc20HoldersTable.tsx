@@ -2,19 +2,11 @@
 
 import { ChevronLeftIcon, ChevronRightIcon } from "@radix-ui/react-icons";
 import { motion } from "framer-motion";
-import Link from "next/link";
-import { usePathname } from "next/navigation";
 import { useState } from "react";
-import { useUpdate } from "react-use";
 import useSWR from "swr";
 
-import { useHasMounted } from "../lib/hooks";
-import {
-  Brc20HolderResponse,
-  Brc20TokenResponse,
-  ListResponse,
-} from "../lib/types";
-import { cn, fetcher, formatDateTime, humanReadableCount } from "../lib/utils";
+import { Brc20HolderResponse, ListResponse } from "../lib/types";
+import { cn, fetcher } from "../lib/utils";
 import {
   Select,
   SelectContent,
@@ -22,39 +14,8 @@ import {
   SelectTrigger,
   SelectValue,
 } from "./Select";
-import { inscriptionSortOptions } from "./Sort";
-import { TimeAgo } from "./TimeAgo";
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipProvider,
-  TooltipTrigger,
-} from "./Tooltip";
-
-const data = {
-  results: [
-    {
-      address: "bc1pvwh2dl6h388x65rqq47qjzdmsqgkatpt4hye6daf7yxvl0z3xjgq247aq8",
-      overall_balance: "2000.00000",
-    },
-    {
-      address: "bc1pvwh2dl6h388x65rqq47qjzdmsqgkatpt4hye6daf7yxvl0z3xjgq247aq8",
-      overall_balance: "2000.00000",
-    },
-    {
-      address: "bc1pvwh2dl6h388x65rqq47qjzdmsqgkatpt4hye6daf7yxvl0z3xjgq247aq8",
-      overall_balance: "2000.00000",
-    },
-    {
-      address: "bc1pvwh2dl6h388x65rqq47qjzdmsqgkatpt4hye6daf7yxvl0z3xjgq247aq8",
-      overall_balance: "2000.00000",
-    },
-    {
-      address: "bc1pvwh2dl6h388x65rqq47qjzdmsqgkatpt4hye6daf7yxvl0z3xjgq247aq8",
-      overall_balance: "2000.00000",
-    },
-  ],
-};
+import { Tooltip, TooltipContent, TooltipTrigger } from "./Tooltip";
+import Link from "next/link";
 
 const Brc20HoldersTable = ({ ticker }: { ticker: string }) => {
   const [page, setPage] = useState(0);
@@ -62,23 +23,18 @@ const Brc20HoldersTable = ({ ticker }: { ticker: string }) => {
     setPage((prev) => prev + delta);
   }
 
-  const [rowsPerPage, setRowsPerPage] = useState("20");
+  const [rowsPerPage, setRowsPerPage] = useState("10");
   const limit = parseInt(rowsPerPage);
   const offset = page * limit;
 
   const params = new URLSearchParams({
-    // sort_by: "tx_count",
-    // order: "desc",
-    count: rowsPerPage,
+    limit: rowsPerPage,
     offset: offset.toString(),
   });
 
-  const {
-    data: unused,
-    error,
-    isLoading,
-  } = useSWR<ListResponse<Brc20TokenResponse>>(
-    `https://api.dev.hiro.so/ordinals/brc-20/tokens/${ticker}/holders?${params.toString()}`,
+  const { data, error, isLoading } = useSWR<ListResponse<Brc20HolderResponse>>(
+    `https://api.beta.hiro.so/ordinals/brc-20/tokens/${ticker}/holders?${params.toString()}`,
+
     fetcher,
     {
       keepPreviousData: true,
@@ -97,22 +53,24 @@ const Brc20HoldersTable = ({ ticker }: { ticker: string }) => {
       </span>
     );
 
-  const isLastPage = (page + 1) * limit >= 100; // todo: fix!!!!
-  // const isLastPage = (page + 1) * limit >= data.total;
+  const isLastPage = (page + 1) * limit >= data.total;
   const isOnlyPage = page === 0 && isLastPage;
 
   return (
     <div className="flex flex-col rounded-lg border border-neutral-0">
-      <div className="p-4 pb-1">
-        <h2 className="text-2xl">Holders</h2>
+      <div className="space-x-3 p-4 pb-1">
+        <h2 className="inline text-2xl">Holders</h2>
+        <span className="text-neutral-300">({data.total})</span>
       </div>
 
       <div className="w-full overflow-scroll">
-        <table className="w-full min-w-[640px]">
+        <table
+          className={cn("w-full min-w-[640px]", isLoading && "opacity-50")}
+        >
           <thead>
             <tr className="border-b border-neutral-0 text-sm text-neutral-300">
               <th className="px-4 py-2 text-start font-normal">address</th>
-              <th className="px-4 py-2 text-start font-normal">balance</th>
+              <th className="px-4 py-2 text-end font-normal">balance</th>
             </tr>
           </thead>
           <tbody>
@@ -126,74 +84,85 @@ const Brc20HoldersTable = ({ ticker }: { ticker: string }) => {
           </tbody>
         </table>
       </div>
-      <div className="flex flex-row-reverse py-0.5 pl-3 pr-2 text-sm">
-        <div className="flex items-center space-x-6">
-          {/* Page size selector */}
-          <Select value={rowsPerPage} onValueChange={setRowsPerPage}>
-            <SelectTrigger
-              className={cn("hidden sm:flex", isOnlyPage && "text-neutral-200")}
-              disabled={isOnlyPage}
-            >
-              <div className="space-x-3">
-                <label htmlFor="rows">Rows per page:</label>
-                <span>
-                  [<SelectValue />]
-                </span>
-              </div>
-            </SelectTrigger>
-            <SelectContent id="rows" className="text-sm">
-              <SelectItem value="20">20</SelectItem>
-              <SelectItem value="30">30</SelectItem>
-              <SelectItem value="50">50</SelectItem>
-            </SelectContent>
-          </Select>
-          <div className="font-['Aeonik_Mono'] tracking-tight">
-            {/* {page * limit + 1}-
+      {data.results.length > 0 ? (
+        <div className="flex flex-row-reverse py-0.5 pl-3 pr-2 text-sm">
+          <div className="flex items-center space-x-6">
+            {/* Page size selector */}
+            <Select value={rowsPerPage} onValueChange={setRowsPerPage}>
+              <SelectTrigger
+                className={cn(
+                  "hidden sm:flex",
+                  isOnlyPage && "text-neutral-200"
+                )}
+                disabled={isOnlyPage}
+              >
+                <div className="space-x-3">
+                  <label htmlFor="rows">Rows per page:</label>
+                  <span>
+                    [<SelectValue />]
+                  </span>
+                </div>
+              </SelectTrigger>
+              <SelectContent id="rows" className="text-sm">
+                <SelectItem value="10">10</SelectItem>
+                <SelectItem value="25">25</SelectItem>
+                <SelectItem value="50">50</SelectItem>
+              </SelectContent>
+            </Select>
+            <div className="font-['Aeonik_Mono'] tracking-tight">
+              {/* {page * limit + 1}-
               {isLastPage ? data.total : (page + 1) * limit} of {data.total} */}
-          </div>
-          {/* Pagination */}
-          <div className="grid grid-cols-2">
-            {page > 0 ? (
-              <motion.button
-                className="self-center rounded-[50%] bg-transparent p-1.5 text-neutral-500 transition-colors hover:bg-neutral-0"
-                whileTap={{
-                  scale: 0.8,
-                }}
-                onClick={() => updatePage(-1)}
-                title="Previous page"
-              >
-                <ChevronLeftIcon className="h-4 w-4" />
-              </motion.button>
-            ) : (
-              <button
-                className="cursor-default self-center rounded-[50%] p-1.5 text-neutral-200"
-                disabled={true}
-              >
-                <ChevronLeftIcon className="h-4 w-4" />
-              </button>
-            )}
-            {isLastPage ? (
-              <button
-                className="cursor-default self-center rounded-[50%] p-1.5 text-neutral-200"
-                disabled={true}
-              >
-                <ChevronRightIcon className="h-4 w-4" />
-              </button>
-            ) : (
-              <motion.button
-                className="self-center rounded-[50%] bg-transparent p-1.5 text-neutral-500 transition-colors hover:bg-neutral-0"
-                whileTap={{
-                  scale: 0.8,
-                }}
-                onClick={() => updatePage(+1)}
-                title="Next page"
-              >
-                <ChevronRightIcon className="h-4 w-4" />
-              </motion.button>
-            )}
+            </div>
+            {/* Pagination */}
+            <div className="grid grid-cols-2">
+              {page > 0 ? (
+                <motion.button
+                  className="self-center rounded-[50%] bg-transparent p-1.5 text-neutral-500 transition-colors hover:bg-neutral-0"
+                  whileTap={{
+                    scale: 0.8,
+                  }}
+                  onClick={() => updatePage(-1)}
+                  title="Previous page"
+                >
+                  <ChevronLeftIcon className="h-4 w-4" />
+                </motion.button>
+              ) : (
+                <button
+                  className="cursor-default self-center rounded-[50%] p-1.5 text-neutral-200"
+                  disabled={true}
+                >
+                  <ChevronLeftIcon className="h-4 w-4" />
+                </button>
+              )}
+              {isLastPage ? (
+                <button
+                  className="cursor-default self-center rounded-[50%] p-1.5 text-neutral-200"
+                  disabled={true}
+                >
+                  <ChevronRightIcon className="h-4 w-4" />
+                </button>
+              ) : (
+                <motion.button
+                  className="self-center rounded-[50%] bg-transparent p-1.5 text-neutral-500 transition-colors hover:bg-neutral-0"
+                  whileTap={{
+                    scale: 0.8,
+                  }}
+                  onClick={() => updatePage(+1)}
+                  title="Next page"
+                >
+                  <ChevronRightIcon className="h-4 w-4" />
+                </motion.button>
+              )}
+            </div>
           </div>
         </div>
-      </div>
+      ) : (
+        <div className="cursor-default pb-12 pt-10 text-center text-neutral-300">
+          <span className="rounded-md bg-neutral-0 px-1 py-0.5">
+            No holders
+          </span>
+        </div>
+      )}
     </div>
   );
 };
@@ -205,12 +174,30 @@ const Brc20HolderRow = ({
   address: string;
   balance: string;
 }) => {
+  const truncatedBalance = truncateAmount(balance, 2);
+
   return (
-    <tr className="border-b border-neutral-0 font-['Aeonik_Mono'] text-sm text-neutral-500">
-      <td className="px-4 py-2">{address}</td>
-      <td className="px-4 py-2">{balance}</td>
+    <tr className="border-b border-neutral-0 font-['Aeonik_Mono'] text-sm text-neutral-500 hover:bg-neutral-0">
+      <td className="px-4 py-2">
+        <Link href={`/address/${address}`}>{address}</Link>
+      </td>
+      <td className="px-4 py-2 text-end">
+        <Tooltip>
+          <TooltipTrigger>
+            {truncatedBalance}
+            {balance === truncatedBalance || <>&hellip;</>}
+          </TooltipTrigger>
+          <TooltipContent variant="light">{balance}</TooltipContent>
+        </Tooltip>
+      </td>
     </tr>
   );
 };
 
 export default Brc20HoldersTable;
+
+function truncateAmount(num: string, maxDecimals = 2) {
+  const [whole, decimals] = num.split(".");
+  if (!decimals || decimals.length <= maxDecimals) return num;
+  return `${whole}.${decimals.substring(0, maxDecimals)}`;
+}

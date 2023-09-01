@@ -98,7 +98,7 @@ async function searchFetcher(searches: SearchTypes[]) {
     }
     if (type === GoToTypes.Brc20) {
       const res = await fetch(
-        `https://api.dev.hiro.so/ordinals/brc-20/tokens/${search}`
+        `https://api.beta.hiro.so/ordinals/brc-20/tokens/${search}`
       );
       if (res.status !== 200) return null;
       const result = await res.json();
@@ -215,8 +215,8 @@ const SearchBar = (props: { className?: string; small?: boolean }) => {
         const selectedItem = searchResults?.find((l) => l.index === selected);
         if (!selectedItem) return;
         e.preventDefault();
-        router.push(selectedItem.link);
         setIsFocused(false);
+        router.push(selectedItem.link);
       } else if (e.key === "ArrowDown") {
         e.preventDefault();
         select(1);

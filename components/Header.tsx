@@ -17,14 +17,14 @@ const Header = ({ children }: { children?: React.ReactNode }) => {
       <AnimatePresence>
         {pathname !== "/" ? (
           <motion.div
-            className="me-5 ms-8 hidden flex-1 lg:block"
             key="search-bar-wrapper"
+            className="me-5 ms-8 hidden flex-1 lg:block"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.2 }}
           >
-            <SearchBar small />
+            <SearchBar small key={pathname} />
           </motion.div>
         ) : (
           <div className="h-10" />
