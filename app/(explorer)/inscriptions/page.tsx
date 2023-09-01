@@ -44,6 +44,7 @@ const rParams = [
 // f: file type
 // m: mime type (comma separated) // todo
 // r: rarity
+// a: address
 // df: inscription date start
 // dt: inscription date end
 // cf: coinbase date start
@@ -73,6 +74,7 @@ const Page = () => {
 
   // text parameters
   const mimeTypes = searchParams.get("m") ?? "";
+  const address = searchParams.get("a") ?? "";
 
   // array filter parameters
   const fSelected = new Set(searchParams.getAll("f"));
@@ -90,7 +92,7 @@ const Page = () => {
 
   // todo: add all other filters
   const arrayCount = fSelected.size + rSelected.size;
-  const textCount = mimeTypes ? 1 : 0;
+  const textCount = (mimeTypes ? 1 : 0) + (address ? 1 : 0);
   const paramsCount = [
     dStart,
     dEnd,
@@ -176,6 +178,7 @@ const Page = () => {
     order,
     order_by: sort,
 
+    address,
     mime_type: mimeTypes.split(",").filter(Boolean),
     file_type: Array.from(fSelected),
     rarity: Array.from(rSelected),
@@ -213,6 +216,13 @@ const Page = () => {
             text={mimeTypes}
             placeholder="Comma-separated types"
             onApply={(t) => updateParam("m", t)}
+          />
+          <hr className="my-3 border-dashed border-neutral-200" />
+          <TextFilter
+            name="Address"
+            text={address}
+            placeholder="bc1q..."
+            onApply={(t) => updateParam("a", t)}
           />
           <hr className="my-3 border-dashed border-neutral-200" />
           <Filter

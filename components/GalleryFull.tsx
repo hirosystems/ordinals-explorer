@@ -41,6 +41,7 @@ export type V1InscriptionsOptions = {
   rarity: string[];
   file_type: string[];
   mime_type: string[];
+  address: string;
 
   from_number: number | null;
   to_number: number | null;
@@ -74,7 +75,7 @@ const GalleryFull = ({
     ["order", apiOptions.order],
     ["order_by", apiOptions.order_by],
 
-    // optional range params
+    // optional array params
     ...apiOptions.rarity.map((r) => ["rarity", r]),
     ...apiOptions.mime_type.map((m) => ["mime_type", m]),
     ...(apiOptions.file_type
@@ -88,6 +89,7 @@ const GalleryFull = ({
 
   // optional params
   const optional = [
+    "address",
     "from_number",
     "to_number",
     "from_genesis_block_height",
