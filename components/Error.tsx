@@ -6,7 +6,7 @@ const Error = ({
   message?: string;
 }) => {
   error = error?.cause ?? error;
-  message = message ?? error.message ?? null;
+  message = message ?? error?.message ?? null;
 
   const action = recommendAction(message);
   const status = error?.status ?? error?.statusText ?? error?.code ?? null;

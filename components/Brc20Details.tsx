@@ -11,6 +11,7 @@ import {
   TooltipTrigger,
 } from "./Tooltip";
 import Brc20HoldersTable from "./Brc20HoldersTable";
+import Error from "./Error";
 
 const BrcDetails = (params: { ticker: string }) => {
   const { data, error, isLoading } = useSWR<Brc20TokenDetailsResponse>(
@@ -18,7 +19,7 @@ const BrcDetails = (params: { ticker: string }) => {
     fetcher
   );
 
-  if (error) return <span>Something went wrong ʕ•̠͡•ʔ</span>;
+  if (error || (data && !data.token)) return <Error error={error ?? data} />;
   if (!params.ticker) return <div>404</div>;
   if (!data) return <Loading />;
 

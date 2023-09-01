@@ -25,6 +25,7 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "./Tooltip";
+import Loading from "./Loading";
 
 const TOKEN_THUMBNAIL_MAP = {
   ordi: "/brc20/ordi.png",
@@ -58,7 +59,7 @@ const Brc20Homepage = () => {
 
   if (!hasMounted) return null; // todo: fix this?
 
-  if (!data) return null;
+  if (!data) return <Loading />;
   if (error) return <span>Something went wrong ʕ•̠͡•ʔ</span>;
   if (data && "error" in data)
     // todo: add better error component
