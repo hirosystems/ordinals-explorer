@@ -3,19 +3,11 @@
 import { ChevronLeftIcon, ChevronRightIcon } from "@radix-ui/react-icons";
 import { motion } from "framer-motion";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
 import { useState } from "react";
-import { useUpdate } from "react-use";
 import useSWR from "swr";
 
-import { useHasMounted } from "../lib/hooks";
-import {
-  Brc20BalanceResponse,
-  Brc20HolderResponse,
-  Brc20TokenResponse,
-  ListResponse,
-} from "../lib/types";
-import { cn, fetcher, formatDateTime, humanReadableCount } from "../lib/utils";
+import { Brc20BalanceResponse, ListResponse } from "../lib/types";
+import { cn, fetcher, truncateAmount } from "../lib/utils";
 import {
   Select,
   SelectContent,
@@ -23,14 +15,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "./Select";
-import { inscriptionSortOptions } from "./Sort";
-import { TimeAgo } from "./TimeAgo";
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipProvider,
-  TooltipTrigger,
-} from "./Tooltip";
+import { Tooltip, TooltipContent, TooltipTrigger } from "./Tooltip";
 
 const Brc20BalancesTable = ({ address }: { address: string }) => {
   const [page, setPage] = useState(0);
@@ -203,9 +188,3 @@ const Brc20BalanceRow = ({
 };
 
 export default Brc20BalancesTable;
-
-function truncateAmount(num: string, maxDecimals = 2) {
-  const [whole, decimals] = num.split(".");
-  if (!decimals || decimals.length <= maxDecimals) return num;
-  return `${whole}.${decimals.substring(0, maxDecimals)}`;
-}

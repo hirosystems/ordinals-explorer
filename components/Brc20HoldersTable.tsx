@@ -5,8 +5,9 @@ import { motion } from "framer-motion";
 import { useState } from "react";
 import useSWR from "swr";
 
+import Link from "next/link";
 import { Brc20HolderResponse, ListResponse } from "../lib/types";
-import { cn, fetcher } from "../lib/utils";
+import { cn, fetcher, truncateAmount } from "../lib/utils";
 import {
   Select,
   SelectContent,
@@ -15,7 +16,6 @@ import {
   SelectValue,
 } from "./Select";
 import { Tooltip, TooltipContent, TooltipTrigger } from "./Tooltip";
-import Link from "next/link";
 
 const Brc20HoldersTable = ({ ticker }: { ticker: string }) => {
   const [page, setPage] = useState(0);
@@ -53,7 +53,8 @@ const Brc20HoldersTable = ({ ticker }: { ticker: string }) => {
       </span>
     );
 
-  const isLastPage = (page + 1) * limit >= data.total;
+  // const isLastPage = (page + 1) * limit >= data.total;
+  const isLastPage = (page + 1) * limit >= 1000; // todo: remove this line when pagination is fixed
   const isOnlyPage = page === 0 && isLastPage;
 
   return (
@@ -195,9 +196,3 @@ const Brc20HolderRow = ({
 };
 
 export default Brc20HoldersTable;
-
-function truncateAmount(num: string, maxDecimals = 2) {
-  const [whole, decimals] = num.split(".");
-  if (!decimals || decimals.length <= maxDecimals) return num;
-  return `${whole}.${decimals.substring(0, maxDecimals)}`;
-}

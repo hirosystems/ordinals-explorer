@@ -11,6 +11,7 @@ import Image from "next/image";
 import { useHasMounted } from "../lib/hooks";
 import { Brc20TokenResponse, ListResponse } from "../lib/types";
 import { cn, fetcher, formatDateTime, humanReadableCount } from "../lib/utils";
+import Loading from "./Loading";
 import {
   Select,
   SelectContent,
@@ -25,7 +26,7 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "./Tooltip";
-import Loading from "./Loading";
+import TruncatingTooltip from "./TruncatingTooltip";
 
 const TOKEN_THUMBNAIL_MAP = {
   ordi: "/brc20/ordi.png",
@@ -71,7 +72,8 @@ const Brc20Homepage = () => {
       </span>
     );
 
-  const isLastPage = (page + 1) * limit >= data.total;
+  // const isLastPage = (page + 1) * limit >= data.total;
+  const isLastPage = (page + 1) * limit >= 1000; // todo: fix when better total exists
   const isOnlyPage = page === 0 && isLastPage;
 
   return (
@@ -142,10 +144,10 @@ const Brc20Homepage = () => {
       {/* todo: ? switch to react table and allow sorting filters column removal etc. -- shadcn/ui */}
       <div className="flex-1 rounded-lg border border-neutral-0">
         <div className="mb-3 space-y-2 p-4">
-          <h2 className="text-2xl">Popular BRC-20 Tokens</h2>
+          <h2 className="text-2xl">Latest Active BRC-20 Tokens</h2>
           <p className="text-neutral-300">
-            Displaying the most used BRC-20 tokens that have been minted, and
-            transferred frequently
+            Displaying the most recently used BRC-20 tokens that have been
+            minted, and transferred
           </p>
         </div>
 
@@ -295,8 +297,6 @@ const Brc20TokenRow = ({ token }: { token: Brc20TokenResponse }) => {
   const remainingSupply =
     Number(token.max_supply) - Number(token.minted_supply);
 
-  console.log("Number(token.minted_supply)", Number(token.minted_supply));
-
   const thumbnail: string | undefined = TOKEN_THUMBNAIL_MAP[token.ticker];
 
   return (
@@ -374,7 +374,7 @@ const Brc20TokenRow = ({ token }: { token: Brc20TokenResponse }) => {
       </td>
       <td className=" px-3 text-start">
         {Number(token.minted_supply) > 0 ? (
-          token.minted_supply
+          <TruncatingTooltip num={token.minted_supply} />
         ) : (
           <span className="text-neutral-100">&mdash;</span>
         )}

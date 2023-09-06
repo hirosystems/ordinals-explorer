@@ -3,6 +3,8 @@
 import useSWR from "swr";
 import { Brc20TokenDetailsResponse } from "../lib/types";
 import { fetcher, formatDate, humanReadableCount } from "../lib/utils";
+import Brc20HoldersTable from "./Brc20HoldersTable";
+import Error from "./Error";
 import Loading from "./Loading";
 import {
   Tooltip,
@@ -10,8 +12,7 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "./Tooltip";
-import Brc20HoldersTable from "./Brc20HoldersTable";
-import Error from "./Error";
+import TruncatingTooltip from "./TruncatingTooltip";
 
 const BrcDetails = (params: { ticker: string }) => {
   const { data, error, isLoading } = useSWR<Brc20TokenDetailsResponse>(
@@ -94,7 +95,7 @@ const BrcDetails = (params: { ticker: string }) => {
                 <div className="text-neutral-300">limit per mint</div>
                 <div>
                   {data.token.mint_limit ? (
-                    data.token.mint_limit
+                    <TruncatingTooltip num={data.token.mint_limit} />
                   ) : (
                     <span className="text-neutral-200">N/A</span>
                   )}
@@ -109,13 +110,15 @@ const BrcDetails = (params: { ticker: string }) => {
             <div className="space-y-6">
               <div className="flex flex-col">
                 <div className="text-neutral-300">max supply</div>
-                <div>{data.token.max_supply}</div>
+                <div>
+                  <TruncatingTooltip num={data.token.max_supply} />
+                </div>
               </div>
               <div className="flex flex-col">
                 <div className="text-neutral-300">minted supply</div>
-                {/* todo: reenable */}
-                {/* <div>{data.token.minted_supply}</div> */}
-                <div>{data.supply.minted_supply}</div>
+                <div>
+                  <TruncatingTooltip num={data.supply.minted_supply} />
+                </div>
               </div>
               {/* todo: add holders */}
               {/* <div className="flex flex-col">

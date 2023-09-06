@@ -100,3 +100,11 @@ export function humanReadableCount(number: number, precision: number): string {
     ? `${value}${suffix}`
     : `~${value}${suffix}`;
 }
+
+export function truncateAmount(num: string, maxDecimals = 2) {
+  const [whole, decimals] = num.split(".");
+  // return only `whole` if `decimals` is all zeroes
+
+  if (!decimals || decimals.length <= maxDecimals) return num;
+  return `${whole}.${decimals.substring(0, maxDecimals)}`;
+}
