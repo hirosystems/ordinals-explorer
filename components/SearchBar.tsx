@@ -1,6 +1,6 @@
 "use client";
 
-import { API_URL } from "@/lib/constants";
+import { API_BETA_URL, API_URL } from "@/lib/constants";
 import { cn } from "@/lib/utils";
 import { motion } from "framer-motion";
 import { Search as SearchIcon } from "lucide-react";
@@ -97,9 +97,7 @@ async function searchFetcher(searches: SearchTypes[]) {
       };
     }
     if (type === GoToTypes.Brc20) {
-      const res = await fetch(
-        `https://api.beta.hiro.so/ordinals/brc-20/tokens/${search}`
-      );
+      const res = await fetch(`${API_BETA_URL}/brc-20/tokens/${search}`);
       if (res.status !== 200) return null;
       const result = await res.json();
       return {

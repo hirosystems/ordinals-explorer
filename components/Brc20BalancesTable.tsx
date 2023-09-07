@@ -16,6 +16,7 @@ import {
   SelectValue,
 } from "./Select";
 import { Tooltip, TooltipContent, TooltipTrigger } from "./Tooltip";
+import { API_BETA_URL } from "../lib/constants";
 
 const Brc20BalancesTable = ({ address }: { address: string }) => {
   const [page, setPage] = useState(0);
@@ -32,7 +33,7 @@ const Brc20BalancesTable = ({ address }: { address: string }) => {
     offset: offset.toString(),
   });
   const { data, error, isLoading } = useSWR<ListResponse<Brc20BalanceResponse>>(
-    `https://api.beta.hiro.so/ordinals/brc-20/balances/${address}?${params.toString()}`,
+    `${API_BETA_URL}/brc-20/balances/${address}?${params.toString()}`,
     fetcher,
     {
       keepPreviousData: true,

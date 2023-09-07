@@ -13,10 +13,11 @@ import {
   TooltipTrigger,
 } from "./Tooltip";
 import TruncatingTooltip from "./TruncatingTooltip";
+import { API_BETA_URL } from "../lib/constants";
 
 const BrcDetails = (params: { ticker: string }) => {
   const { data, error, isLoading } = useSWR<Brc20TokenDetailsResponse>(
-    `https://api.beta.hiro.so/ordinals/brc-20/tokens/${params.ticker}`,
+    `${API_BETA_URL}/brc-20/tokens/${params.ticker}`,
     fetcher
   );
 

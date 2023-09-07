@@ -16,6 +16,7 @@ import {
   SelectValue,
 } from "./Select";
 import { Tooltip, TooltipContent, TooltipTrigger } from "./Tooltip";
+import { API_BETA_URL } from "../lib/constants";
 
 const Brc20HoldersTable = ({ ticker }: { ticker: string }) => {
   const [page, setPage] = useState(0);
@@ -33,7 +34,7 @@ const Brc20HoldersTable = ({ ticker }: { ticker: string }) => {
   });
 
   const { data, error, isLoading } = useSWR<ListResponse<Brc20HolderResponse>>(
-    `https://api.beta.hiro.so/ordinals/brc-20/tokens/${ticker}/holders?${params.toString()}`,
+    `${API_BETA_URL}/brc-20/tokens/${ticker}/holders?${params.toString()}`,
 
     fetcher,
     {

@@ -27,6 +27,7 @@ import {
   TooltipTrigger,
 } from "./Tooltip";
 import TruncatingTooltip from "./TruncatingTooltip";
+import { API_BETA_URL } from "../lib/constants";
 
 const TOKEN_THUMBNAIL_MAP = {
   ordi: "/brc20/ordi.png",
@@ -51,7 +52,7 @@ const Brc20Homepage = () => {
   if (!ticker) params.delete("ticker");
 
   const { data, error, isLoading } = useSWR<ListResponse<Brc20TokenResponse>>(
-    `https://api.beta.hiro.so/ordinals/brc-20/tokens?${params.toString()}`,
+    `${API_BETA_URL}/brc-20/tokens?${params.toString()}`,
     fetcher,
     {
       keepPreviousData: true,
