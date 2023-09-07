@@ -12,7 +12,7 @@ const CtaLink = (props: {
     <Link
       href={props.href}
       className={cn(
-        "cta-link rounded-[4px] border-2 border-black bg-neutral-500 px-[24px] py-[15px] text-white",
+        "cta-link rounded-[4px] border-2 border-black bg-neutral-500 px-[24px] py-[15px] text-white transition-colors hover:bg-black",
         props.className
       )}
     >

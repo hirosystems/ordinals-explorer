@@ -8,15 +8,22 @@ import InscriptionRender from "./InscriptionRender";
 const InscriptionCard = ({
   inscription,
   light = false,
+  className,
 }: {
   inscription?: InscriptionResponse;
   light?: boolean;
+  className?: string;
 }) => {
   if (!inscription?.id)
     return (
       // make the grid take up the maximal space, even when a grid item is empty
       // todo: double-check skeleton styles are the same as the real ones
-      <div className="space-y-2 rounded-md border sm:p-2 md:space-y-3 md:p-3 lg:space-y-5 lg:p-5">
+      <div
+        className={cn(
+          "block space-y-2 rounded-md border sm:p-2 md:space-y-3 md:p-3 lg:space-y-5 lg:p-5",
+          className
+        )}
+      >
         <div className="aspect-square rounded-[4px]" />
         <div
           className={cn(
@@ -33,7 +40,10 @@ const InscriptionCard = ({
   return (
     <Link
       href={`/inscription/${inscription.id}`}
-      className="space-y-2 rounded-md border sm:p-2 md:space-y-3 md:p-3 lg:space-y-5 lg:p-5"
+      className={cn(
+        "block space-y-2 rounded-md border sm:p-2 md:space-y-3 md:p-3 lg:space-y-5 lg:p-5",
+        className
+      )}
     >
       <div className="aspect-square w-full overflow-hidden rounded-[4px]">
         <InscriptionRender

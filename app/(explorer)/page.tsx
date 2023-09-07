@@ -1,12 +1,15 @@
 import Link from "next/link";
 
+import { Metadata } from "next";
 import CtaLink from "../../components/CtaLink";
 import Footer from "../../components/Footer";
+
 import GalleryPreview from "../../components/GalleryPreview";
+import GalleryRow from "../../components/GalleryRow";
 import Header from "../../components/Header";
 import Intro from "../../components/Intro";
 import SearchBar from "../../components/SearchBar";
-import { Metadata } from "next";
+import { mimeTypes } from "../../lib/utils";
 
 export const metadata: Metadata = {
   title: "Hiro Ordinals Explorer | ordinals.hiro.so",
@@ -18,7 +21,7 @@ export default function Home() {
   return (
     <>
       <Header />
-      <main className="mx-auto flex min-h-screen max-w-5xl flex-col items-center justify-between space-y-6 p-6">
+      <main className="mx-auto flex min-h-screen w-full max-w-5xl flex-col items-center justify-between space-y-6 p-6">
         {/* Intro Section */}
         <div className="mx-auto max-w-2xl space-y-10">
           {/* todo: wrap in motion */}
@@ -47,6 +50,27 @@ export default function Home() {
               Explore all, sort, and filter &rarr;
             </CtaLink>
           </div>
+        </div>
+
+        {/* Gallery Section */}
+        <div className="w-full">
+          <div className="mt-20 flex justify-between">
+            <p className="text-sm uppercase">Latest Image Inscriptions</p>
+            <Link
+              href="/explore?f=image"
+              className="text-sm text-neutral-500 hover:underline"
+            >
+              Explore &rarr;
+            </Link>
+          </div>
+          <div className="mt-4" />
+          {/* <div className="mx-auto mb-4 mt-3 h-12 w-0 border border-dashed border-l-black" /> */}
+          <GalleryRow query={mimeTypes.image.map((i) => ["mime_type", i])} />
+          {/* <div className="mt-16 flex justify-around">
+            <CtaLink href="/explore">
+              Explore all, sort, and filter &rarr;
+            </CtaLink>
+          </div> */}
         </div>
 
         <div className="w-full py-8">
