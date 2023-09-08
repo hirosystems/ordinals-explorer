@@ -6,8 +6,9 @@ import { useState } from "react";
 import useSWR from "swr";
 
 import Link from "next/link";
+import { API_BETA_URL } from "../lib/constants";
 import { Brc20HolderResponse, ListResponse } from "../lib/types";
-import { cn, fetcher, truncateAmount } from "../lib/utils";
+import { cn, fetcher } from "../lib/utils";
 import {
   Select,
   SelectContent,
@@ -15,8 +16,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "./Select";
-import { Tooltip, TooltipContent, TooltipTrigger } from "./Tooltip";
-import { API_BETA_URL } from "../lib/constants";
+import TruncatingTooltip from "./TruncatingTooltip";
 
 const Brc20HoldersTable = ({ ticker }: { ticker: string }) => {
   const [page, setPage] = useState(0);
@@ -176,21 +176,13 @@ const Brc20HolderRow = ({
   address: string;
   balance: string;
 }) => {
-  const truncatedBalance = truncateAmount(balance, 2);
-
   return (
     <tr className="border-b border-neutral-0 font-['Aeonik_Mono'] text-sm text-neutral-500 hover:bg-neutral-0">
       <td className="px-4 py-2">
         <Link href={`/address/${address}`}>{address}</Link>
       </td>
       <td className="px-4 py-2 text-end">
-        <Tooltip>
-          <TooltipTrigger>
-            {truncatedBalance}
-            {balance === truncatedBalance || <>&hellip;</>}
-          </TooltipTrigger>
-          <TooltipContent variant="light">{balance}</TooltipContent>
-        </Tooltip>
+        <TruncatingTooltip num={balance} />
       </td>
     </tr>
   );
