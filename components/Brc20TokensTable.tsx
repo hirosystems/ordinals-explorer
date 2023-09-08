@@ -62,7 +62,7 @@ const Brc20TokensTable = () => {
     }
   );
 
-  if (!data) return <Loading />;
+  if (!data) return <Loading className="py-4" />;
   if (error) return <span>Something went wrong ʕ•̠͡•ʔ</span>;
   if (data && "error" in data)
     // todo: add better error component
