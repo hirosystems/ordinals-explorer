@@ -32,11 +32,10 @@ const InscriptionRenderJson = (props: {
   try {
     const content = cleanJsonString(props.json);
 
-    let protocol =
+    const protocol =
       props.json?.p ?? props.json?.protocol?.name ?? props.json?.protocol;
-    protocol = protocol?.replace(/\-/g, "");
 
-    if (protocol === "brc20") {
+    if (protocol === "brc-20") {
       return (
         <JsonViewer {...props} json={props.json} protocol={protocol}>
           <ContentBrc20 json={props.json} />
@@ -98,7 +97,7 @@ const JsonViewer = (props: {
       )}
       <div className="absolute bottom-1 left-1 flex space-x-0.5 text-xs uppercase text-neutral-400">
         {props.protocol && (
-          <div className="cursor-default rounded border border-neutral-300 bg-neutral-100 px-1 py-0.5 leading-none  shadow-[0_1px_2px_0_rgba(0,0,0,0.1)]">
+          <div className="cursor-default rounded border border-neutral-300 bg-neutral-100 px-1 py-0.5 leading-none shadow-[0_1px_2px_0_rgba(0,0,0,0.1)]">
             {props.protocol}
           </div>
         )}
@@ -218,5 +217,5 @@ function ContentBrc20({ json }: { json: Brc20Content }) {
   }
 
   // todo: add better invalid/fallback view of content
-  throw "Invalid brc20 content";
+  throw "Invalid BRC-20 content";
 }

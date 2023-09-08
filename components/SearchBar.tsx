@@ -1,22 +1,20 @@
 "use client";
 
+import { API_BETA_URL, API_URL } from "@/lib/constants";
+import { cn } from "@/lib/utils";
+import { motion } from "framer-motion";
 import { Search as SearchIcon } from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useCallback, useEffect, useRef, useState } from "react";
 import useSWR from "swr";
-import { motion } from "framer-motion";
-
-import { API_URL } from "@/lib/constants";
-import { cn } from "@/lib/utils";
-
-import "./SearchBar.css";
 import Thumbnail from "./Thumbnail";
 
 enum GoToTypes {
   Inscription = "inscription",
   Block = "block",
   Sat = "sat",
+  Brc20 = "brc20",
 }
 type SearchTypes = {
   type: GoToTypes;
@@ -53,6 +51,10 @@ const searchRegexes: Readonly<{ type: GoToTypes; reg: RegExp }[]> = [
   {
     type: GoToTypes.Block,
     reg: /^\d+$/,
+  },
+  {
+    type: GoToTypes.Brc20,
+    reg: /.{1,4}$/i,
   },
 ] as const;
 
@@ -92,6 +94,19 @@ async function searchFetcher(searches: SearchTypes[]) {
         link: `/block/${search}`,
         text: search,
         secondaryText: null,
+      };
+    }
+    if (type === GoToTypes.Brc20) {
+      const res = await fetch(`${API_BETA_URL}/brc-20/tokens/${search}`);
+      if (res.status !== 200) return null;
+      const result = await res.json();
+      return {
+        type,
+        id: result.token.id,
+        link: `/protocols/brc-20/${result.token.ticker}`,
+        content_type: result.content_type,
+        text: result.token.ticker,
+        secondaryText: result.token.id,
       };
     }
     return null;
@@ -140,7 +155,16 @@ const BlockLink = (props: SearchResult) => {
   return <p className="text-neutral-800">#{props.text}</p>;
 };
 
-const SearchBar = () => {
+const Brc20Link = (props: SearchResult) => {
+  return (
+    <p className="text-neutral-800">
+      {props.text.toUpperCase()}{" "}
+      <span className="text-sm text-neutral-300">{props.secondaryText}</span>
+    </p>
+  );
+};
+
+const SearchBar = (props: { className?: string; small?: boolean }) => {
   const router = useRouter();
   const [search, setSearch] = useState("");
   const [isFocused, setIsFocused] = useState(false);
@@ -148,7 +172,7 @@ const SearchBar = () => {
   const [searchResults, setSearchResults] = useState<SearchResult[] | null>([]);
   const searchInputRef = useRef<HTMLInputElement>(null);
 
-  let searches: SearchTypes[] = [];
+  const searches: SearchTypes[] = [];
   for (const { reg, type } of searchRegexes) {
     if (reg.test(search)) {
       searches.push({ type, search });
@@ -189,6 +213,7 @@ const SearchBar = () => {
         const selectedItem = searchResults?.find((l) => l.index === selected);
         if (!selectedItem) return;
         e.preventDefault();
+        setIsFocused(false);
         router.push(selectedItem.link);
       } else if (e.key === "ArrowDown") {
         e.preventDefault();
@@ -206,6 +231,18 @@ const SearchBar = () => {
     return () => window.removeEventListener("keydown", onKeydown);
   }, [onKeydown]);
 
+  // CMD+K to focus search input
+  useEffect(() => {
+    const down = (e: KeyboardEvent) => {
+      if (e.key === "k" && (e.metaKey || e.ctrlKey)) {
+        e.preventDefault();
+        searchInputRef.current?.focus();
+      }
+    };
+    document.addEventListener("keydown", down);
+    return () => document.removeEventListener("keydown", down);
+  }, []);
+
   const groupedResult = searchResults?.reduce(
     (acc, r) => ({
       ...acc,
@@ -215,6 +252,7 @@ const SearchBar = () => {
       [GoToTypes.Inscription]: [],
       [GoToTypes.Sat]: [],
       [GoToTypes.Block]: [],
+      [GoToTypes.Brc20]: [],
     } as GroupedResults
   );
 
@@ -223,82 +261,116 @@ const SearchBar = () => {
   return (
     <div
       className={cn(
-        "search-bar-container relative z-20 mb-10 h-12 text-neutral-400 transition-colors",
-        isFocused && "focused"
+        // height given manually, since the search bar is absolutely positioned
+        "search-bar-container group relative z-20 h-10 text-neutral-400 transition-[box-shadow,opacity]",
+        isFocused && "focused",
+        !isFocused && props.small && "opacity-80",
+        props.className
       )}
     >
-      {/* search bar input */}
-      <div className="absolute w-full p-[1px]">
-        <div className="relative z-40 rounded-[4px] bg-white p-[18px]">
-          <div className="flex gap-4 ">
-            <SearchIcon className="text-neutral-300" />
+      <div
+        className={cn(
+          "absolute z-30 w-full rounded-[4px] bg-gradient-to-b from-neutral-0 to-neutral-200 p-[1px] transition-[box-shadow] group-hover:shadow-[0_6px_14px_0_#8c877d4d]",
+          props.small
+            ? "shadow-[0px_3px_6px_0px_#f2f0ed]"
+            : "shadow-[0px_6px_14px_0px_#f2f0ed]",
+          isFocused && "shadow-[0_6px_14px_0_#8c877d4d]"
+        )}
+      >
+        <div className="overflow-hidden rounded-[3px] bg-white">
+          {/* Search bar */}
+          <div className="relative flex items-center ">
+            {/* Search input */}
             <input
               ref={searchInputRef}
-              className="w-full font-normal outline-none placeholder:text-neutral-300"
+              className={cn(
+                "flex-1 font-normal outline-none placeholder:text-neutral-300",
+                props.small ? "p-[9px] ps-[40px] text-sm" : "p-[17px] ps-[58px]"
+              )}
               type="text"
               value={search}
               onChange={(ev) => setSearch(ev.target.value.trim().toLowerCase())}
               onFocus={() => setIsFocused(true)}
               onBlur={() => setIsFocused(false)}
-              placeholder="Search by inscription, sat, or block"
+              placeholder="Search by inscription, sat, block, or BRC-20 token"
             />
-          </div>
-        </div>
-      </div>
-      {/* 1 px wrapper for gradient border */}
-      <motion.div
-        layout
-        transition={{ duration: 0.1 }}
-        className="search-bar-box absolute z-30 min-h-[62px] w-full overflow-hidden rounded-[5px] bg-gradient-to-b from-neutral-0 to-neutral-200 p-[1px] transition-[box-shadow]"
-      >
-        {/* search results content */}
-        <div className="m-0 w-full overflow-hidden rounded-[4px] bg-white text-neutral-400 transition-colors">
-          <div className="m-5 mt-[54px]">
+            {/* CMD K badge */}
             <div
-              className={cn("space-y-1.5", isFocused ? "visible" : "hidden")}
+              className={cn(
+                "cursor-default whitespace-nowrap rounded border border-neutral-300 bg-gradient-to-b from-neutral-0 to-neutral-100 px-1.5 pb-0.5 font-['Aeonik_Mono'] text-xs text-neutral-950 opacity-40",
+                props.small ? "mx-2" : "mx-5"
+              )}
             >
-              {groupedResult
-                ? Object.entries(groupedResult).map(([type, results]) =>
-                    results.length ? (
-                      <div key={type}>
-                        <p className="relative z-50 uppercase text-neutral-300">
-                          {type}
-                        </p>
-                        {results.map((result) => (
-                          <Link
-                            className={cn(
-                              "flex items-center gap-2 overflow-hidden text-ellipsis whitespace-nowrap rounded border-2 border-transparent p-2 leading-5 transition-colors hover:bg-neutral-0",
-                              result.index === selected && "border-peach"
-                            )}
-                            key={result.id}
-                            href={result.link}
-                            onMouseDown={(e) => {
-                              // avoid loosing focus on the input
-                              e.preventDefault();
-                            }}
-                          >
-                            {type === GoToTypes.Inscription && (
-                              <InscriptionLink {...result} />
-                            )}
-                            {type === GoToTypes.Sat && <SatLink {...result} />}
-                            {type === GoToTypes.Block && (
-                              <BlockLink {...result} />
-                            )}
-                          </Link>
-                        ))}
-                      </div>
-                    ) : null
-                  )
-                : null}
+              {/* todo: switch to two separate keyboard key looking badges for each key */}
+              <span className="relative top-[1px] me-[5px] text-sm">⌘</span>K
+            </div>
+            {/* Search icon wrapper */}
+            <div
+              className={cn(
+                "absolute left-0 top-0 flex h-full items-center ps-5 text-neutral-300",
+                props.small ? "ps-3" : "ps-5"
+              )}
+            >
+              <SearchIcon size={props.small ? 20 : 26} />
             </div>
           </div>
-          {search.length && searchResults === null ? (
-            <p className="mt-5 uppercase text-neutral-300">
-              ¯\_(ツ)_/¯ No results
-            </p>
-          ) : null}
+          {/* Search results */}
+          <motion.div
+            animate={{
+              height: isFocused && searchResults?.length ? "auto" : 0,
+            }}
+            className="m-0 h-0 w-full rounded-[4px] bg-white text-neutral-400 transition-colors"
+          >
+            <div className={cn(props.small ? "p-3" : "p-5", "pt-0")}>
+              <div className={cn("space-y-1.5")}>
+                {groupedResult
+                  ? Object.entries(groupedResult).map(([type, results]) =>
+                      results.length ? (
+                        <div key={type}>
+                          <p className="relative z-50 uppercase text-neutral-300">
+                            {type}
+                          </p>
+                          {results.map((result) => (
+                            <Link
+                              className={cn(
+                                "flex items-center gap-2 overflow-hidden text-ellipsis whitespace-nowrap rounded border-2 border-transparent p-2 leading-5 transition-colors hover:bg-neutral-0",
+                                result.index === selected && "border-peach"
+                              )}
+                              key={result.id}
+                              href={result.link}
+                              onMouseDown={(e) => {
+                                // avoid loosing focus on the input
+                                e.preventDefault();
+                              }}
+                            >
+                              {type === GoToTypes.Inscription && (
+                                <InscriptionLink {...result} />
+                              )}
+                              {type === GoToTypes.Sat && (
+                                <SatLink {...result} />
+                              )}
+                              {type === GoToTypes.Block && (
+                                <BlockLink {...result} />
+                              )}
+                              {type === GoToTypes.Brc20 && (
+                                <Brc20Link {...result} />
+                              )}
+                            </Link>
+                          ))}
+                        </div>
+                      ) : null
+                    )
+                  : null}
+              </div>
+            </div>
+            {search.length && searchResults === null ? (
+              <p className="mt-5 px-5 pb-3 uppercase text-neutral-300">
+                ¯\_(ツ)_/¯ No results
+              </p>
+            ) : null}
+          </motion.div>
         </div>
-      </motion.div>
+      </div>
     </div>
   );
 };

@@ -1,22 +1,48 @@
 "use client";
 
+import { AnimatePresence, motion } from "framer-motion";
 import { ArrowUpRight } from "lucide-react";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
+import SearchBar from "./SearchBar";
 
 const Header = ({ children }: { children?: React.ReactNode }) => {
+  const pathname = usePathname();
+
   return (
-    <header className="relative mx-auto flex w-full max-w-[88rem] justify-between px-6 py-8 md:px-10">
-      <a href="/">
+    <header className="relative mx-auto flex w-full max-w-[88rem] items-center justify-between px-6 py-4 md:px-10">
+      <Link href="/" className="cursor-pointer">
         <img src="/logo.svg" alt="Hiro Ordinals Beta" />
-      </a>
-      {children}
+      </Link>
+      <AnimatePresence>
+        {pathname !== "/" ? (
+          <motion.div
+            key="search-bar-wrapper"
+            className="me-5 ms-8 hidden flex-1 lg:block"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.2 }}
+          >
+            <SearchBar small key={pathname} />
+          </motion.div>
+        ) : (
+          <div className="h-10" />
+        )}
+      </AnimatePresence>
       {/* todo: explore button, stats, hiro.so */}
       <div className="hidden sm:block">
         <Link
-          href="/explore"
+          href="/inscriptions"
           className="rounded-md px-3.5 py-2.5 transition-colors hover:bg-neutral-0"
         >
-          Explore All
+          Inscriptions
+        </Link>
+        <Link
+          href="/protocols/brc-20"
+          className="rounded-md px-3.5 py-2.5 transition-colors hover:bg-neutral-0"
+        >
+          BRC-20
         </Link>
         {/* todo: re-enable different explore modes */}
         {/* <HoverCard openDelay={0}>

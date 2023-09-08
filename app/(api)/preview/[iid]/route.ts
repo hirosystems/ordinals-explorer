@@ -23,7 +23,6 @@ export async function GET(
 
     return new Response(await page(data), {
       status: 200,
-
       headers: {
         "Content-Type": "text/html; charset=utf-8",
         "Access-Control-Allow-Origin": "*",

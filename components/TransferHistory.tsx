@@ -2,12 +2,9 @@
 
 import { ChevronLeftIcon, ChevronRightIcon } from "@radix-ui/react-icons";
 import { motion } from "framer-motion";
-import TimeAgo from "javascript-time-ago";
-import en from "javascript-time-ago/locale/en.json";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
-import ReactTimeAgo from "react-time-ago";
 import { useUpdate } from "react-use";
 import useSWR from "swr";
 import { API_URL } from "../lib/constants";
@@ -31,8 +28,7 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "./Tooltip";
-
-TimeAgo.addDefaultLocale(en);
+import { TimeAgo } from "./TimeAgo";
 
 const TransferHistory = (props: { inscription: InscriptionResponse }) => {
   const update = useUpdate();
@@ -247,7 +243,7 @@ const TransferRow = ({
         <TooltipProvider delayDuration={150}>
           <Tooltip>
             <TooltipTrigger className="text-left">
-              <ReactTimeAgo
+              <TimeAgo
                 className="tracking-tight"
                 date={transfer.timestamp}
                 tooltip={false}

@@ -34,6 +34,11 @@ const nextConfig = {
         destination: `${process.env.NEXT_PUBLIC_API_URL}/inscriptions/:iid/content`,
         permanent: false,
       },
+      {
+        source: "/explore",
+        destination: `/inscriptions`,
+        permanent: false,
+      },
     ];
   },
 };

@@ -46,11 +46,9 @@ const Filter = ({
                     onClick={() => onClick(value)}
                   >
                     [
-                    {selected.has(value) ? (
-                      <span>⏺</span>
-                    ) : (
-                      <span className="opacity-0">⏺</span>
-                    )}
+                    <span className={cn(selected.has(value) || "opacity-0")}>
+                      ⏺
+                    </span>
                     ] {value}
                   </button>
                   {label && (

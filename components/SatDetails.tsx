@@ -30,9 +30,8 @@ const SatDetails = (params: { sid: string }) => {
       <h1 className="text-3xl">Sat {params.sid}</h1>
 
       {data.inscription_id && (
-        <div className="my-6 flex flex-col items-center">
-          <h2 className="mb-3 mt-8 uppercase">Inscription</h2>
-          {/* todo: fix inscription preview sizing from growing too large */}
+        <div className="my-6 flex w-1/2 flex-col items-stretch sm:w-1/3 md:w-1/3 lg:w-2/5">
+          <h2 className="mb-3 mt-8 text-center uppercase">Inscription</h2>
           <Inscription id={data.inscription_id} />
         </div>
       )}

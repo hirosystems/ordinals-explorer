@@ -1,10 +1,18 @@
+"use client";
+
+import { motion } from "framer-motion";
 import { GitHubLogoIcon, TwitterLogoIcon } from "@radix-ui/react-icons";
 import IconTwitter from "./icons/IconTwitter";
 import Link from "next/link";
 
 const Footer = () => {
   return (
-    <footer className="mx-auto w-full max-w-[88rem] p-3 sm:p-5 md:p-10">
+    <motion.footer
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 0.5 }}
+      className="mx-auto w-full max-w-[88rem] p-3 sm:p-5 md:p-10"
+    >
       <div className="w-full rounded-md bg-black">
         <div className="flex flex-col p-4 pb-8 sm:p-6 md:p-12">
           <a href="https://hiro.so" aria-label="Hiro Systems">
@@ -17,10 +25,7 @@ const Footer = () => {
               Hiro Ordinals API
             </a>{" "}
             powered by{" "}
-            <a
-              className="underline"
-              href="https://github.com/hirosystems/hord"
-            >
+            <a className="underline" href="https://github.com/hirosystems/hord">
               Hord
             </a>
             .
@@ -51,7 +56,7 @@ const Footer = () => {
           </div>
         </div>
       </div>
-    </footer>
+    </motion.footer>
   );
 };
 

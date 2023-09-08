@@ -12,9 +12,9 @@ const IconUpRight = (params: { className?: string; style?: CSSProperties }) => {
     >
       <path
         stroke="#0D0C0C"
-        stroke-linecap="round"
-        stroke-linejoin="round"
-        stroke-width=".943"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        strokeWidth=".943"
         d="M1.893.6h7.393v7.394M.66 9.226 9.286.6"
       />
     </svg>

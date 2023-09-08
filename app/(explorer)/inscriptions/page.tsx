@@ -5,18 +5,27 @@ import { useUpdate } from "react-use";
 
 import DateFilter from "../../../components/DateFilter";
 import Filter from "../../../components/Filter";
-import Footer from "../../../components/Footer";
 import GalleryFull, {
   V1InscriptionsOptions,
 } from "../../../components/GalleryFull";
-import Header from "../../../components/Header";
 import RangeFilter from "../../../components/RangeFilter";
-
-import Sort, { sortOptions } from "../../../components/Sort";
+import Sort, { inscriptionSortOptions } from "../../../components/Sort";
 import TextFilter from "../../../components/TextFilter";
 import { useHasMounted } from "../../../lib/hooks";
 
-const fParams = ["image", "video", "audio", "text", "binary"];
+const fParams = [
+  [
+    "image",
+    "Filter by image mimetypes: image/apng, image/avif, image/gif, image/jpg, image/jpeg, image/png, image/svg+xml, or image/webp",
+  ],
+  ["video", "Filter by video mimetypes: video/mp4 or video/webm"],
+  ["audio", "Filter by audio mimetypes: audio/midi, audio/mod, or audio/mpeg"],
+  ["text", "Filter by text mimetypes: text/html, text/markdown, or text/plain"],
+  [
+    "binary",
+    "Filter by binary mimetypes: application/epub+zip, application/json, application/pdf, or application/pgp-signature",
+  ],
+];
 const rParams = [
   ["common", "Any sat that is not the first sat of its block"],
   ["uncommon", "The first sat of each block"],
@@ -35,6 +44,7 @@ const rParams = [
 // f: file type
 // m: mime type (comma separated) // todo
 // r: rarity
+// a: address
 // df: inscription date start
 // dt: inscription date end
 // cf: coinbase date start
@@ -59,11 +69,12 @@ const Page = () => {
   // basic parameters
   const sort = searchParams.get("s") ?? "genesis_block_height"; // genesis_block_height, rarity
   const order = searchParams.get("o") ?? "desc"; // asc, desc
-  const sortKey = `${sort}-${order}` as keyof typeof sortOptions;
+  const sortKey = `${sort}-${order}` as keyof typeof inscriptionSortOptions;
   const page = parseInt(searchParams.get("p") ?? "0");
 
   // text parameters
   const mimeTypes = searchParams.get("m") ?? "";
+  const address = searchParams.get("a") ?? "";
 
   // array filter parameters
   const fSelected = new Set(searchParams.getAll("f"));
@@ -81,7 +92,7 @@ const Page = () => {
 
   // todo: add all other filters
   const arrayCount = fSelected.size + rSelected.size;
-  const textCount = mimeTypes ? 1 : 0;
+  const textCount = (mimeTypes ? 1 : 0) + (address ? 1 : 0);
   const paramsCount = [
     dStart,
     dEnd,
@@ -167,6 +178,7 @@ const Page = () => {
     order,
     order_by: sort,
 
+    address,
     mime_type: mimeTypes.split(",").filter(Boolean),
     file_type: Array.from(fSelected),
     rarity: Array.from(rSelected),
@@ -182,131 +194,134 @@ const Page = () => {
   } as V1InscriptionsOptions;
 
   return (
-    <>
-      <Header />
-      <main className="mx-auto w-full max-w-[104rem] flex-grow">
-        <div className="flex">
-          {/* FILTERS */}
-          <div className="ml-6 hidden min-w-[210px] whitespace-nowrap text-xs md:block">
+    <main className="mx-auto w-full max-w-[104rem] flex-grow">
+      <div className="flex">
+        {/* FILTERS */}
+        <div className="ml-6 hidden min-w-[210px] whitespace-nowrap text-xs md:block">
+          <div className="space-y-2">
+            <div className="py-1 uppercase">Filter</div>
+            <hr className="border-dashed border-neutral-300" />
+          </div>
+          <div className="mt-5" />
+          <Filter
+            defaultOpen={true}
+            name="File Types"
+            options={fParams}
+            onClick={(t) => toggle("f", t)}
+            selected={fSelected}
+          />
+          <hr className="my-3 border-dashed border-neutral-200" />
+          <TextFilter
+            name="Mime Types"
+            text={mimeTypes}
+            placeholder="Comma-separated types"
+            onApply={(t) => updateParam("m", t)}
+          />
+          <hr className="my-3 border-dashed border-neutral-200" />
+          <TextFilter
+            name="Address"
+            text={address}
+            placeholder="bc1q..."
+            onApply={(t) => updateParam("a", t)}
+          />
+          <hr className="my-3 border-dashed border-neutral-200" />
+          <Filter
+            name="Rarity"
+            options={rParams}
+            onClick={(t) => toggle("r", t)}
+            selected={rSelected}
+          />
+          <hr className="my-3 border-dashed border-neutral-200" />
+          {/* todo: clear date filters unapplied state when clear is called (e.g. via key prop) */}
+          <DateFilter
+            name="Inscription Date"
+            start={dStart}
+            end={dEnd}
+            onApply={(f, t) => updateRange("d", f, t)}
+          />
+          <hr className="my-3 border-dashed border-neutral-200" />
+          <RangeFilter
+            name="Inscription Number"
+            start={nStart}
+            end={nEnd}
+            onApply={(f, t) => updateRange("n", f, t)}
+          />
+          <hr className="my-3 border-dashed border-neutral-200" />
+          <RangeFilter
+            name="Inscription Height"
+            start={hStart}
+            end={hEnd}
+            onApply={(f, t) => updateRange("h", f, t)}
+          />
+          <hr className="my-3 border-dashed border-neutral-200" />
+          <RangeFilter
+            name="Coinbase Height"
+            start={cStart}
+            end={cEnd}
+            onApply={(f, t) => updateRange("c", f, t)}
+          />
+          {/* todo: period filter */}
+
+          <hr className="my-3 border-dashed border-neutral-200" />
+          <div className="my-6" />
+          <button
+            className="block w-full rounded-[4px] border px-4 py-2 uppercase text-neutral-600"
+            onClick={clear}
+          >
+            {/* todo: clear button color state, hover, etc. */}
+            Clear Filters {filterCount > 0 && `(${filterCount})`}
+          </button>
+        </div>
+        <div className="mx-6 flex flex-grow flex-col space-y-5">
+          <div className="w-full text-xs uppercase">
             <div className="space-y-2">
-              <div className="py-1 uppercase">Filter</div>
+              <div className="flex justify-between">
+                <div className="py-1 uppercase opacity-0">Show todo</div>
+                <Sort sortKey={sortKey} updateSort={updateSort} />
+              </div>
               <hr className="border-dashed border-neutral-300" />
             </div>
-            <div className="mt-5" />
-            <Filter
-              defaultOpen={true}
-              name="File Types"
-              options={fParams}
-              onClick={(t) => toggle("f", t)}
-              selected={fSelected}
-            />
-            <div className="mt-5" />
-            <TextFilter
-              name="Mime Types"
-              text={mimeTypes}
-              placeholder="Comma-separated types"
-              onApply={(t) => updateParam("m", t)}
-            />
-            <hr className="my-3 border-dashed border-neutral-200" />
-            <Filter
-              name="Rarity"
-              options={rParams}
-              onClick={(t) => toggle("r", t)}
-              selected={rSelected}
-            />
-            <hr className="my-3 border-dashed border-neutral-200" />
-            {/* todo: clear date filters unapplied state when clear is called (e.g. via key prop) */}
-            <DateFilter
-              name="Inscription Date"
-              start={dStart}
-              end={dEnd}
-              onApply={(f, t) => updateRange("d", f, t)}
-            />
-            <hr className="my-3 border-dashed border-neutral-200" />
-            <RangeFilter
-              name="Inscription Number"
-              start={nStart}
-              end={nEnd}
-              onApply={(f, t) => updateRange("n", f, t)}
-            />
-            <hr className="my-3 border-dashed border-neutral-200" />
-            <RangeFilter
-              name="Inscription Height"
-              start={hStart}
-              end={hEnd}
-              onApply={(f, t) => updateRange("h", f, t)}
-            />
-            <hr className="my-3 border-dashed border-neutral-200" />
-            <RangeFilter
-              name="Coinbase Height"
-              start={cStart}
-              end={cEnd}
-              onApply={(f, t) => updateRange("c", f, t)}
-            />
-            {/* todo: period filter */}
-
-            <hr className="my-3 border-dashed border-neutral-200" />
-            <div className="my-6" />
-            <button
-              className="block w-full rounded-[4px] border px-4 py-2 uppercase text-neutral-600"
-              onClick={clear}
-            >
-              {/* todo: clear button color state, hover, etc. */}
-              Clear Filters {filterCount > 0 && `(${filterCount})`}
-            </button>
           </div>
-          <div className="mx-6 flex flex-grow flex-col space-y-5">
-            <div className="w-full text-xs uppercase">
-              <div className="space-y-2">
-                <div className="flex justify-between">
-                  <div className="py-1 uppercase opacity-0">Show todo</div>
-                  <Sort sortKey={sortKey} updateSort={updateSort} />
-                </div>
-                <hr className="border-dashed border-neutral-300" />
-              </div>
-            </div>
-            {/* IMAGES */}
-            <GalleryFull apiOptions={apiOptions} renderEmpty={renderEmpty}>
-              {/* Pagination */}
-              <div className="my-12 flex justify-center">
-                {/* todo: use real links? */}
-                {/* todo: hide on load, or add skeleton */}
-                <div className="grid grid-cols-2 gap-3">
-                  {page > 0 ? (
-                    <button
-                      className="rounded-[4px] bg-black px-3 py-1.5 text-white"
-                      onClick={() => updatePage(-1)}
-                    >
-                      &larr; Previous
-                    </button>
-                  ) : (
-                    <button
-                      className="bg-neutral cursor-default rounded-[4px] px-3 py-1.5 text-neutral-200 transition-colors"
-                      disabled={true}
-                    >
-                      &larr; Previous
-                    </button>
-                  )}
+          {/* IMAGES */}
+          <GalleryFull apiOptions={apiOptions} renderEmpty={renderEmpty}>
+            {/* Pagination */}
+            <div className="my-12 flex justify-center">
+              {/* todo: use real links? */}
+              {/* todo: hide on load, or add skeleton */}
+              <div className="grid grid-cols-2 gap-3">
+                {page > 0 ? (
                   <button
                     className="rounded-[4px] bg-black px-3 py-1.5 text-white"
-                    onClick={() => updatePage(+1)}
+                    onClick={() => updatePage(-1)}
                   >
-                    Next &rarr;
+                    &larr; Previous
                   </button>
-                </div>
+                ) : (
+                  <button
+                    className="bg-neutral cursor-default rounded-[4px] px-3 py-1.5 text-neutral-200 transition-colors"
+                    disabled={true}
+                  >
+                    &larr; Previous
+                  </button>
+                )}
+                <button
+                  className="rounded-[4px] bg-black px-3 py-1.5 text-white"
+                  onClick={() => updatePage(+1)}
+                >
+                  Next &rarr;
+                </button>
               </div>
-            </GalleryFull>
-            {/* preload next page */}
-            <div className="hidden">
-              <GalleryFull
-                apiOptions={{ ...apiOptions, page: apiOptions.page + 1 }}
-              />
             </div>
+          </GalleryFull>
+          {/* preload next page */}
+          <div className="hidden">
+            <GalleryFull
+              apiOptions={{ ...apiOptions, page: apiOptions.page + 1 }}
+            />
           </div>
         </div>
-      </main>
-      <Footer />
-    </>
+      </div>
+    </main>
   );
 };
 
