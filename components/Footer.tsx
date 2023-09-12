@@ -25,8 +25,8 @@ const Footer = () => {
               Hiro Ordinals API
             </a>{" "}
             powered by{" "}
-            <a className="underline" href="https://github.com/hirosystems/hord">
-              Hord
+            <a className="underline" href="https://github.com/hirosystems/ordhook">
+              Ordhook
             </a>
             .
           </p>
