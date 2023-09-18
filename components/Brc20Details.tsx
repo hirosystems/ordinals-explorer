@@ -35,7 +35,9 @@ const BrcDetails = (params: { ticker: string }) => {
         <div className="flex flex-col rounded-lg border border-neutral-0 p-7 sm:flex-row sm:space-x-9">
           <div className="flex basis-2/5 flex-col items-center space-y-6 sm:items-start">
             <div className="flex items-end space-x-3 ">
-              <h1 className=" text-5xl leading-[75%]">{params.ticker}</h1>
+              <h1 className=" text-5xl leading-[75%]">
+                {decodeURIComponent(params.ticker)}
+              </h1>
               <div className="b-3 rounded-md border-2 border-sky-400 bg-sky-100 px-1 text-base leading-tight text-sky-600">
                 BRC-20
               </div>
