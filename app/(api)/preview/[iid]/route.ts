@@ -76,6 +76,7 @@ async function page(data: InscriptionResponse): Promise<string> {
 
 function html(children: string) {
   return `
+    <!DOCTYPE html>
     <html>
       <head>
         <meta charset="utf-8">
@@ -107,6 +108,7 @@ function html(children: string) {
 
 function htmlWithFont(children: string) {
   return `
+    <!DOCTYPE html>
     <html>
       <head>
         <meta charset="utf-8">
@@ -173,7 +175,7 @@ function htmlWithFont(children: string) {
 
 function bodyWithImage(data: InscriptionResponse) {
   return `
-    <body style="background-image: url(${API_URL}/inscriptions/${data.id}/content); background-position: center; background-repeat: no-repeat; background-size: contain; height: 100%; image-rendering: pixelated;>
+    <body style="background-image: url(${API_URL}/inscriptions/${data.id}/content); background-position: center; background-repeat: no-repeat; background-size: contain; height: 100%; image-rendering: pixelated;">
       <img src="${API_URL}/inscriptions/${data.id}/content" alt="Inscription image" style="image-rendering: pixelated; opacity: 0;"
         width="100%"
         height="100%"

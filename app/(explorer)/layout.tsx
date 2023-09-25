@@ -8,7 +8,7 @@ import Footer from "../../components/Footer";
 import Header from "../../components/Header";
 
 export const metadata: Metadata = {
-  metadataBase: new URL('https://ordinals.hiro.so'),
+  metadataBase: new URL("https://ordinals.hiro.so"),
   title: {
     template: "%s | Hiro Ordinals Explorer",
     default: "Hiro Ordinals Explorer",
@@ -56,12 +56,10 @@ export default function RootLayout({
     <html lang="en">
       <head>
         <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#CFC9C2" />
-        {process.env.ENABLE_CSP && (
-          <meta
-            httpEquiv="Content-Security-Policy"
-            content="frame-src https://*.hiro.so https://*.vercel.app http://localhost:*;"
-          />
-        )}
+        <meta
+          httpEquiv="Content-Security-Policy"
+          content="frame-src https://*.hiro.so https://*.vercel.app http://localhost:*; img-src https://*.hiro.so https://*.vercel.app http://localhost:*;"
+        />
       </head>
 
       <body className="flex min-h-screen flex-col justify-between">
