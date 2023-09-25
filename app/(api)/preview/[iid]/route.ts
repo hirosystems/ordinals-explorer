@@ -3,6 +3,8 @@ import { getFontSize } from "../../../../lib/utils";
 import { InscriptionResponse } from "../../../../lib/types";
 import { redirect } from "next/navigation";
 
+const PREVIEW_URL = process.env.NEXT_PUBLIC_PREVIEW_URL;
+
 export async function GET(
   request: Request,
   { params }: { params: { iid: string } }
@@ -43,8 +45,9 @@ export async function GET(
 // todo: remove css loading from this route group
 async function page(data: InscriptionResponse): Promise<string> {
   // todo: add error handling and 404 etc.
-
-  if (data.mime_type.startsWith("image/")) {
+  if (data.mime_type.startsWith("image/svg+xml")) {
+    return html(bodyWithIframe(data));
+  } else if (data.mime_type.startsWith("image/")) {
     // todo!: add iframe for svg+xml
     return html(bodyWithImage(data));
   } else if (data.mime_type.startsWith("video/")) {
@@ -56,7 +59,7 @@ async function page(data: InscriptionResponse): Promise<string> {
     const content = await getContent(data.id);
 
     if (data.mime_type.startsWith("text/html")) {
-      return content; // todo!: wrap in iframe
+      return html(bodyWithIframe(data));
     }
 
     return htmlWithFont(
@@ -82,6 +85,9 @@ function html(children: string) {
       <head>
         <meta charset="utf-8">
         <meta name="format-detection" content="telephone=no" />
+
+        <meta http-equiv="Content-Security-Policy" content="default-src 'self' https://api.hiro.so http://localhost:*; script-src 'unsafe-inline'; style-src 'unsafe-inline';">
+
         <style>
           * {
             margin: 0;
@@ -114,6 +120,9 @@ function htmlWithFont(children: string) {
       <head>
         <meta charset="utf-8">
         <meta name="format-detection" content="telephone=no" />
+
+        // todo: add CSP
+
         <style>
           @font-face {
             font-family: "Aeonik Fono";
@@ -173,6 +182,21 @@ function htmlWithFont(children: string) {
 // }
 
 // bodies
+
+function bodyWithIframe(data: InscriptionResponse) {
+  return `
+    <body style="width: 100%; height: 100%;">
+      <iframe src="${PREVIEW_URL}/raw/${data.id}"
+        style="margin: 0; padding: 0; border: none;"
+        width="100%"
+        height="100%"
+        loading="lazy"
+        sandbox="allow-scripts"
+        referrerpolicy="no-referrer"
+        credentialless
+      />
+    </body>`;
+}
 
 function bodyWithImage(data: InscriptionResponse) {
   return `
