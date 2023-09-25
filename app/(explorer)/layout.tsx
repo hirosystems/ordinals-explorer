@@ -58,7 +58,7 @@ export default function RootLayout({
         <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#CFC9C2" />
         <meta
           httpEquiv="Content-Security-Policy"
-          content="frame-src https://*.hiro.so https://*.vercel.app http://localhost:*; img-src https://*.hiro.so https://*.vercel.app http://localhost:*;"
+          content="frame-src https://api.hiro.so https://alphaassets.hiro.so https://ordinal.vercel.app http://localhost:*; img-src https://api.hiro.so https://alphaassets.hiro.so https://ordinal.vercel.app http://localhost:*;"
         />
       </head>
 

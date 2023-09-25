@@ -45,6 +45,7 @@ async function page(data: InscriptionResponse): Promise<string> {
   // todo: add error handling and 404 etc.
 
   if (data.mime_type.startsWith("image/")) {
+    // todo!: add iframe for svg+xml
     return html(bodyWithImage(data));
   } else if (data.mime_type.startsWith("video/")) {
     return html(bodyWithVideo(data));
@@ -55,7 +56,7 @@ async function page(data: InscriptionResponse): Promise<string> {
     const content = await getContent(data.id);
 
     if (data.mime_type.startsWith("text/html")) {
-      return content;
+      return content; // todo!: wrap in iframe
     }
 
     return htmlWithFont(

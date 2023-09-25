@@ -18,10 +18,26 @@ export const WithContentJson = (
     fetcher
   );
 
-  if (error) return <span>Something went wrong ʕ•̠͡•ʔ</span>;
+  if (error) return <Error error={error} />;
+
   if (!data) return <></>;
 
   return <Content {...props} json={data} />;
+};
+
+const Error = (props: { error: any }) => {
+  const text = JSON.stringify(props.error);
+  const message = text.includes('"line":')
+    ? "Invalid JSON"
+    : props.error.message ?? "Something went wrong";
+  return (
+    <div className="flex aspect-square w-full flex-1 flex-col items-center justify-center bg-[#FCFAF8] pb-2">
+      <p>Error ʕ•̠͡•ʔ</p>
+      <pre className="inline-block rounded bg-neutral-50 px-1 font-['Aeonik_Mono'] text-sm">
+        {message}
+      </pre>
+    </div>
+  );
 };
 
 const InscriptionRenderJson = (props: {
@@ -171,7 +187,7 @@ function ContentBrc20({ json }: { json: Brc20Content }) {
   if (json.op === "deploy") {
     return (
       <div className="flex flex-1 flex-col items-center justify-center pb-2">
-        <p className=" uppercase">{json.op}</p>
+        <p className="uppercase">{json.op}</p>
         <p className="mb-0.5 text-lg underline">{json.tick}</p>
         <p>{json.max}</p>
         {json.lim && (
@@ -193,7 +209,7 @@ function ContentBrc20({ json }: { json: Brc20Content }) {
   if (json.op === "mint") {
     return (
       <div className="flex flex-1 flex-col items-center justify-center pb-2">
-        <p className=" uppercase">{json.op}</p>
+        <p className="uppercase">{json.op}</p>
         <p className="mb-0.5 text-lg underline">{json.tick}</p>
         <p>{json.amt}</p>
       </div>
@@ -203,7 +219,7 @@ function ContentBrc20({ json }: { json: Brc20Content }) {
   if (json.op === "transfer") {
     return (
       <div className="flex flex-1 flex-col items-center justify-center pb-2">
-        <p className=" uppercase">{json.op}</p>
+        <p className="uppercase">{json.op}</p>
         <p className="mb-0.5 text-lg underline">{json.tick}</p>
         <p>{json.amt}</p>
         {json.fee && (
