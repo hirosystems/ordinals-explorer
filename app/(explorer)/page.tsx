@@ -53,11 +53,11 @@ export default function Home() {
           <p className="mt-4">
             Download{" "}
             <a
-              href="https://wallet.hiro.so/"
+              href="https://leather.io/install-extension"
               target="_blank"
               className="text-neutral-300"
             >
-              Hiro Wallet
+              Leather
             </a>{" "}
             and try{" "}
             <a
