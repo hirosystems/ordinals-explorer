@@ -15,21 +15,32 @@ const Footer = () => {
     >
       <div className="w-full rounded-md bg-black">
         <div className="flex flex-col p-4 pb-8 sm:p-6 md:p-12">
-          <a href="https://hiro.so" aria-label="Hiro Systems">
-            <div className="hiro h-[54px] w-[54px]"></div>
-          </a>
-          {/* todo: link chainhooks */}
-          <p className="my-4 text-sm text-neutral-0 md:my-6">
-            This Ordinals Explorer is using the{" "}
-            <a className="underline" href="https://docs.hiro.so/ordinals">
-              Hiro Ordinals API
-            </a>{" "}
-            powered by{" "}
-            <a className="underline" href="https://github.com/hirosystems/ordhook">
-              Ordhook
-            </a>
-            .
-          </p>
+          <div className="flex justify-between gap-4">
+            <div className="flex flex-col">
+              <a href="https://hiro.so" aria-label="Hiro Systems">
+                <div className="hiro h-[54px] w-[54px]"></div>
+              </a>
+              {/* todo: link chainhooks */}
+              <p className="my-4 text-sm text-neutral-0 md:my-6">
+                This Ordinals Explorer is using the{" "}
+                <a className="underline" href="https://docs.hiro.so/ordinals">
+                  Hiro Ordinals API
+                </a>{" "}
+                powered by{" "}
+                <a
+                  className="underline"
+                  href="https://github.com/hirosystems/ordhook"
+                >
+                  Ordhook
+                </a>
+                .
+              </p>
+            </div>
+            {/* Newsletter form */}
+            <div className="flex basis-[420px]">
+              <div id="lightbox-inline-form-8b0bbe84-51ac-4bfc-8af0-101231368a57" />
+            </div>
+          </div>
           <div className="mt-10 flex flex-col justify-between space-y-4 text-center text-xs text-neutral-300 md:flex-row md:space-y-0">
             <div>
               {/* todo: links */}
