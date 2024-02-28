@@ -37,8 +37,8 @@ const Footer = () => {
               </p>
             </div>
             {/* Newsletter form */}
-            <div className="flex bg-red-200">
-              <div id="lightbox-inline-form-aef439bd-8c00-48bc-aec8-e32f62698748" />
+            <div className="flex basis-[420px]">
+              <div id="lightbox-inline-form-8b0bbe84-51ac-4bfc-8af0-101231368a57" />
             </div>
           </div>
           <div className="mt-10 flex flex-col justify-between space-y-4 text-center text-xs text-neutral-300 md:flex-row md:space-y-0">
