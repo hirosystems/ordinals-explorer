@@ -52,8 +52,7 @@ const InscriptionDetails = (params: { iid: string }) => {
     );
   // todo: reusable error component (maybe including loading)
 
-  // todo: add better check (could be the same if transferred in same block?)
-  const wasTransferred = data.timestamp !== data.genesis_timestamp;
+  const wasTransferred = data.tx_id !== data.genesis_tx_id;
 
   return (
     <TooltipProvider delayDuration={0}>
