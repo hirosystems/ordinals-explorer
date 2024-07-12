@@ -89,12 +89,6 @@ export default function RootLayout({
               width="0"
             />
           </noscript>
-          {/* Digioh */}
-          <Script
-            async
-            type="text/javascript"
-            src="https://www.lightboxcdn.com/vendor/94b8df2e-6c46-4cd4-b3dc-ecb7c357ccaf/lightbox_speed.js"
-          />
         </>
       </body>
     </html>
