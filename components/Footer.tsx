@@ -36,11 +36,6 @@ const Footer = () => {
                 .
               </p>
             </div>
-            {/* Newsletter form */}
-            <div
-              className="digioh-form"
-              id="lightbox-inline-form-8b0bbe84-51ac-4bfc-8af0-101231368a57"
-            />
           </div>
           <div className="mt-10 flex flex-col justify-between space-y-4 text-center text-xs text-neutral-300 md:flex-row md:space-y-0">
             <div>
