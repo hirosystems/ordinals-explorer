@@ -17,7 +17,10 @@ const nextConfig = {
     return [
       {
         source: "/:path*",
-        headers: [{ key: "Access-Control-Allow-Origin", value: "*" }],
+        headers: [
+          { key: "Access-Control-Allow-Origin", value: "*" },
+          { key: "Cross-Origin-Opener-Policy", value: "same-origin" }
+        ],
       },
     ];
   },
