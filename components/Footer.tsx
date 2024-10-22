@@ -23,13 +23,13 @@ const Footer = () => {
               {/* todo: link chainhooks */}
               <p className="text-sm text-neutral-0">
                 This Ordinals Explorer is using the{" "}
-                <a className="underline" href="https://docs.hiro.so/ordinals">
+                <a className="underline" href="https://www.hiro.so/ordinals-api">
                   Hiro Ordinals API
                 </a>{" "}
                 powered by{" "}
                 <a
                   className="underline"
-                  href="https://github.com/hirosystems/ordhook"
+                  href="https://www.hiro.so/ordhook"
                 >
                   Ordhook
                 </a>
