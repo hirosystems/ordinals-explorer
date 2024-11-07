@@ -7,6 +7,7 @@ import IconImage from "./icons/IconImage";
 import IconText from "./icons/IconText";
 import IconVideo from "./icons/IconVideo";
 import Iframe from "./inscriptions/Iframe";
+import { UNSAFE_API_URL } from "../lib/constants";
 
 // todo: add more types
 const safeTypes = ["image/jpeg", "image/png", "image/gif", "image/webp"];
@@ -34,7 +35,7 @@ export const ThumbnailIcon = ({
   if (showImage && safeTypes.includes(inscription.content_type.toLowerCase()))
     return (
       <Iframe
-        src={`${process.env.NEXT_PUBLIC_PREVIEW_URL}/preview/${inscription.id}`}
+        src={`${UNSAFE_API_URL}/inscriptions/${inscription.id}/unsafe`}
         className="pointer-events-none"
       />
     );

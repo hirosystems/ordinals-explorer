@@ -1,7 +1,7 @@
-import { API_URL } from "../../../../lib/constants";
-import { getFontSize } from "../../../../lib/utils";
-import { InscriptionResponse } from "../../../../lib/types";
 import { redirect } from "next/navigation";
+import { API_URL, UNSAFE_API_URL } from "../../../../lib/constants";
+import { InscriptionResponse } from "../../../../lib/types";
+import { getFontSize } from "../../../../lib/utils";
 
 export async function GET(
   request: Request,

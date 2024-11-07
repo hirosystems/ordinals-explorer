@@ -1,3 +1,4 @@
+import { UNSAFE_API_URL } from "../../lib/constants";
 import { InscriptionResponse } from "../../lib/types";
 import Iframe from "./Iframe";
 import InscriptionRenderImage from "./InscriptionRenderImage";
@@ -10,21 +11,24 @@ const InscriptionRender = (props: {
   inscription: InscriptionResponse;
   className?: string;
 }) => {
+  if (
+    props.inscription.content_type.startsWith("text/html") ||
+    props.inscription.content_type.startsWith("image/svg+xml")
+  ) {
+    return (
+      <Iframe
+        {...props}
+        src={`${UNSAFE_API_URL}/inscriptions/${props.inscription.id}/unsafe`}
+      />
+    );
+  }
+
   if (props.inscription.content_type.startsWith("image/")) {
     return <InscriptionRenderImage {...props} />;
   }
 
   if (props.inscription.content_type.startsWith("application/json")) {
     return WithContentJson(props, InscriptionRenderJson);
-  }
-
-  if (props.inscription.content_type.startsWith("text/html")) {
-    return (
-      <Iframe
-        {...props}
-        src={`${process.env.NEXT_PUBLIC_PREVIEW_URL}/preview/${props.inscription.id}`}
-      />
-    );
   }
 
   if (props.inscription.content_type.startsWith("text/")) {
