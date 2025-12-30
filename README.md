@@ -15,9 +15,12 @@ There are two main parts of this project:
 
 ## Development
 
-```bash
-cp .env.sample .env.local
-```
+To run the explorer locally, you need to set up your environment variables.
+
+1. Create a `.env` file in the root directory:
+   ```bash
+   cp .env.example .env
+   ```bash
 
 ```bash
 npm install
@@ -26,6 +29,20 @@ npm install
 ```bash
 npm run dev
 ```
+
+If .env.example is still missing, use these default values for the Stacks Mainnet API:
+
+Bash
+
+NEXT_PUBLIC_API_URL=[https://api.hiro.so](https://api.hiro.so)
+NEXT_PUBLIC_NETWORK_MODE=mainnet
+Install dependencies and start the development server:
+
+Bash
+
+npm install
+npm run dev
+
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
