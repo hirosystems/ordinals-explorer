@@ -3,6 +3,27 @@
   "version": "0.1.0",
   "private": true,
   "license": "Apache 2.0",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/AdekunleBamz/ordinals-explorer.git"
+  },
+  "author": "AdekunleBamz",
+  "bugs": {
+    "url": "https://github.com/AdekunleBamz/ordinals-explorer/issues"
+  },
+  "homepage": "https://github.com/AdekunleBamz/ordinals-explorer#readme",
+  "keywords": [
+    "ordinals",
+    "explorer",
+    "stacks",
+    "bitcoin",
+    "nextjs",
+    "typescript"
+  ],
+  "engines": {
+    "node": ">=18.0.0",
+    "npm": ">=8.0.0"
+  },
   "scripts": {
     "dev": "next dev",
     "build": "next build",
