@@ -1,19 +1,29 @@
-### Description
+## Title
+```
+[PR Title Here]
+```
 
-<!-- Describe the bug this PR fixes or the feature it adds. Link to any related issues and PRs -->
+## Description
+```
+[PR Description Here]
+```
 
-#### Breaking change?
+## Changes
+- [ ] UI updates
+- [ ] Data fetching/API
+- [ ] Performance
+- [ ] Bug fix
+- [ ] Tests
+- [ ] Docs
 
-<!-- If applicable, list the APIs/functionality which this PR breaks -->
+## Testing
+- [ ] `npm run lint`
+- [ ] `npm run test` (if applicable)
+- [ ] Manual testing
 
-### Example
+## Screenshots (if applicable)
+Add screenshots or recordings that show the change.
 
-<!-- If applicable, add an example on how this improves the application -->
-
----
-
-### Checklist
-
-- [ ] All tests pass
-- [ ] Tests added in this PR (if applicable)
+## Related Issues
+Closes # (issue number)
 
